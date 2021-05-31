@@ -1,0 +1,51 @@
+%{
+import java.util.Vector;
+class javaparser {
+%}
+
+%token ASSIGN
+%token BINARY
+%token BOOL
+%token CLASS
+%token CHAR
+%token IF
+%token INTEGER
+%token JNULL
+%token NEW
+%token RETURN
+%token STRING
+%token SUPER
+%token THIS
+%token UNARY
+%token WHILE
+%token OPENCURLYBRACKET
+%token CLOSECURLYBRACKET
+%token OPENROUNDBRACKET
+%token CLOSEROUNDBRACKET
+%token <String> TEXT
+
+%type <Stmt> Return While If Block Stmt
+%type <StmtExpr> Assign New Method
+%type <Expr> This Super Unary Binary Integer Bool Char String Jnull 
+%type <Class> S
+%type <Vector> Field
+%type <Vector> Method
+%type <Type> Type
+
+%%
+
+S: CLASS TEXT OPENCURLYBRACKET Field Method CLOSECURLYBRACKET {
+      $$ = new Class($2, $4, $5);
+}
+
+Field: Type TEXT {
+       Vector<Field> v = new Vector();
+       v.add(new Field($1, $2));
+       $$ = v;
+}
+
+Method: Type TEXT OPENROUNDBRACKET Field CLOSEROUNDBRACKET OPENCURLYBRACKET Stmt CLOSECURLYBRACKET  {
+	Vector<Method> v = new Vector();
+	v.add(new Method($1, $2, $4, $6));
+	$$ = v;
+}
