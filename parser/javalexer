@@ -5,38 +5,30 @@
 System.out.println("EOF reached");
 return new EOF();
 %eofval}%
-assign = [\=]
-ccb = [\}]
-crb = [\)]
-csb = [\]]
-ocb = [\{]
-orb = [\(]
-osb = [\]]
 javaString = ([A-z]+[0-9]+|[A-z]+)
-numbers = [0-9]+
 ws = [ \t\r\n\b\015]+
+binary = (+|-|*|/|==|!=)
 %%
-{assign} { return new Assign(yytext()); }
-bool { return new Boolean(yytext()); }
-char { return new Char(yytext()); }
-class { return new Class(yytext()); }
-{ccb} { return new ClosingCurlyBracket(yytext()); }
-{crb} { return new ClosingRoundBracket(yytext()); }
-{csb} { return new ClosingSquareBracket(yytext()); }
-if { return new Binary(yytext()); }
-int { return new Integer(yytext()); }
-null { return new Jnull(yytext()); }
-new { return new New(yytext()); }
-{ocb} { return new OpenCurlyBracket(yytext()); }
-{orb} { return new OpenRoundBracket(yytext()); }
-{osb} { return new OpenSquareBracket(yytext()); }
-return { return new Return(yytext()); }
-String { return new String(yytext()); }
-super { return new Super(yytext()); }
-this { return new This(yytext()); }
-unary { return new Unary(yytext()); }
-while { return new While(yytext()); }
-{javaString} { System.out.println(yytext()); }
-{numbers} { System.out.println(yytext()); }
+= { return new ASSIGN(); }
+boolean { return new BOOL(); }
+char { return new CHAR(); }
+class { return new CLASS(); }
+if { return new IF(); }
+int { return new INTEGER(); }
+null { return new JNULL(); }
+new { return new NEW(); }
+return { return new RETURN(); }
+String { return new TEXT(); }
+super { return new SUPER(); }
+this { return new THIS(); }
+while { return new WHILE(); }
+} { return new CLOSECURLYBRACKET(); }
+) { return new CLOSEROUNDBRACKET(); }
+{ { return new OPENCURLYBRACKET(); }
+( { return new OPENROUNDBRACKET(); }
+{binary} { return new BINARY(yytext()); }
+! { return new UNARY(yytext()); }
+{javaString} { new TEXT(yytext()); }
+[0-9]+ { System.out.println(yytext()); }
 {ws} { System.out.println(yytext()); }
 . { System.out.println("FEHLER: "+yytext()); }

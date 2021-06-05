@@ -4,29 +4,35 @@ class javaparser {
 %}
 
 %token ASSIGN
-%token BINARY
+%token <java.lang.String> BINARY
 %token BOOL
 %token CLASS
 %token CHAR
+$token COMMA
+%token ELSE
 %token IF
 %token INTEGER
 %token JNULL
 %token NEW
 %token RETURN
+%token SEMICOLON
 %token STRING
 %token SUPER
 %token THIS
-%token UNARY
+%token <java.lang.String> UNARY
 %token WHILE
+%token VOID
 %token OPENCURLYBRACKET
 %token CLOSECURLYBRACKET
 %token OPENROUNDBRACKET
 %token CLOSEROUNDBRACKET
-%token <String> TEXT
+%token <java.lang.String> TEXT
 
-%type <Stmt> Return While If Block Stmt
-%type <StmtExpr> Assign New Method
+%type <Stmt> Return While If Block EmptyStmt Stmt
 %type <Expr> This Super Unary Binary Integer Bool Char String Jnull 
+%type <StmtExpr> Assign New MethodCall
+%type <StmtExprExpr> StmtExprExpr
+%type <StmtExprStmt> StmtExprStmt
 %type <Class> S
 %type <Vector> Field
 %type <Vector> Method
@@ -44,8 +50,183 @@ Field: Type TEXT {
        $$ = v;
 }
 
-Method: Type TEXT OPENROUNDBRACKET Field CLOSEROUNDBRACKET OPENCURLYBRACKET Stmt CLOSECURLYBRACKET  {
+Method: Type TEXT OPENROUNDBRACKET Field CLOSEROUNDBRACKET Block  {
 	Vector<Method> v = new Vector();
 	v.add(new Method($1, $2, $4, $6));
 	$$ = v;
 }
+
+
+
+
+
+Stmt: ifthenstatement { $$ = $1}
+      | ifthenelsestatement { $$ = $1}
+      | whilestatement { $$ = $1}
+      | block { $$ = $1}
+      | emptystatement { $$ = $1}
+      | returnstatement { $$ = $1}
+      | StmtExprStmt { $$ = $1 }
+
+ifthenstatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
+      $$ = new If($3, $5);
+}
+
+ifthenelsestatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt ELSE Stmt {
+      $$ = new If($3, $5, $7)
+}
+
+whilestatement: WHILE OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
+      $$ = new While($3, $5);
+}
+
+block: OPENCURLYBRACKET CLOSECURLYBRACKET {
+            $$ = new Block(new Vector());
+      }
+      | OPENCURLYBRACKET statements CLOSECURLYBRACKET {
+            $$ = new Block($2);
+      }
+
+statements: Stmt {
+            Vector<Stmt> v = new Vector();
+            v.add($1);
+            $$ = v;
+      }
+      | statements Stmt {
+            $1.insertElementAt($2, 0);
+            $$ = $1;
+      }
+
+
+emptystatement: SEMICOLON {
+      $$ = new EmptyStmt();
+}
+
+
+// ?
+
+returnstatement: RETURN SEMICOLON {
+            $$ = new Return();
+      }
+      |
+      RETURN Expr SEMICOLON {
+            $$ = new Return($2);
+      }
+
+StmtExprStmt: StmtExpr {
+      $$ = new StmtExprStmt($1); 
+}
+
+
+
+
+
+StmtExpr: Assign { $$ = $1; }
+      | New { $$ = $1; }
+      | MethodCall { $$ = $1; }
+
+Assign: LocalOrFieldVar ASSIGN Expr {
+      $$ = new Assign($1, $2);
+}
+
+New: NEW Type OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
+            $$ = new New($2, $4);
+      }
+      | NEW Type OPENROUNDBRACKET CLOSEROUNDBRACKET {
+            $$ = new New($2, new Vector());
+      }
+
+// ?
+
+MethodCall: Expr TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, $2, $4);
+      }
+      | Expr TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, $2, new Vector());
+      }
+
+
+
+Expr: This { $$ = $1; }
+      | Super { $$ = $1; }
+      | LocalOrFieldVar { $$ = $1; }
+      | InstVar { $$ = $1; }
+      | Unary { $$ = $1; }
+      | Binary { $$ = $1; }
+      | Integer { $$ = $1; }
+      | Bool { $$ = $1; }
+      | Char { $$ = $1; }
+      | String { $$ = $1; }
+      | Jnull { $$ = $1; }
+      | StmtExprExpr { $$ = $1; }
+
+
+// THIS mit this.Expr?
+
+This: THIS {
+      $$ = new This();
+}
+
+// Super weglassen?
+
+Super: SUPER {
+      $$ = new Super();
+}
+
+LocalOrFieldVar: TEXT {
+      $$ = new LocalOrFieldVar($1);
+}
+
+InstVar: Expr TEXT {
+      $$ = new InstVar($1, $2);
+}
+
+Unary: UNARY Expr {
+      $$ = new Unary($1, $2);
+}
+
+Binary: Expr BINARY Expr {
+      $$ = new Binary($2, $1, $3);
+}
+
+// ?
+
+Integer: INTEGER TEXT {
+      $$ = new Integer($2);
+}
+
+Bool: BOOL TEXT {
+            $$ = new Bool($2);
+      }
+
+Char: CHAR TEXT {
+      $$ = new Char($2);
+}
+
+String: STRING TEXT {
+      $$ = new String($2);
+}
+
+Jnull: JNULL {
+      $$ = new Jnull();
+}
+
+StmtExprExpr: StmtExpr { 
+      $$ = new StmtExprExpr($1);
+}
+
+expressions: Expr { 
+            Vector<Expr> v = new Vector();
+            v.add($1);
+            $$ = v;
+      }
+      | Expr COMMA expressions {
+            $1.insertElementAt($3, 0);
+            $$ = $1;
+      }
+
+Type: STRING { $$ = new Type($1); }
+      | CHAR { $$ = new Type($1); }
+      | BOOL { $$ = new Type($1); }
+      | INTEGER { $$ = new Type($1); }
+      | VOID { $$ = new Type($1); }
