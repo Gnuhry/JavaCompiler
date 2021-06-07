@@ -41,7 +41,7 @@ class javaparser {
 %%
 
 S:  CLASS Type OPENCURLYBRACKET Body CLOSECURLYBRACKET {
-      $$ = new Class($2, (Vector) $4.get(0),(Vector) $4.get(1));
+    $$ = new Class($2, (Vector) $4.get(0),(Vector) $4.get(1));
 }
 
 Body: Field {
@@ -52,210 +52,229 @@ Body: Field {
     v.add(new Vector());
     $$ = v;
 } | Method {
-      Vector<Method> vm = new Vector();
-      vm.add($1);
-      Vector<Vector> v = new Vector();
-      v.add(new Vector());
-      v.add(vm);
-      $$ = v;
-  } |
-   Field Body{
-      Vector<Field> vf = new Vector();
-      vf.add($1);
-      ((Vector) $2.get(0)).insertElementAt(vf,0);
-      $$ = $2;
-  } | Method Body{
-      	Vector<Method> vm = new Vector();
+    Vector<Method> vm = new Vector();
+    vm.add($1);
+    Vector<Vector> v = new Vector();
+    v.add(new Vector());
+    v.add(vm);
+    $$ = v;
+} | Field Body{
+    Vector<Field> vf = new Vector();
+    vf.add($1);
+    ((Vector) $2.get(0)).insertElementAt(vf,0);
+    $$ = $2;
+} | Method Body{
+    Vector<Method> vm = new Vector();
 	vm.add($1);
-        ((Vector) $2.get(1)).insertElementAt(vm,0);
-        $$ = $2;
-    }
+    ((Vector) $2.get(1)).insertElementAt(vm,0);
+    $$ = $2;
+}
 
 Field: Type TEXT SEMICOLON {
-         $$ = new Field($1, $2);
+    $$ = new Field($1, $2);
 }
-	
 
-Method: Type TEXT OPENROUNDBRACKET Parameters  CLOSEROUNDBRACKET block  {
+Method: Type TEXT OPENROUNDBRACKET Parameters CLOSEROUNDBRACKET block {
 	$$ = new Method($1, $2, new Parameter($4), $6);
 }
 
 Parameter: Type TEXT {
-	   $$ = new Field($1, $2);
+    $$ = new Field($1, $2);
 }
 
 Parameters: Parameter COMMA Parameters {
-	      $3.insertElementAt($1, 0);
-	      $$ = $3;
-	    }
-	    | Parameter {
-	      Vector<Field> v = new Vector();
-	      v.add($1);
-	      $$ = v;
-	    }
-
-Stmt: ifthenstatement { $$ = $1;}
-      | ifthenelsestatement { $$ = $1;}
-      | whilestatement { $$ = $1;}
-      | block { $$ = $1;}
-      | LocalVarDecl { $$ = $1; }
-      | emptystatement { $$ = $1;}
-      | returnstatement { $$ = $1;}
-      | StmtExprStmt { $$ = $1; }
-
-ifthenstatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
-      $$ = new If($3, $5);
+	$3.insertElementAt($1, 0);
+	$$ = $3;
+} | Parameter {
+	Vector<Field> v = new Vector();
+	v.add($1);
+	$$ = v;
 }
 
-ifthenelsestatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt ELSE Stmt {
-      $$ = new If($3, $5, $7);
-}
-
-whilestatement: WHILE OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
-      $$ = new While($3, $5);
-}
-
-block: OPENCURLYBRACKET CLOSECURLYBRACKET {
-            $$ = new Block(new Vector());
-      }
-      | OPENCURLYBRACKET statements CLOSECURLYBRACKET {
-      	    $$ = new Block($2);
-      }
-
-LocalVarDecl : Type TEXT SEMICOLON {
-	     $$ = new LocalVarDecl($1, $2);
+Stmt: ifthenstatement {
+    $$ = $1;
+} | ifthenelsestatement {
+    $$ = $1;
+} | whilestatement {
+    $$ = $1;
+} | block {
+    $$ = $1;
+} | LocalVarDecl {
+    $$ = $1;
+} | emptystatement {
+    $$ = $1;
+} | returnstatement {
+    $$ = $1;
+} | StmtExprStmt {
+    $$ = $1;
 }
 
 statements: Stmt {
-            Vector<Stmt> v = new Vector();
-            v.add($1);
-            $$ = v;
-      }
-      | statements Stmt {
-            $1.insertElementAt($2, 0);
-            $$ = $1;
-      }
+    Vector<Stmt> v = new Vector();
+    v.add($1);
+    $$ = v;
+} | statements Stmt {
+    $1.insertElementAt($2, 0);
+    $$ = $1;
+}
+
+ifthenstatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
+    $$ = new If($3, $5);
+}
+
+ifthenelsestatement: IF OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt ELSE Stmt {
+    $$ = new If($3, $5, $7);
+}
+
+whilestatement: WHILE OPENROUNDBRACKET Bool CLOSEROUNDBRACKET Stmt {
+    $$ = new While($3, $5);
+}
+
+block: OPENCURLYBRACKET CLOSECURLYBRACKET {
+    $$ = new Block(new Vector());
+} | OPENCURLYBRACKET statements CLOSECURLYBRACKET {
+   	$$ = new Block($2);
+}
+
+LocalVarDecl : Type TEXT SEMICOLON {
+	$$ = new LocalVarDecl($1, $2);
+}
 
 emptystatement: SEMICOLON {
-      $$ = new EmptyStmt();
+    $$ = new EmptyStmt();
 }
 // ?
 
 returnstatement: RETURN SEMICOLON {
-            $$ = new Return();
-      }
-      | RETURN Expr SEMICOLON {
-            $$ = new Return($2);
-      }
-
-StmtExprStmt: StmtExpr SEMICOLON {
-      $$ = new StmtExprStmt($1); 
+    $$ = new Return();
+} | RETURN Expr SEMICOLON {
+    $$ = new Return($2);
 }
 
-StmtExpr: Assign { $$ = $1; }
-      | New { $$ = $1; }
-      | MethodCall { $$ = $1; }
+StmtExprStmt: StmtExpr SEMICOLON {
+    $$ = new StmtExprStmt($1);
+}
+
+//------------------------------StmtExpr---------------------------------------
+StmtExpr: Assign {
+    $$ = $1;
+} | New {
+    $$ = $1;
+} | MethodCall {
+    $$ = $1;
+}
 
 Assign: LocalOrFieldVar ASSIGN Expr {
-      $$ = new Assign((LocalOrFieldVar) $1, $3);
+    $$ = new Assign((LocalOrFieldVar) $1, $3);
 }
 
 New: NEW Type OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
-            $$ = new New($2, $4);
-      }
-      | NEW Type OPENROUNDBRACKET CLOSEROUNDBRACKET {
-            $$ = new New($2, new Vector());
-      }
+    $$ = new New($2, $4);
+} | NEW Type OPENROUNDBRACKET CLOSEROUNDBRACKET {
+    $$ = new New($2, new Vector());
+}
 
 MethodCall: Expr DOT TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, $3, $5);
-      }
-      | Expr DOT TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, $3, new Vector());
-      } | TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, $3);
-      }
-      | TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, new Vector());
-      }
+    $$ = new MethodCall($1, $3, $5);
+} | Expr DOT TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
+    $$ = new MethodCall($1, $3, new Vector());
+} | TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
+    $$ = new MethodCall($1, $3);
+} | TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
+    $$ = new MethodCall($1, new Vector());
+}
        
+//------------------------------------Expr-----------------------------------
+Expr: This {
+    $$ = $1; 
+} | Super { 
+    $$ = $1; 
+} | LocalOrFieldVar {
+    $$ = $1; 
+} | InstVar {
+    $$ = $1; 
+} | Unary {
+    $$ = $1; 
+} | Binary {
+    $$ = $1; 
+} | Integer {
+    $$ = $1; 
+} | Bool {
+    $$ = $1; 
+} | Char {
+    $$ = $1; 
+} | String {
+    $$ = $1; 
+} | Jnull {
+    $$ = $1; 
+} | StmtExprExpr {
+    $$ = $1; 
+}
 
-Expr: This { $$ = $1; }
-      | Super { $$ = $1; }
-      | LocalOrFieldVar { $$ = $1; }
-      | InstVar { $$ = $1; }
-      | Unary { $$ = $1; }
-      | Binary { $$ = $1; }
-      | Integer { $$ = $1; }
-      | Bool { $$ = $1; }
-      | Char { $$ = $1; }
-      | String { $$ = $1; }
-      | Jnull { $$ = $1; }
-      | StmtExprExpr { $$ = $1; }
+expressions: Expr {
+    Vector<Expr> v = new Vector();
+    v.add($1);
+    $$ = v;
+} | Expr COMMA expressions {
+    $3.insertElementAt($1, 0);
+    $$ = $3;
+}
 
 This: THIS {
-      $$ = new This();
+    $$ = new This();
 }
 
 Super: SUPER {
-      $$ = new Super();
+    $$ = new Super();
 }
 
 LocalOrFieldVar: TEXT {
-      $$ = new LocalOrFieldVar($1);
+    $$ = new LocalOrFieldVar($1);
 }
 
 InstVar: TEXT LocalOrFieldVar {
-      $$ = new InstVar($2, $1);
+    $$ = new InstVar($2, $1);
 }
 
 Unary: UNARY Expr {
-      $$ = new Unary($1, $2);
+    $$ = new Unary($1, $2);
 }
 
 Binary: Expr BINARY Expr {
-      $$ = new Binary($2, $1, $3);
+    $$ = new Binary($2, $1, $3);
 }
 
 // ?
 
 Integer: INTEGER {
-      $$ = new JInteger(Integer.parseInt($1));
+    $$ = new JInteger(Integer.parseInt($1));
 }
 
 Bool: BOOL {
-            $$ = new Bool($1 == "true");
-      }
+    $$ = new Bool($1 == "true");
+}
 
 Char: CHAR {
-      $$ = new Char($1.charAt(1));
+    $$ = new Char($1.charAt(1));
 }
 
 String: STRING {
-      $$ = new JString($1.replace("\"", ""));
+    $$ = new JString($1.replace("\"", ""));
 }
 
 Jnull: JNULL {
-      $$ = new Jnull();
+    $$ = new Jnull();
 }
 
 StmtExprExpr: StmtExpr { 
-      $$ = new StmtExprExpr($1);
+    $$ = new StmtExprExpr($1);
 }
 
-expressions: Expr { 
-            Vector<Expr> v = new Vector();
-            v.add($1);
-            $$ = v;
-      }
-      | Expr COMMA expressions {
-            $3.insertElementAt($1, 0);
-            $$ = $3;
-      }
 
+//----------------------TEXT---------------------
 Type: TEXT {
-      System.out.println("Test: " + $1);
-      $$ = new Type($1);
-      }
+    System.out.println("Test: " + $1);
+    $$ = new Type($1);
+}
 %%
 }
