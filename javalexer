@@ -10,7 +10,7 @@ return new EOF();
 
 javaString = ([A-z]+[0-9]+|[A-z]+)
 ws = [ \t\r\n\b\015]+
-binary = (\+|-|\*|/|==|!=)
+binary = (\+|-|\*|/|==|!=|&&|\|\||<|<=|>|>=)
 boolean = true|false
 char = '([^'\\]?|\\\w)' 
 int = -?[0-9]+
@@ -27,9 +27,9 @@ super { return new SUPER(); }
 this { System.out.println("this"); return new THIS(); }
 while { return new WHILE(); }
 } { System.out.println("Close: " + yytext()); return new CLOSECURLYBRACKET(); }
-) { return new CLOSEROUNDBRACKET(); }
-{ { System.out.println("Open: " + yytext()); return new OPENCURLYBRACKET(); }
-( { return new OPENROUNDBRACKET(); }
+\) { return new CLOSEROUNDBRACKET(); }
+\{ { System.out.println("Open: " + yytext()); return new OPENCURLYBRACKET(); }
+\( { return new OPENROUNDBRACKET(); }
 ; { return new SEMICOLON(); }
 , { return new COMMA(); }
 \. { System.out.println("DOT"); return new DOT(); }

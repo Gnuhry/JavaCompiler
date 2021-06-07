@@ -7,7 +7,7 @@ class Test{
       String t;
 
       int test32(int a) {
-      	  if (true + false) {
+      	  if (true || false) {
 	     return;
 	     } else return;
 	  t = t.i;
