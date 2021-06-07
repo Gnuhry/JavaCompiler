@@ -7,7 +7,20 @@ class Test{
       String t;
 
       int test32(int a) {
+      	  if (true + false) {
+	     return;
+	     } else return;
+	  t = t.i;
 	  int i;
-	  return "String";
+	  t = null;
+	  t = 5;
+	  i = 3;
+	  i = new Test();
+	  u.t;
+	  super.method();
+	  this.test();
+	  while ("Test" == "Test") {}
+	  
+	  return "String"+ "Test";
       }
 }
