@@ -7,49 +7,38 @@
 System.out.println("EOF reached");
 return new EOF();
 %eofval}%
+
 javaString = ([A-z]+[0-9]+|[A-z]+)
 ws = [ \t\r\n\b\015]+
 binary = (\+|-|\*|/|==|!=)
-opencurly = (\{)
 boolean = true|false
 char = '([^'\\]?|\\\w)' 
 int = -?[0-9]+
 string = \"([^\"]|\\\")+[^\\]\"|\"\"
 
 %%
-= {
-  System.out.println(yytext());
-  return new ASSIGN(); }
-{boolean} { return new BOOL(yytext()); }
-{char} { return new CHAR(yytext()); }
-class {
-      System.out.println("Class: " + yytext());
-      return new CLASS(); }
+class { System.out.println("Class: " + yytext()); return new CLASS(); }
 if { return new IF(); }
-{int} { return new INTEGER(yytext()); }
 null { return new JNULL(); }
 new { return new NEW(); }
 return { return new RETURN(); }
-{string} { return new STRING(yytext()); }
 super { return new SUPER(); }
 this { System.out.println("this"); return new THIS(); }
 while { return new WHILE(); }
-} {
-System.out.println("Close: " + yytext());
-return new CLOSECURLYBRACKET(); }
-\) { return new CLOSEROUNDBRACKET(); }
-{opencurly} {
-System.out.println("Open: " + yytext());
-return new OPENCURLYBRACKET(); }
-\( { return new OPENROUNDBRACKET(); }
+} { System.out.println("Close: " + yytext()); return new CLOSECURLYBRACKET(); }
+) { return new CLOSEROUNDBRACKET(); }
+{ { System.out.println("Open: " + yytext()); return new OPENCURLYBRACKET(); }
+( { return new OPENROUNDBRACKET(); }
 ; { return new SEMICOLON(); }
 , { return new COMMA(); }
 \. { System.out.println("DOT"); return new DOT(); }
-{binary} {System.out.println("BINARY"); return new BINARY(yytext()); }
 ! { return new UNARY(yytext()); }
-{javaString} {
-	     System.out.println("TEXT:" + yytext());
-	     return new TEXT(yytext()); }
-[0-9]+ { System.out.println(yytext()); }
+= { System.out.println(yytext()); return new ASSIGN(); }
+{boolean} { return new BOOL(yytext()); }
+{char} { return new CHAR(yytext()); }
+{int} { return new INTEGER(yytext()); }
+{string} { return new STRING(yytext()); }
+{binary} {System.out.println("BINARY"); return new BINARY(yytext()); }
+{javaString} { System.out.println("TEXT:" + yytext()); return new TEXT(yytext()); }
 {ws} { System.out.println("."); }
 . { System.out.println("FEHLER: "+yytext()); }
