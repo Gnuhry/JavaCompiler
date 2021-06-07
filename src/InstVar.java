@@ -1,4 +1,4 @@
-public class InstVar extends Expr{
+public class InstVar extends StmtExpr{
 
     Expr expr;
     java.lang.String st;

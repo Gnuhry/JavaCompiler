@@ -9,7 +9,7 @@ return new EOF();
 %eofval}%
 javaString = ([A-z]+[0-9]+|[A-z]+)
 ws = [ \t\r\n\b\015]+
-binary = (\+|-|\*|/|==|!=)
+binary = (\+|-|\*|/|==|!=|&&|\|\||<|<=|>|>=)
 opencurly = (\{)
 boolean = true|false
 char = '([^'\\]?|\\\w)' 
@@ -25,6 +25,7 @@ string = \"([^\"]|\\\")+[^\\]\"|\"\"
 class {
       System.out.println("Class: " + yytext());
       return new CLASS(); }
+else { return new ELSE(); }
 if { return new IF(); }
 {int} { return new INTEGER(yytext()); }
 null { return new JNULL(); }
