@@ -5,18 +5,19 @@ class javaparser {
 
 %token ASSIGN
 %token <String> BINARY
-%token BOOL
+%token <String> BOOL
 %token CLASS
-%token CHAR
-$token COMMA
+%token <String> CHAR
+%token COMMA
+%token DOT
 %token ELSE
 %token IF
-%token INTEGER
+%token <String> INTEGER
 %token JNULL
 %token NEW
 %token RETURN
 %token SEMICOLON
-%token STRING
+%token <String> STRING
 %token SUPER
 %token THIS
 %token <String> UNARY
@@ -28,7 +29,7 @@ $token COMMA
 %token CLOSEROUNDBRACKET
 %token <String> TEXT
 
-%type <Stmt> Stmt ifthenstatement ifthenelsestatement whilestatement block emptystatement returnstatement StmtExprStmt
+%type <Stmt> LocalVarDecl Stmt ifthenstatement ifthenelsestatement whilestatement block emptystatement returnstatement StmtExprStmt
 %type <Expr> This Super Unary Binary Integer Bool Char String Jnull Expr LocalOrFieldVar InstVar StmtExprExpr
 %type <StmtExpr> Assign New MethodCall StmtExpr
 %type <Class> S
@@ -97,6 +98,7 @@ Stmt: ifthenstatement { $$ = $1;}
       | ifthenelsestatement { $$ = $1;}
       | whilestatement { $$ = $1;}
       | block { $$ = $1;}
+      | LocalVarDecl { $$ = $1; }
       | emptystatement { $$ = $1;}
       | returnstatement { $$ = $1;}
       | StmtExprStmt { $$ = $1; }
@@ -117,8 +119,12 @@ block: OPENCURLYBRACKET CLOSECURLYBRACKET {
             $$ = new Block(new Vector());
       }
       | OPENCURLYBRACKET statements CLOSECURLYBRACKET {
-            $$ = new Block($2);
+      	    $$ = new Block($2);
       }
+
+LocalVarDecl : Type TEXT SEMICOLON {
+	     $$ = new LocalVarDecl($1, $2);
+}
 
 statements: Stmt {
             Vector<Stmt> v = new Vector();
@@ -135,15 +141,14 @@ emptystatement: SEMICOLON {
 }
 // ?
 
-returnstatement:// RETURN SEMICOLON {
-        //    $$ = new Return();
-      //}
-      //|
-      RETURN Expr SEMICOLON {
+returnstatement: RETURN SEMICOLON {
+            $$ = new Return();
+      }
+      | RETURN Expr SEMICOLON {
             $$ = new Return($2);
       }
 
-StmtExprStmt: StmtExpr {
+StmtExprStmt: StmtExpr SEMICOLON {
       $$ = new StmtExprStmt($1); 
 }
 
@@ -161,14 +166,19 @@ New: NEW Type OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
       | NEW Type OPENROUNDBRACKET CLOSEROUNDBRACKET {
             $$ = new New($2, new Vector());
       }
-// ?
 
-MethodCall: Expr TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, $2, $4);
+MethodCall: Expr DOT TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, $3, $5);
       }
-      | Expr TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
-            $$ = new MethodCall($1, $2, new Vector());
+      | Expr DOT TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, $3, new Vector());
+      } | TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, $3);
       }
+      | TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET {
+            $$ = new MethodCall($1, new Vector());
+      }
+       
 
 Expr: This { $$ = $1; }
       | Super { $$ = $1; }
@@ -182,12 +192,10 @@ Expr: This { $$ = $1; }
       | String { $$ = $1; }
       | Jnull { $$ = $1; }
       | StmtExprExpr { $$ = $1; }
-// THIS mit this.Expr?
 
 This: THIS {
       $$ = new This();
 }
-// Super weglassen?
 
 Super: SUPER {
       $$ = new Super();
@@ -197,8 +205,8 @@ LocalOrFieldVar: TEXT {
       $$ = new LocalOrFieldVar($1);
 }
 
-InstVar: Expr TEXT {
-      $$ = new InstVar($1, $2);
+InstVar: TEXT LocalOrFieldVar {
+      $$ = new InstVar($2, $1);
 }
 
 Unary: UNARY Expr {
@@ -211,20 +219,20 @@ Binary: Expr BINARY Expr {
 
 // ?
 
-Integer: INTEGER TEXT {
-      $$ = new JInteger(1);
+Integer: INTEGER {
+      $$ = new JInteger(Integer.parseInt($1));
 }
 
-Bool: BOOL TEXT {
-            $$ = new Bool(true);
+Bool: BOOL {
+            $$ = new Bool($1 == "true");
       }
 
-Char: CHAR TEXT {
-      $$ = new Char('t');
+Char: CHAR {
+      $$ = new Char($1.charAt(1));
 }
 
-String: STRING TEXT {
-      $$ = new JString($2);
+String: STRING {
+      $$ = new JString($1.replace("\"", ""));
 }
 
 Jnull: JNULL {
@@ -247,11 +255,7 @@ expressions: Expr {
 
 Type: TEXT {
       System.out.println("Test: " + $1);
-      $$ = new Type($1); }
-    //  | CHAR { $$ = new Type($1); }
-    //  | BOOL { $$ = new Type($1); }
-     | INTEGER { $$ = new Type("int"); }
-     | VOID { $$ = new Type("void"); }
-     | STRING { $$ = new Type("String"); }
+      $$ = new Type($1);
+      }
 %%
 }

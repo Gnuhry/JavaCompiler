@@ -11,23 +11,28 @@ javaString = ([A-z]+[0-9]+|[A-z]+)
 ws = [ \t\r\n\b\015]+
 binary = (\+|-|\*|/|==|!=)
 opencurly = (\{)
+boolean = true|false
+char = '([^'\\]?|\\\w)' 
+int = -?[0-9]+
+string = \"([^\"]|\\\")+[^\\]\"|\"\"
+
 %%
 = {
   System.out.println(yytext());
   return new ASSIGN(); }
-boolean { return new BOOL(); }
-char { return new CHAR(); }
+{boolean} { return new BOOL(yytext()); }
+{char} { return new CHAR(yytext()); }
 class {
       System.out.println("Class: " + yytext());
       return new CLASS(); }
 if { return new IF(); }
-int { return new INTEGER(); }
+{int} { return new INTEGER(yytext()); }
 null { return new JNULL(); }
 new { return new NEW(); }
 return { return new RETURN(); }
-String { return new STRING(); }
+{string} { return new STRING(yytext()); }
 super { return new SUPER(); }
-this { return new THIS(); }
+this { System.out.println("this"); return new THIS(); }
 while { return new WHILE(); }
 } {
 System.out.println("Close: " + yytext());
@@ -39,7 +44,8 @@ return new OPENCURLYBRACKET(); }
 \( { return new OPENROUNDBRACKET(); }
 ; { return new SEMICOLON(); }
 , { return new COMMA(); }
-{binary} { return new BINARY(yytext()); }
+\. { System.out.println("DOT"); return new DOT(); }
+{binary} {System.out.println("BINARY"); return new BINARY(yytext()); }
 ! { return new UNARY(yytext()); }
 {javaString} {
 	     System.out.println("TEXT:" + yytext());

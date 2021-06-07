@@ -2,7 +2,12 @@ class Test{
       int test;
       String i;
 
-      void test2(int a, String b) {
-      	   return a;
+      void test2(int a, String b) {}
+
+      String t;
+
+      int test32(int a) {
+	  int i;
+	  return "String";
       }
 }
