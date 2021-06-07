@@ -1,0 +1,45 @@
+%%
+%public
+%jayscanner javascanner
+%jayparser javaparser
+%class javalexer
+%eofval{
+System.out.println("EOF reached");
+return new EOF();
+%eofval}%
+
+javaString = ([A-z]+[0-9]+|[A-z]+)
+ws = [ \t\r\n\b\015]+
+binary = (\+|-|\*|/|==|!=)
+boolean = true|false
+char = '([^'\\]?|\\\w)' 
+int = -?[0-9]+
+string = \"([^\"]|\\\")+[^\\]\"|\"\"
+
+%%
+class { System.out.println("Class: " + yytext()); return new CLASS(); }
+if { return new IF(); }
+else { return new ELSE(); }
+null { return new JNULL(); }
+new { return new NEW(); }
+return { return new RETURN(); }
+super { return new SUPER(); }
+this { System.out.println("this"); return new THIS(); }
+while { return new WHILE(); }
+} { System.out.println("Close: " + yytext()); return new CLOSECURLYBRACKET(); }
+) { return new CLOSEROUNDBRACKET(); }
+{ { System.out.println("Open: " + yytext()); return new OPENCURLYBRACKET(); }
+( { return new OPENROUNDBRACKET(); }
+; { return new SEMICOLON(); }
+, { return new COMMA(); }
+\. { System.out.println("DOT"); return new DOT(); }
+! { return new UNARY(yytext()); }
+= { System.out.println(yytext()); return new ASSIGN(); }
+{boolean} { return new BOOL(yytext()); }
+{char} { return new CHAR(yytext()); }
+{int} { return new INTEGER(yytext()); }
+{string} { return new STRING(yytext()); }
+{binary} {System.out.println("BINARY"); return new BINARY(yytext()); }
+{javaString} { System.out.println("TEXT:" + yytext()); return new TEXT(yytext()); }
+{ws} { System.out.println("."); }
+. { System.out.println("FEHLER: "+yytext()); }

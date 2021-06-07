@@ -4,4 +4,7 @@ public class Return extends Stmt {
     public Return(Expr exp) {
         this.exp = exp;
     }
+
+    public Return() {
+    }
 }
