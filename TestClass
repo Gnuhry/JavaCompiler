@@ -1,0 +1,8 @@
+class Test{
+      int test;
+      String i;
+
+      void test2(int a, String b) {
+      	   return a;
+      }
+}
