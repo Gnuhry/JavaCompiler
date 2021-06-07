@@ -1,5 +1,8 @@
-all: clean javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class
+all: clean javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class test
+all2: clean pull javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class test
 
+pull:
+    git pull
 javalexer.java: javalexer
 	java -cp JLex2.jar JLex2.Main javalexer
 
@@ -23,6 +26,9 @@ javascanner.class: javalexer.java
 
 main.class: main.java yyTokenclass.class javascanner.class
 	javac main.java
+
+test:
+    java main < TestClass
 
 clean:
 	rm -f *.class javalexer.java javaparser.java
