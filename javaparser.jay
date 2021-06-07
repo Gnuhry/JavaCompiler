@@ -32,59 +32,65 @@ $token COMMA
 %type <Expr> This Super Unary Binary Integer Bool Char String Jnull Expr LocalOrFieldVar InstVar StmtExprExpr
 %type <StmtExpr> Assign New MethodCall StmtExpr
 %type <Class> S
-%type <Vector> Field Method expressions statements Parameters Parameter Body
+%type <Field> Parameter Field
+%type <Method> Method
+%type <Vector> expressions statements Parameters Body
 %type <Type> Type
 
 %%
 
 S:  CLASS Type OPENCURLYBRACKET Body CLOSECURLYBRACKET {
-      $$ = new Class($2, $4.get(0), $4.get(1));
+      $$ = new Class($2, (Vector) $4.get(0),(Vector) $4.get(1));
 }
 
 Body: Field {
+    Vector<Field> vf = new Vector();
+    vf.add($1);
     Vector<Vector> v = new Vector();
-    v.add($1);
+    v.add(vf);
     v.add(new Vector());
     $$ = v;
 } | Method {
+      Vector<Method> vm = new Vector();
+      vm.add($1);
       Vector<Vector> v = new Vector();
       v.add(new Vector());
-      v.add($1);
+      v.add(vm);
       $$ = v;
   } |
    Field Body{
-      $2.get(0).insertElementAt($1,0);
+      Vector<Field> vf = new Vector();
+      vf.add($1);
+      ((Vector) $2.get(0)).insertElementAt(vf,0);
       $$ = $2;
   } | Method Body{
-        $2.get(1).insertElementAt($1,0);
+      	Vector<Method> vm = new Vector();
+	vm.add($1);
+        ((Vector) $2.get(1)).insertElementAt(vm,0);
         $$ = $2;
     }
 
 Field: Type TEXT SEMICOLON {
-         Vector<Field> v = new Vector();
-         v.add(new Field($1, $2));
-         $$ = v;
+         $$ = new Field($1, $2);
 }
 	
 
 Method: Type TEXT OPENROUNDBRACKET Parameters  CLOSEROUNDBRACKET block  {
-	Vector<Method> v = new Vector();
-	v.add(new Method($1, $2, new Parameter($4), $6));
-	$$ = v;
+	$$ = new Method($1, $2, new Parameter($4), $6);
 }
 
 Parameter: Type TEXT {
-	   Vector<Field> v = new Vector();
-	   v.add(new Field($1, $2));
-	   $$ = v;
+	   $$ = new Field($1, $2);
 }
 
 Parameters: Parameter COMMA Parameters {
-	      $1.insertElementAt($3, 0);
-	      $$ = $1;
+	      $3.insertElementAt($1, 0);
+	      $$ = $3;
 	    }
-	    | Field {
-	      $$ = $1;
+	    | Parameter {
+	      Vector<Field> v = new Vector();
+	      v.add($1);
+	      $$ = v;
 	    }
 
 Stmt: ifthenstatement { $$ = $1;}
