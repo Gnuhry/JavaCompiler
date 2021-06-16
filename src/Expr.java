@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 public abstract class Expr implements TypeInterface {
     private Type type;
@@ -7,4 +8,6 @@ public abstract class Expr implements TypeInterface {
     public Type typeCheck(Map<String, String> localVars, Class thisClass){
         return this.type;
     }
+
+    public abstract void codeGen(MethodVisitor mv);
 }

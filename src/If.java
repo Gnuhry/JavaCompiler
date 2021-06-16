@@ -1,4 +1,6 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class If extends Stmt {
     Expr exp;
@@ -29,4 +31,16 @@ public class If extends Stmt {
         throw new RuntimeException("Typecheck Error");
     }
 
+    public void codeGen(MethodVisitor mv) {
+        exp.codeGen(mv);
+
+        // Insert here?
+
+        stmt.codeGen(mv);
+        maybeStmt.codeGen(mv);
+
+        mv.visitVarInsn(Opcodes.ILOAD, 1);
+        method.visitInsn(Opcodes.ICONST_5);
+        method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
+    }
 }
