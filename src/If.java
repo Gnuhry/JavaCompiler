@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -35,39 +36,41 @@ public class If extends Stmt {
         exp.codeGen(mv);
 
         // Insert here?
+        Label end = new Label();
+        Label else_label = new Label();
 
-        stmt.codeGen(mv);
-        maybeStmt.codeGen(mv);
+        Label jump_label = maybeStmt == null ? end : else_label;
 
-        mv.visitVarInsn(Opcodes.ILOAD, 1);
-        method.visitInsn(Opcodes.ICONST_5);
-        method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
+//        mv.visitVarInsn(Opcodes.ILOAD, 1);
+//        method.visitInsn(Opcodes.ICONST_5);
+//        method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
 
-        Label jumpLabel = else_statement == null ? end : else_label;
+        if (exp instanceof Binary){
+            Binary binaryExpression = (Binary) exp;
 
-        if (exp instanceof BINARY){
-            BINARY binaryExpression = (Binary) exp;
-
-            switch (binaryExpression.operator){
+            switch (binaryExpression.st){
                 case "<":
-                    method.visitJumpInsn(Opcodes.IF_ICMPLT, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPLT, jump_label);
                     break;
                 case "<=":
-                    method.visitJumpInsn(Opcodes.IF_ICMPLE, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPLE, jump_label);
                     break;
                 case "==":
-                    method.visitJumpInsn(Opcodes.IF_ICMPEQ, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPEQ, jump_label);
                     break;
                 case "!=":
-                    method.visitJumpInsn(Opcodes.IF_ICMPNQ, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPNE, jump_label);
                     break;
                 case ">=":
-                    method.visitJumpInsn(Opcodes.IF_ICMPGE, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPGE, jump_label);
                     break;
                 case ">":
-                    method.visitJumpInsn(Opcodes.IF_ICMPGT, jumpLabel);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPGT, jump_label);
                     break;
             }
         }
+
+        stmt.codeGen(mv);
+        maybeStmt.codeGen(mv);
     }
 }

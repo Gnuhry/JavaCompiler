@@ -1,4 +1,6 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class Assign extends StmtExpr {
     LocalOrFieldVar var;
@@ -18,4 +20,7 @@ public class Assign extends StmtExpr {
         throw new RuntimeException("Typecheck Error");
     }
 
+    public void codeGen(MethodVisitor mv) {
+        mv.visitVarInsn(Opcodes.ISTORE, );
     }
+}

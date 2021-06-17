@@ -1,4 +1,6 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class Return extends Stmt {
     Expr exp;
@@ -12,5 +14,14 @@ public class Return extends Stmt {
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return exp.typeCheck(localVars, thisClass);
+    }
+
+    public void codeGen(MethodVisitor mv) {
+        if (exp == null) {
+            mv.visitInsn(Opcodes.RETURN);
+        } else {
+            exp.codeGen(mv);
+            mv.visitInsn(Opcodes.RETURN);
+        }
     }
 }
