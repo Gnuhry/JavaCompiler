@@ -42,5 +42,30 @@ public class If extends Stmt {
         mv.visitVarInsn(Opcodes.ILOAD, 1);
         method.visitInsn(Opcodes.ICONST_5);
         method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
+
+        if (exp instanceof BINARY){
+            BINARY binaryExpression = (Binary) exp;
+
+            switch (binaryExpression.operator){
+                case "<":
+                    method.visitJumpInsn(Opcodes.IF_ICMPLT, jumpLabel);
+                    break;
+                case "<=":
+                    method.visitJumpInsn(Opcodes.IF_ICMPLE, jumpLabel);
+                    break;
+                case "==":
+                    method.visitJumpInsn(Opcodes.IF_ICMPEQ, jumpLabel);
+                    break;
+                case "!=":
+                    method.visitJumpInsn(Opcodes.IF_ICMPNQ, jumpLabel);
+                    break;
+                case ">=":
+                    method.visitJumpInsn(Opcodes.IF_ICMPGE, jumpLabel);
+                    break;
+                case ">":
+                    method.visitJumpInsn(Opcodes.IF_ICMPGT, jumpLabel);
+                    break;
+            }
+        }
     }
 }
