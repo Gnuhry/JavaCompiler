@@ -43,6 +43,8 @@ public class If extends Stmt {
         method.visitInsn(Opcodes.ICONST_5);
         method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
 
+        Label jumpLabel = else_statement == null ? end : else_label;
+
         if (exp instanceof BINARY){
             BINARY binaryExpression = (Binary) exp;
 
