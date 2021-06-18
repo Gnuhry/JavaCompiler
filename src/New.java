@@ -1,4 +1,7 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
 import java.util.Vector;
 
 public class New extends StmtExpr{
@@ -13,5 +16,16 @@ public class New extends StmtExpr{
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return ty;
+    }
+    
+    public void codeGen(MethodVisitor mv) {
+
+        for (Expr expr : exprs) {
+            expr.codeGen(mv);
+        }
+
+        mv.visitTypeInsn(Opcodes.NEW, ty.typ);
+        mv.visitInsn(Opcodes.DUP);
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, ty.typ, "<init>", "()V", false);
     }
 }

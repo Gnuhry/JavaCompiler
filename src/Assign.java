@@ -21,6 +21,26 @@ public class Assign extends StmtExpr {
     }
 
     public void codeGen(MethodVisitor mv) {
-        mv.visitVarInsn(Opcodes.ISTORE, );
+
+        // ---- Temporärer Wert ----
+        // Wenn man einen Wert (= Ergebnis einer Expression) in eine lokale
+        // Variable packen will (Felder/Klassenvariablen werden anders behandelt)
+        // muss man einen Index für die Variable im Code angeben.
+        // Der Index 0 ist immer 'this', die erste erstellte Variable ist 1...
+        int index = 0;
+
+
+        // Für den Fall: 'st' ist lokale Variable
+        if (ex instanceof Bool || ex instanceof Char || ex instanceof JInteger) {
+            mv.visitVarInsn(Opcodes.ISTORE, index);
+        } else {
+            mv.visitVarInsn(Opcodes.ASTORE, index);
+        }
+
+
+        // Für den Fall: 'st' ist Feld bzw. Klassenvariable
+        // Hier muss man dazu den Owner (Name der Klasse, wo sie definiert ist)
+        // und den Descriptor (interne Beschreibung des Datentyps angeben)
+        mv.visitFieldInsn(Opcodes.PUTFIELD, "pkg/Bean", st.st, "I");
     }
 }

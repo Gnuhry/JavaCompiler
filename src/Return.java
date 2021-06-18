@@ -21,7 +21,12 @@ public class Return extends Stmt {
             mv.visitInsn(Opcodes.RETURN);
         } else {
             exp.codeGen(mv);
-            mv.visitInsn(Opcodes.RETURN);
+
+            if (exp instanceof Bool || exp instanceof Char || exp instanceof JInteger) {
+                mv.visitInsn(Opcodes.IRETURN);
+            } else {
+                mv.visitInsn(Opcodes.ARETURN);
+            }
         }
     }
 }

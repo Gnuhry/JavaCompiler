@@ -41,10 +41,6 @@ public class If extends Stmt {
 
         Label jump_label = maybeStmt == null ? end : else_label;
 
-//        mv.visitVarInsn(Opcodes.ILOAD, 1);
-//        method.visitInsn(Opcodes.ICONST_5);
-//        method.visitJumpInsn(Opcodes.IF_ICMPGE, end);
-
         if (exp instanceof Binary){
             Binary binaryExpression = (Binary) exp;
 
@@ -68,9 +64,13 @@ public class If extends Stmt {
                     mv.visitJumpInsn(Opcodes.IF_ICMPGT, jump_label);
                     break;
             }
+        } else if(exp instanceof Bool) {
+            mv.visitJumpInsn(Opcodes.IFEQ, jump_label);
         }
 
         stmt.codeGen(mv);
+        mv.visitLabel(else_label);
         maybeStmt.codeGen(mv);
+        mv.visitLabel(end);
     }
 }
