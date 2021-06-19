@@ -8,7 +8,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
 
+/**
+ * Class - Eine Java-Klasse
+ *
+ * Status: Möglicherweise vollständing
+ *
+ * Diese Klasse muss eventuell noch erweitert werden, da man
+ * möglicheriwese in der Assign-Klasse noch Daten aus der Klasse
+ * benötigt, sofern man einen Wert einer Klassenvariable zuweisen möchte.
+ */
 public class Class implements TypeInterface{
+
     Type ty;
     Vector<Field> fields;
     Vector<Method> meth;

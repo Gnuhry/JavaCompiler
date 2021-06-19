@@ -3,6 +3,11 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * If - If-Abfrage/Statement
+ *
+ * Status: Unsicher
+ */
 public class If extends Stmt {
     Expr exp;
     Stmt stmt;

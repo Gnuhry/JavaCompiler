@@ -2,7 +2,12 @@ import java.util.Map;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
-public class Field implements TypeInterface{
+/**
+ * Field - Ein Feld bzw. auch Klassenvariable genannt
+ *
+ * Status: Möglicherweise vollständig
+ */
+public class Field implements TypeInterface {
 
     Type ty;
     java.lang.String name;
@@ -18,6 +23,9 @@ public class Field implements TypeInterface{
     }
     
     public void codeGen(ClassWriter cw) {
+
+        // So wie ich es verstehe, wird dieser Code an der Stelle eingefügt, wo
+        // sozusagen ein Feld definiert wird.
         cw.visitField(Opcodes.ACC_PUBLIC, name, ty.typ, null, null);
     }
 }

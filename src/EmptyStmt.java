@@ -2,6 +2,11 @@ import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * EmptyStmt - Leere Anweisung
+ *
+ * Status: Vermutlich vollständig
+ */
 public class EmptyStmt extends Stmt {
     
     @Override

@@ -2,8 +2,17 @@ import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Assign - Wert zu einer lokalen Variable bzw. einem Feld zuweisen
+ *
+ * Status: Unvollständig
+ */
 public class Assign extends StmtExpr {
+
+    // Lokale Variable bzw. Feld, in welchem etwas gespiechert werden soll
     LocalOrFieldVar var;
+
+    // Expression, dessen Ergebnis der Variable bzw. Feld zugewiesen wird
     Expr ex;
 
     public Assign(LocalOrFieldVar var, Expr ex) {
@@ -27,10 +36,11 @@ public class Assign extends StmtExpr {
         // Variable packen will (Felder/Klassenvariablen werden anders behandelt)
         // muss man einen Index für die Variable im Code angeben.
         // Der Index 0 ist immer 'this', die erste erstellte Variable ist 1...
+        // TODO Wie komme ich an den richtigen Index der Variable?
         int index = 0;
 
 
-        // Für den Fall: 'st' ist lokale Variable
+        // Für den Fall: 'var' ist lokale Variable
         if (ex instanceof Bool || ex instanceof Char || ex instanceof JInteger) {
             mv.visitVarInsn(Opcodes.ISTORE, index);
         } else {
@@ -38,9 +48,11 @@ public class Assign extends StmtExpr {
         }
 
 
-        // Für den Fall: 'st' ist Feld bzw. Klassenvariable
+        // Für den Fall: 'var' ist Feld bzw. Klassenvariable
         // Hier muss man dazu den Owner (Name der Klasse, wo sie definiert ist)
         // und den Descriptor (interne Beschreibung des Datentyps angeben)
-        mv.visitFieldInsn(Opcodes.PUTFIELD, "pkg/Bean", st.st, "I");
+        // TODO Wie komme ich an den Owner des Felds?
+        // TODO Wie komme ich an den Descriptor des Felds?
+        mv.visitFieldInsn(Opcodes.PUTFIELD, "pkg/Bean", var.st, "I");
     }
 }

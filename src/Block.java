@@ -2,6 +2,13 @@ import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import java.util.Vector;
 
+/**
+ * Block - Ein simpler Block von Anweisungen
+ * -> z.B. werden alle Anweisungen, die in einer Methode enthalten sind
+ * in einem Block gesammelt
+ *
+ * Status: Vollständig
+ */
 public class Block extends Stmt {
     Vector<Stmt> stmts;
 
