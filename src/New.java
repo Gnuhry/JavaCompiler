@@ -4,6 +4,11 @@ import org.objectweb.asm.Opcodes;
 
 import java.util.Vector;
 
+/**
+ * New - Erzeugung eines neuen Objektes
+ *
+ * Status:
+ */
 public class New extends StmtExpr{
     Type ty;
     Vector<Expr> exprs;
@@ -26,6 +31,11 @@ public class New extends StmtExpr{
 
         mv.visitTypeInsn(Opcodes.NEW, ty.typ);
         mv.visitInsn(Opcodes.DUP);
+
+        // In MethodCall wird auch schon der Fall behandelt, dass die Methode <init> heißt
+        // Der Methodenaufruf hier ist also vermutlich doppelt oder der Spezialfall
+        // sollte aus der MethodCall-Klasse entfernt werden
+        // TODO Prüfen, ob Methodenaufruf hier redundant ist
         mv.visitMethodInsn(Opcodes.INVOKESPECIAL, ty.typ, "<init>", "()V", false);
     }
 }

@@ -1,5 +1,12 @@
 import java.util.Map;
 
+/**
+ * Unary - Unäre Operationen
+ *
+ * Alle Operatoren, die nur einen Operanden haben
+ * Darunter fallen z.B. vorangestelltes + und - (Zahl negieren)
+ * Oder auch ++, -- und ! (not)
+ */
 public class Unary extends Expr{
     java.lang.String st;
     Expr expr;

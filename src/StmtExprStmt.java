@@ -1,5 +1,16 @@
 import java.util.Map;
 
+/**
+ * StmtExprStmt - Statement-Expression-Statement (?)
+ *
+ * Aus dem Jay-File:
+ *
+ * StmtExprStmt: StmtExpr SEMICOLON {
+ *     $$ = new StmtExprStmt($1);
+ * }
+ *
+ * Laut Folien kann StmtExprStmt ein Assign kapseln (?)
+ */
 public class StmtExprStmt extends Stmt{
     StmtExpr expr;
 

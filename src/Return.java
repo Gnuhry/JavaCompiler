@@ -2,6 +2,11 @@ import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Return - Aus einer Methode herausspringen
+ *
+ * Status: Vermutlich vollständig
+ */
 public class Return extends Stmt {
     Expr exp;
 

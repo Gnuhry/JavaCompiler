@@ -3,11 +3,23 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Mehtod - Methode
+ *
+ * Status: Möglicherweise komplett
+ */
 public class Method implements TypeInterface{
 
+    // Return-Type
     Type retty;
+
+    // Name der Methode
     java.lang.String name;
+
+    // Parameter der Metode
     Parameter para;
+
+    // Statements innerhalb der Methode, sozusagen der "Code"
     Stmt stmt;
 
     public Method(Type retty, java.lang.String name, Parameter para, Stmt stmt) {

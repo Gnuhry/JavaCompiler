@@ -1,5 +1,12 @@
 import java.util.Map;
 
+/**
+ * LocalOrFieldVar - Lokale Variable, Feld oder Instanz-Variable
+ *
+ * Status: Fehlt
+ *
+ * Siehe Hinweise in Klassen 'Assign' und 'InstVar'
+ */
 public class LocalOrFieldVar extends Expr {
     java.lang.String st;
 

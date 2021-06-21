@@ -3,6 +3,9 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+/**
+ * While - While-Schleife
+ */
 public class While extends Stmt {
     Expr exp;
     Stmt stmt;
@@ -17,6 +20,11 @@ public class While extends Stmt {
         return stmt.typeCheck(localVars, thisClass);
     }
     
+    /*
+     * Die Implementierung deckt sich sehr stark mit der aus 'If'
+     * Vermutlich kann man einiges auslagern
+     * Darüber hinaus ist auch noch nicht klar, ob das überhaupt stimmt
+     */
     public void codeGen(MethodVisitor mv) {
         Label loop = new Label();
         Label end = new Label();
@@ -48,7 +56,11 @@ public class While extends Stmt {
             mv.visitJumpInsn(Opcodes.IFEQ, end);
         }
 
+        // Kann sein, dass die Zeile hier falsch ist und über das Switch-Case muss
+        // Man loopt ja sozusagen wieder zum Anfang und muss ja erneut prüfen,
+        // ob unsere Bedingung weiterhin erfüllt ist
         mv.visitLabel(loop);
+
         stmt.codeGen(mv);
         mv.visitJumpInsn(Opcodes.GOTO, loop);
         mv.visitLabel(end);

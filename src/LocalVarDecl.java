@@ -1,5 +1,15 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
+/**
+ * LocalVarDecl - Deklaration einer lokalen Variable
+ *
+ * Status: Fehlt
+ *
+ * Eine Lokale Variable (Variable innerhalb einer Methode) erhält bei der
+ * Deklaration immer einen Index. Dieser muss auch in der visit-Methode angegeben
+ * werden, ggf. sollte dieser also in diesem Objekt gespeichert werden
+ */
 public class LocalVarDecl extends Stmt {
     Type ty;
     java.lang.String st;
@@ -11,5 +21,11 @@ public class LocalVarDecl extends Stmt {
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return ty;
+    }
+
+    public void codeGen(MethodVisitor mv) {
+        String descriptor = "?";
+
+        mv.visitLocalVariable(st, descriptor, null, );
     }
 }
