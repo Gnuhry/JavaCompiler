@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * JString - String-Objekt
@@ -16,5 +17,10 @@ public class JString extends Expr{
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return new Type("string");
+    }
+
+    @Override
+    public void codeGen(MethodVisitor mv) {
+        mv.visitLdcInsn(st);
     }
 }

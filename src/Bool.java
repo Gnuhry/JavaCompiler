@@ -5,6 +5,10 @@ import org.objectweb.asm.Opcodes;
 /**
  * Bool - Boolscher Wert
  *
+ * Laut Herr Plümicke: Klassen wie Bool und co. beschreiben die Konstanten im Code
+ * Somit müssten diese Klassen ebenfalls Code erzeugen können, da der Wert der
+ * Konstante vor der Verarbeitung erst auf den Stack gepusht werden muss
+ *
  * Status: Unsicher
  */
 public class Bool extends Expr{
@@ -20,11 +24,9 @@ public class Bool extends Expr{
     }
     
     public void codeGen(MethodVisitor mv) {
-
-        // Mittels ILOAD wird ein boolscher Wert von der Variable mit einem bestimmten index
-        // auf den Stack gepusht. Es kann sein, dass diese Klasse hier selbst überhaupt
-        // gar keinen Code erzeugen soll und nur dazu da ist, um innerhalb anderen Klassen
-        // mittels 'instanceof' den Typ zu prüfen
-        mv.visitVarInsn(Opcodes.ILOAD, 1);
+        if (bo)
+            mv.visitInsn(Opcodes.ICONST_1);
+        else
+            mv.visitInsn(Opcodes.ICONST_0);
     }
 }

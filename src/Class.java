@@ -39,7 +39,8 @@ public class Class implements TypeInterface{
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, ty.typ, null, "java/lang/Object", null);
         for(Field field : fields) { field.codeGen(cw); }
-        for(Method m : meth) { m.codeGen(cw); }
+
+        for(Method m : meth) { m.codeGen(this, cw); }
         cw.visitEnd();
 
         try

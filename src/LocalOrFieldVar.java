@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * LocalOrFieldVar - Lokale Variable, Feld oder Instanz-Variable
@@ -24,6 +25,9 @@ public class LocalOrFieldVar extends Expr {
         else{
             throw new RuntimeException("Typecheck Error");
         }
+
+    @Override
+    public void codeGen(MethodVisitor mv) {
 
     }
 }

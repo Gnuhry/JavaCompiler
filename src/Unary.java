@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * Unary - Unäre Operationen
@@ -20,5 +21,9 @@ public class Unary extends Expr{
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         // TODO Auto-generated method stub
         return expr.typeCheck(localVars, thisClass);
+    }
+    
+    public void codeGen(MethodVisitor mv) {
+
     }
 }

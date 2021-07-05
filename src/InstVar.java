@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * InstVar - Instanz-Variable
@@ -32,5 +33,10 @@ public class InstVar extends StmtExpr{
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return expr.typeCheck(localVars, thisClass);
+    }
+
+    
+    public void codeGen(MethodVisitor mv) {
+
     }
 }

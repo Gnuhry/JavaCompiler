@@ -22,6 +22,8 @@ public class Method implements TypeInterface{
     // Statements innerhalb der Methode, sozusagen der "Code"
     Stmt stmt;
 
+    // TODO Liste mit Variablen und deren Index
+
     public Method(Type retty, java.lang.String name, Parameter para, Stmt stmt) {
         this.retty = retty;
         this.name = name;
@@ -34,7 +36,12 @@ public class Method implements TypeInterface{
         return retty;
     }
     
-    public void codeGen(ClassWriter cw) {
+    /**
+     * Code einer Methode generieren
+     * @param cl This-Objekt der Klasse, in welcher die Methode enthalten ist
+     * @param cw ClassWriter
+     */
+    public void codeGen(Class cl, ClassWriter cw) {
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, retty.typ, null, null);
 
         mv.visitCode();

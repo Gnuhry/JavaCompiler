@@ -19,8 +19,9 @@ public class Char extends Expr{
         return new Type("char");
     }
     
-    // Siehe Hinweis bei der Klasse 'Bool'
+    // Siehe Hinweise bei der Klasse 'Bool'
     public void codeGen(MethodVisitor mv) {
-        mv.visitVarInsn(Opcodes.ILOAD, 1);
+        // Datentyp Char ist 1 Byte lang, BIPUSH packt 1 Byte auf den Stack
+        mv.visitVarInsn(Opcodes.BIPUSH, ch);
     }
 }

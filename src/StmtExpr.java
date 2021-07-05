@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * StmtExprs - Statement-Expression
@@ -12,4 +13,6 @@ public abstract class StmtExpr implements TypeInterface {
 	public Type typeCheck(Map<String,String> localVars, Class thisClass) {
         return type;
     }
+
+    public abstract void codeGen(MethodVisitor mv);
 }

@@ -19,8 +19,8 @@ public class JInteger extends Expr{
         return new Type("integer");
     }
     
-    // Siehe Hinweis bei der Klasse 'Bool'
+    // Siehe Hinweise bei der Klasse 'Bool'
     public void codeGen(MethodVisitor mv) {
-        mv.visitVarInsn(Opcodes.ILOAD, 1);
+        mv.visitLdcInsn(in);
     }
 }

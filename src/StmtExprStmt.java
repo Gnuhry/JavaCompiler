@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * StmtExprStmt - Statement-Expression-Statement (?)
@@ -20,5 +21,10 @@ public class StmtExprStmt extends Stmt{
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return expr.typeCheck(localVars, thisClass);
+    }
+
+    @Override
+    public void codeGen(MethodVisitor mv) {
+        
     }
 }

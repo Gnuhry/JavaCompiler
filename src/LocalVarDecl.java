@@ -24,8 +24,8 @@ public class LocalVarDecl extends Stmt {
     }
 
     public void codeGen(MethodVisitor mv) {
-        String descriptor = "?";
-
-        mv.visitLocalVariable(st, descriptor, null, );
+//        String descriptor = "?";
+//
+//        mv.visitLocalVariable(st, descriptor, null, );
     }
 }

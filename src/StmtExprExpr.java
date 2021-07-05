@@ -1,4 +1,5 @@
 import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
 
 /**
  * StmtExprExpr - ?
@@ -23,5 +24,9 @@ public class StmtExprExpr extends Expr{
     @Override
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return stmtExpr.typeCheck(localVars, thisClass);
+    }
+
+    public void codeGen(MethodVisitor mv) {
+        stmtExpr.codeGen(mv);
     }
 }
