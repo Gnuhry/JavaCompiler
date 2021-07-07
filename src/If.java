@@ -41,7 +41,7 @@ public class If extends Stmt {
         Label end = new Label();
         Label else_label = new Label();
 
-        exp.codeGen(mv);
+        exp.codeGen(cl, mv);
 
         // Insert here?
 
@@ -74,9 +74,9 @@ public class If extends Stmt {
             mv.visitJumpInsn(Opcodes.IFEQ, jump_label);
         }
 
-        stmt.codeGen(mv);
+        stmt.codeGen(cl, mv);
         mv.visitLabel(else_label);
-        maybeStmt.codeGen(mv);
+        maybeStmt.codeGen(cl, mv);
         mv.visitLabel(end);
     }
 }

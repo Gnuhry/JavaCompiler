@@ -35,7 +35,7 @@ public class Binary extends Expr {
         // von beiden Expressions das Ergebnis auf den Stack gepusht wird,
         // sodass in einer übergeordneten Klasse jeweils darauf reagiert werden
         // kann (siehe z.B. das switch-case in 'If' oder 'While'
-        expr1.codeGen(mv);
-        expr2.codeGen(mv);
+        expr1.codeGen(cl, mv);
+        expr2.codeGen(cl, mv);
     }
 }

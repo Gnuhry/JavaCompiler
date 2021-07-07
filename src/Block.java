@@ -23,7 +23,7 @@ public class Block extends Stmt {
 
     public void codeGen(Class cl, MethodVisitor mv) {
         for (Stmt stmt : stmts) {
-            stmt.codeGen(mv);
+            stmt.codeGen(cl, mv);
         }
     }
 }
