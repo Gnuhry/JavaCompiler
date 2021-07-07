@@ -74,7 +74,6 @@
 .  /** debugging support, requires the package jay.yydebug.
 .      Set to null to suppress debugging messages.
 .    */
-t  protected jay.yydebug.yyDebug yydebug;
 .
  final_rule             ## constant storing final rule
 .
@@ -127,7 +126,6 @@ t  }
 .    */
 .  public Object yyparse (yyInput yyLex, Object yydebug)
 .				throws java.io.IOException, yyException {
-t    this.yydebug = (jay.yydebug.yyDebug)yydebug;
 .    return yyparse(yyLex);
 .  }
 .
@@ -178,7 +176,6 @@ t    this.yydebug = (jay.yydebug.yyDebug)yydebug;
 .      }
 .      yyStates[yyTop] = yyState;
 .      yyVals[yyTop] = yyVal;
-t      if (yydebug != null) yydebug.push(yyState, yyVal);
 .
 .      yyDiscarded: for (;;) {	// discarding a token does not change stack
 .        int yyN;
@@ -192,11 +189,6 @@ t      if (yydebug != null) yydebug.push(yyState, yyVal);
 .           /* modified by diho, 27.04.2004
 .             if "null", create EOF token */
 .            if (yyToken == null) {yyToken = new EOF();}
-.
-t            if (yydebug != null)
-t          /* modified by diho, 14.04.2004
-t             orig.: yydebug.lex(yyState, yyToken, yyname(yyToken), yyLex.value()); */
-t              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yyToken.value);
 .          }
 .          /* modified by diho, 14.04.2004 
 .             replaced yyToken by yyToken.tokennr*/
@@ -204,8 +196,6 @@ t              yydebug.lex(yyState, yyToken.tokennr, yyname(yyToken.tokennr), yy
 .          /* modified by diho, 14.04.2004 
 .             replaced yyToken by yyToken.tokennr*/
 .              && yyN < YyTableClass.yyTable.length && YyCheckClass.yyCheck[yyN] == yyToken.tokennr) {
-t            if (yydebug != null)
-t              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
 .            yyState = YyTableClass.yyTable[yyN];		// shift to yyN
 .          /* modified by diho, 14.04.2004 
 .             replaced yyLex.value() by yyToken.value*/
@@ -228,7 +218,6 @@ t              yydebug.shift(yyState, YyTableClass.yyTable[yyN], yyErrorFlag-1);
 .  
 .            case 0:
 .              yyerror("syntax error", yyExpecting(yyState));
-t              if (yydebug != null) yydebug.error("syntax error");
 .  
 .            case 1: case 2:
 .              yyErrorFlag = 3;
@@ -236,31 +225,21 @@ t              if (yydebug != null) yydebug.error("syntax error");
 .                if ((yyN = YySindexClass.yySindex[yyStates[yyTop]]) != 0
 .                    && (yyN += yyErrorCode) >= 0 && yyN < YyTableClass.yyTable.length
 .                    && YyCheckClass.yyCheck[yyN] == yyErrorCode) {
-t                  if (yydebug != null)
-t                    yydebug.shift(yyStates[yyTop], YyTableClass.yyTable[yyN], 3);
 .                  yyState = YyTableClass.yyTable[yyN];
 .          /* modified by diho, 14.04.2004 
 .             replaced yyLex.value by yyToken.value*/
 .                  yyVal = yyToken.value;
 .                  continue yyLoop;
 .                }
-t                if (yydebug != null) yydebug.pop(yyStates[yyTop]);
 .              } while (-- yyTop >= 0);
-t              if (yydebug != null) yydebug.reject();
 .              throw new yyException("irrecoverable syntax error");
 .  
 .            case 3:
 .          /* modified by diho, 14.04.2004 
 .             orig.: if (yyToken == 0)*/
 .              if (yyToken == null) {
-t                if (yydebug != null) yydebug.reject();
 .                throw new yyException("irrecoverable syntax error at end-of-file");
 .              }
-t              if (yydebug != null)
-.          /* modified by diho, 14.04.2004 
-.             replaced yyToken by yyToken.tokennr, yyLex.value by yyToken.value*/
-t                yydebug.discard(yyState, yyToken.tokennr, yyname(yyToken.tokennr),
-t  							yyToken.value);
 .          /* modified by diho, 14.04.2004 
 .             orig: yyToken = -1*/
 .              yyToken = new yyTokenclass();
@@ -268,8 +247,6 @@ t  							yyToken.value);
 .            }
 .        }
 .        int yyV = yyTop + 1-YyLenClass.yyLen[yyN];
-t        if (yydebug != null)
-t          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN], YyLenClass.yyLen[yyN]);
 .        yyVal = yyDefault(yyV > yyTop ? null : yyVals[yyV]);
 .        switch (yyN) {
 
@@ -280,7 +257,6 @@ t          yydebug.reduce(yyState, yyStates[yyV-1], yyN, YyRuleClass.yyRule[yyN]
 .        yyState = yyStates[yyTop];
 .        int yyM = YyLhsClass.yyLhs[yyN];
 .        if (yyState == 0 && yyM == 0) {
-t          if (yydebug != null) yydebug.shift(0, yyFinal);
 .          yyState = yyFinal;
 .          /* modified by diho, 14.04.2004 
 .             replaced yyToken by yyToken.tokennr*/
@@ -291,15 +267,12 @@ t          if (yydebug != null) yydebug.shift(0, yyFinal);
 .          /* modified by diho, 14.04.2004
 .             if "empty token", get next token */
 .            if (yyToken == null) {yyToken = new EOF();}
-t            if (yydebug != null)
 .          /* modified by diho, 14.04.2004 
 .             replaced yyToken by yyToken.tokennr, yyLex.value() by yyToken.value*/
-t               yydebug.lex(yyState, yyToken.tokennr,yyname(yyToken.tokennr), yyToken.value);
 .          }
 .          /* modified by diho, 14.04.2004 
 .             orig.: if (yyToken == 0) */
 .          if (yyToken.tokennr == 0) {
-t            if (yydebug != null) yydebug.accept(yyVal);
 .            return yyVal;
 .          }
 .          continue yyLoop;
@@ -309,7 +282,6 @@ t            if (yydebug != null) yydebug.accept(yyVal);
 .          yyState = YyTableClass.yyTable[yyN];
 .        else
 .          yyState = YyDgotoClass.yyDgoto[yyM];
-t        if (yydebug != null) yydebug.shift(yyStates[yyTop], yyState);
 .	 continue yyLoop;
 .      }
 .    }
