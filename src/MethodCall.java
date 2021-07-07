@@ -49,7 +49,7 @@ public class MethodCall extends StmtExpr {
         this.exprs = exprs;
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
         // Kontruktor benötigt Opcode INVOKESPECIAL, ansonsten INVOKEVIRTUAL
         int opcode = st.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;

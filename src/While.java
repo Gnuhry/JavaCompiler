@@ -25,7 +25,7 @@ public class While extends Stmt {
      * Vermutlich kann man einiges auslagern
      * Darüber hinaus ist auch noch nicht klar, ob das überhaupt stimmt
      */
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         Label loop = new Label();
         Label end = new Label();
 

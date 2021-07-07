@@ -23,7 +23,7 @@ public class LocalVarDecl extends Stmt {
         return ty;
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 //        String descriptor = "?";
 //
 //        mv.visitLocalVariable(st, descriptor, null, );

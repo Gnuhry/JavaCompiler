@@ -13,7 +13,7 @@ public class Super extends Expr{
         return thisClass.typeCheck(localVars, thisClass);
     }
     
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
     }
 }

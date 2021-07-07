@@ -15,7 +15,7 @@ public class This extends Expr{
         return thisClass.typeCheck(localVars, thisClass);
     }
     
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         // "this" ist immer die Lokale Variable mit dem Index 0
         // Die wird hier auf den Stack geladen und kann verwendet werden
         mv.visitVarInsn(Opcodes.ALOAD, 0);

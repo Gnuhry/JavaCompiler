@@ -14,5 +14,5 @@ public abstract class StmtExpr implements TypeInterface {
         return type;
     }
 
-    public abstract void codeGen(MethodVisitor mv);
+    public abstract void codeGen(Class cl, MethodVisitor mv);
 }

@@ -24,7 +24,7 @@ public class StmtExprStmt extends Stmt{
     }
 
     @Override
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         
     }
 }

@@ -26,7 +26,7 @@ public class StmtExprExpr extends Expr{
         return stmtExpr.typeCheck(localVars, thisClass);
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         stmtExpr.codeGen(mv);
     }
 }

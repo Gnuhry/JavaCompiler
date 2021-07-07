@@ -23,7 +23,7 @@ public class New extends StmtExpr{
         return ty;
     }
     
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
         for (Expr expr : exprs) {
             expr.codeGen(mv);
