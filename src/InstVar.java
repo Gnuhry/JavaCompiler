@@ -35,8 +35,7 @@ public class InstVar extends StmtExpr{
         return expr.typeCheck(localVars, thisClass);
     }
 
-    
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
     }
 }

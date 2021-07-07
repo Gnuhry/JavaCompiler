@@ -14,7 +14,7 @@ public class EmptyStmt extends Stmt {
         return new Type("null");
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         mv.visitInsn(Opcodes.NOP);
     }
 }

@@ -21,7 +21,7 @@ public class Block extends Stmt {
         return new Type("");
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         for (Stmt stmt : stmts) {
             stmt.codeGen(mv);
         }

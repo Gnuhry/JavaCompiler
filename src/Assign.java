@@ -29,7 +29,7 @@ public class Assign extends StmtExpr {
         throw new RuntimeException("Typecheck Error");
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
         // ---- Temporärer Wert ----
         // Wenn man einen Wert (= Ergebnis einer Expression) in eine lokale

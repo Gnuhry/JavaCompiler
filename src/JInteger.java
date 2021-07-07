@@ -20,7 +20,7 @@ public class JInteger extends Expr{
     }
     
     // Siehe Hinweise bei der Klasse 'Bool'
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         mv.visitLdcInsn(in);
     }
 }

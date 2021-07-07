@@ -21,7 +21,7 @@ public class Return extends Stmt {
         return exp.typeCheck(localVars, thisClass);
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         if (exp == null) {
             mv.visitInsn(Opcodes.RETURN);
         } else {

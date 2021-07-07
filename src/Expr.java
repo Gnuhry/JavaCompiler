@@ -16,5 +16,5 @@ public abstract class Expr implements TypeInterface {
         return this.type;
     }
 
-    public abstract void codeGen(MethodVisitor mv);
+    public abstract void codeGen(Class cl, MethodVisitor mv);
 }

@@ -22,7 +22,7 @@ public class Field implements TypeInterface {
         return ty;
     }
     
-    public void codeGen(ClassWriter cw) {
+    public void codeGen(Class cl, ClassWriter cw) {
 
         // So wie ich es verstehe, wird dieser Code an der Stelle eingefügt, wo
         // sozusagen ein Feld definiert wird.

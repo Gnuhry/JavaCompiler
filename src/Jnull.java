@@ -15,7 +15,7 @@ public class Jnull extends Expr{
     }
     
     // Siehe Hinweis bei der Klasse 'Bool'
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         mv.visitInsn(Opcodes.ACONST_NULL);
     }
 }

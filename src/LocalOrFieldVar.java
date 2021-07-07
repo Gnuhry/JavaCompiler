@@ -27,7 +27,7 @@ public class LocalOrFieldVar extends Expr {
         }
 
     @Override
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
 
     }
 }

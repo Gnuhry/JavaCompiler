@@ -27,8 +27,9 @@ public class Binary extends Expr {
         }else{
             throw new RuntimeException("Typecheck Error");
         }
+    }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
         // Vermutlich reichen die beiden Zeilen hier nicht aus
         // Möglicherweise reicht es aber auch einfach aus, wenn hier
         // von beiden Expressions das Ergebnis auf den Stack gepusht wird,

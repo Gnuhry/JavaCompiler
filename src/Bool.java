@@ -22,8 +22,8 @@ public class Bool extends Expr{
     public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return new Type("boolean");
     }
-    
-    public void codeGen(MethodVisitor mv) {
+
+    public void codeGen(Class cl, MethodVisitor mv) {
         if (bo)
             mv.visitInsn(Opcodes.ICONST_1);
         else

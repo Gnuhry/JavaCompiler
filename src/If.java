@@ -37,12 +37,13 @@ public class If extends Stmt {
         throw new RuntimeException("Typecheck Error");
     }
 
-    public void codeGen(MethodVisitor mv) {
+    public void codeGen(Class cl, MethodVisitor mv) {
+        Label end = new Label();
+        Label else_label = new Label();
+
         exp.codeGen(mv);
 
         // Insert here?
-        Label end = new Label();
-        Label else_label = new Label();
 
         Label jump_label = maybeStmt == null ? end : else_label;
 
