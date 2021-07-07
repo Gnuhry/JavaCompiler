@@ -26,7 +26,7 @@ public class New extends StmtExpr{
     public void codeGen(Class cl, MethodVisitor mv) {
 
         for (Expr expr : exprs) {
-            expr.codeGen(mv);
+            expr.codeGen(Class cl, mv);
         }
 
         mv.visitTypeInsn(Opcodes.NEW, ty.typ);
