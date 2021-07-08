@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Vector;
 
 public class MethodCall extends StmtExpr{
@@ -15,4 +16,20 @@ public class MethodCall extends StmtExpr{
 	this.st = st;
 	this.exprs = exprs;
     }
+
+    /*@Override
+    Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        // TODO Auto-generated method stub
+        return new Type("");
+    }
+
+    public Type typeCheck(Map< String, String> localVars, Class thisClass){
+        if (localVars.get(name).equals(ex.typeCheck(localVars, thisClass))){
+            String typ = ifStmt.typeCheck(localVars, thisClass);
+            return typ;
+        }
+        else{
+            return  "error";
+        }
+    }*/
 }
