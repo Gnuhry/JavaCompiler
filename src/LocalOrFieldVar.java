@@ -7,8 +7,15 @@ public class LocalOrFieldVar extends Expr{
         this.st = st;
     }
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        return new Type("");
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        if(thisClass.fields.stream().anyMatch(f -> f.name.equals(st))){
+            return new Type("fieldVar");
+        }else if(localVars.keySet().contains(st)){
+            return new Type("localVar");
+        }
+        else{
+            throw new RuntimeException("Typecheck Error");
+        }
+
     }
 }

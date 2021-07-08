@@ -6,9 +6,9 @@ public class Bool extends Expr{
     public Bool(boolean bo) {
         this.bo = bo;
     }
+    
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        new Type("boolean");
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return new Type("boolean");
     }
 }

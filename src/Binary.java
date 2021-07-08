@@ -11,8 +11,11 @@ public class Binary extends Expr {
         this.expr2 = expr2;
     }
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        return new Type("");
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        if (expr1.typeCheck(localVars, thisClass).equals(expr2.typeCheck(localVars, thisClass))){
+            return expr1.typeCheck(localVars, thisClass);
+        }else{
+            throw new RuntimeException("Typecheck Error");
+        }
     }
 }

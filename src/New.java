@@ -11,7 +11,7 @@ public class New extends StmtExpr{
     }
 
     @Override
-    public String typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return ty;
     }
 }

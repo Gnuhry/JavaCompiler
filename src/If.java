@@ -19,14 +19,14 @@ public class If extends Stmt {
     }
 
     @Override
+    public
     Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        if(exp.typeCheck(localVars, thisClass).equals("boolean")){
+        if(exp.typeCheck(localVars, thisClass).equals(new Type("boolean"))){
 			if(stmt.typeCheck(localVars, thisClass).equals(maybeStmt.typeCheck(localVars, thisClass))){
 				return stmt.typeCheck(localVars, thisClass);
 			}
 		}
-		return new Type("error");
+        throw new RuntimeException("Typecheck Error");
     }
 
 }

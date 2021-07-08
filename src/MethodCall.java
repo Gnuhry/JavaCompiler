@@ -17,19 +17,10 @@ public class MethodCall extends StmtExpr{
 	this.exprs = exprs;
     }
 
-    /*@Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        return new Type("");
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        //TODO unsicher ob das so stimmt!
+        return expr.typeCheck(localVars, thisClass);
     }
 
-    public Type typeCheck(Map< String, String> localVars, Class thisClass){
-        if (localVars.get(name).equals(ex.typeCheck(localVars, thisClass))){
-            String typ = ifStmt.typeCheck(localVars, thisClass);
-            return typ;
-        }
-        else{
-            return  "error";
-        }
-    }*/
 }

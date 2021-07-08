@@ -6,9 +6,9 @@ public class Char extends Expr{
     public Char(char ch) {
         this.ch = ch;
     }
+
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        return new Type("");
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return new Type("char");
     }
 }

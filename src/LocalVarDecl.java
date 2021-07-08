@@ -9,8 +9,7 @@ public class LocalVarDecl extends Stmt {
         this.st = st;
     }
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return ty;
     }
 }

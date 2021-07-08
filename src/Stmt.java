@@ -1,6 +1,10 @@
 import java.util.Map;
 
-public abstract class Stmt {
+public abstract class Stmt implements TypeInterface {
     Type type;
-    abstract Type typeCheck(Map<String, String> localVars, Class thisClass);
+    
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass){
+        return type;
+    }
 }

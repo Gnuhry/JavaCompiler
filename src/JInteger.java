@@ -7,8 +7,7 @@ public class JInteger extends Expr{
         this.in = in;
     }
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
-        new Type("integer");
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return new Type("integer");
     }
 }

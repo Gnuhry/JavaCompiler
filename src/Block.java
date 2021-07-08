@@ -8,8 +8,7 @@ public class Block extends Stmt {
         this.stmts = stmts;
     }
     @Override
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        // TODO Auto-generated method stub
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
         return new Type("");
     }
 }   

@@ -15,7 +15,7 @@ public class Assign extends StmtExpr {
         if(var.typeCheck(localVars, thisClass).equals(ex.typeCheck(localVars, thisClass))) {
             return var.typeCheck(localVars, thisClass);
         }
-        return new Type("error");
+        throw new RuntimeException("Typecheck Error");
     }
 
     }
