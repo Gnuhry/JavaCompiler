@@ -27,6 +27,7 @@ public class Class implements TypeInterface{
         this.ty = ty;
         this.fields = fields;
         this.meth = meth;
+        codeGen();
     }
 
     @Override
@@ -37,24 +38,36 @@ public class Class implements TypeInterface{
     public void codeGen() {
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, ty.typ, null, "java/lang/Object", null);
-        for(Field field : fields) { field.codeGen(this, cw); }
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, ty.name, null, "java/lang/Object", null);
 
-        for(Method m : meth) { m.codeGen(this, cw); }
+        System.out.println(((Object) fields.get(0)).getClass());
+        System.out.println(fields);
+
+        for(Field field : fields) {
+            System.out.printf("Feld: %s, Typ: %s\n", field.name, field.ty.name);
+            field.codeGen(this, cw);
+        }
+
+        for(Method m : meth) {
+            System.out.printf("Methode: %s\n", m.name);
+            m.codeGen(this, cw);
+        }
         cw.visitEnd();
 
         try
         {
+            System.out.println("Now try writing");
             writeClassfile(cw);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     static void writeClassfile(ClassWriter cw) throws IOException {
         byte[] bytes = cw.toByteArray();
+        System.out.println("Hallo Welt!");
         String className = new ClassReader(bytes).getClassName();
+        System.out.println("Writing Class: " + className);
         File outputFile = new File("./", className + ".class");
         FileOutputStream output = new FileOutputStream(outputFile);
         output.write(bytes);

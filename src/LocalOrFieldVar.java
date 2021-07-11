@@ -9,10 +9,10 @@ import org.objectweb.asm.MethodVisitor;
  * Siehe Hinweise in Klassen 'Assign' und 'InstVar'
  */
 public class LocalOrFieldVar extends Expr {
-    java.lang.String st;
+    java.lang.String name;
 
     public LocalOrFieldVar(java.lang.String st) {
-        this.st = st;
+        this.name = st;
     }
     
     @Override

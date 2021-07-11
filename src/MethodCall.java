@@ -55,10 +55,7 @@ public class MethodCall extends StmtExpr {
         int opcode = st.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
 
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist
-        // TODO: Wie bekomme ich den Namen der Klasse aus dem Expr-Objekt? TypeCheck?
-        String owner = "?";
-
-        mv.visitMethodInsn(opcode, owner, st, null, false);
+        mv.visitMethodInsn(opcode, cl.ty.name, st, null, false);
     }
 
     @Override

@@ -10,13 +10,13 @@ import org.objectweb.asm.Opcodes;
 public class Assign extends StmtExpr {
 
     // Lokale Variable bzw. Feld, in welchem etwas gespiechert werden soll
-    LocalOrFieldVar var;
+    LocalOrFieldVar fieldOrVar;
 
     // Expression, dessen Ergebnis der Variable bzw. Feld zugewiesen wird
     Expr ex;
 
-    public Assign(LocalOrFieldVar var, Expr ex) {
-        this.var = var;
+    public Assign(LocalOrFieldVar fieldOrVar, Expr ex) {
+        this.fieldOrVar = fieldOrVar;
         this.ex = ex;
     }
 
@@ -53,6 +53,6 @@ public class Assign extends StmtExpr {
         // und den Descriptor (interne Beschreibung des Datentyps angeben)
         // TODO Wie komme ich an den Owner des Felds?
         // TODO Wie komme ich an den Descriptor des Felds?
-        mv.visitFieldInsn(Opcodes.PUTFIELD, "pkg/Bean", var.st, "I");
+        mv.visitFieldInsn(Opcodes.PUTFIELD, cl.ty.name, fieldOrVar.name, "I");
     }
 }

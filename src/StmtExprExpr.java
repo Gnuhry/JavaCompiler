@@ -27,6 +27,6 @@ public class StmtExprExpr extends Expr{
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
-        stmtExpr.codeGen(mv);
+        stmtExpr.codeGen(cl, mv);
     }
 }

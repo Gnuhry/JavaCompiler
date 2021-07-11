@@ -26,6 +26,11 @@ public class Field implements TypeInterface {
 
         // So wie ich es verstehe, wird dieser Code an der Stelle eingefügt, wo
         // sozusagen ein Feld definiert wird.
-        cw.visitField(Opcodes.ACC_PUBLIC, name, ty.typ, null, null);
+        // cw.visitField(Opcodes.ACC_PUBLIC, name, ty.name, null, null);
+
+        // Neuer Code - Nimmt Typdescriptor statt Typname an
+        // Ich hatte es mal mit dem Namen des Typs ausprobiert, aber das hat nicht funktioniert
+        // Java-VM meckert, dass er dann den jeweiligen internen Typen nicht kennt
+        cw.visitField(Opcodes.ACC_PUBLIC, name, ty.getTypeDescriptor(), null, null);
     }
 }

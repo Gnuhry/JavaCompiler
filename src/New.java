@@ -26,16 +26,16 @@ public class New extends StmtExpr{
     public void codeGen(Class cl, MethodVisitor mv) {
 
         for (Expr expr : exprs) {
-            expr.codeGen(Class cl, mv);
+            expr.codeGen(cl, mv);
         }
 
-        mv.visitTypeInsn(Opcodes.NEW, ty.typ);
+        mv.visitTypeInsn(Opcodes.NEW, ty.name);
         mv.visitInsn(Opcodes.DUP);
 
         // In MethodCall wird auch schon der Fall behandelt, dass die Methode <init> heißt
         // Der Methodenaufruf hier ist also vermutlich doppelt oder der Spezialfall
         // sollte aus der MethodCall-Klasse entfernt werden
         // TODO Prüfen, ob Methodenaufruf hier redundant ist
-        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, ty.typ, "<init>", "()V", false);
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, ty.name, "<init>", "()V", false);
     }
 }

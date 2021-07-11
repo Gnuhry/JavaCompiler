@@ -7,10 +7,43 @@
  * Klassen nur zum Typechecking genutzt
  */
 public class Type {
-    java.lang.String typ;
 
-    public Type(java.lang.String typ) {
-        this.typ = typ;
+    // Name des Typs
+    java.lang.String name;
+
+    /**
+     * Neues Type-Objekt erstellen
+     * @param name Name des Typs
+     */
+    public Type(java.lang.String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gebe den Deskriptor des Typs zurück.
+     *
+     * Siehe auch: https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3
+     *
+     * @return Descriptor des Typs
+     */
+    public String getTypeDescriptor() {
+        switch (name) {
+            case "int": return "I";
+            case "char": return "C";
+            case "boolean": return "Z";
+            case "void": return "V";
+
+            case "byte":
+            case "small":
+            case "float":
+            case "double":
+            case "long":
+                System.err.println("Der Java-Compiler unterstützt folgenden Datentyp nicht: " + name);
+                System.exit(1);
+
+            default: // Annahme: Alles, was hier ankommt, ist eine Klasse
+                return "L" + name + ";";
+        }
     }
 
     @Override

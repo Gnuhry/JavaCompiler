@@ -25,7 +25,7 @@ public class Return extends Stmt {
         if (exp == null) {
             mv.visitInsn(Opcodes.RETURN);
         } else {
-            exp.codeGen(mv);
+            exp.codeGen(cl, mv);
 
             if (exp instanceof Bool || exp instanceof Char || exp instanceof JInteger) {
                 mv.visitInsn(Opcodes.IRETURN);

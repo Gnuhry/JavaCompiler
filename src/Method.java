@@ -42,11 +42,30 @@ public class Method implements TypeInterface{
      * @param cw ClassWriter
      */
     public void codeGen(Class cl, ClassWriter cw) {
-        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, retty.typ, null, null);
+        System.out.printf("Visiting: %s, returning %s\n", name, retty.name);
+//        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, retty.typ, null, null);
+        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
         mv.visitCode();
-        stmt.codeGen(mv);
+        stmt.codeGen(cl, mv);
         mv.visitMaxs(0,0);
         mv.visitEnd();
+    }
+
+    /**
+     * Typ-Descriptor der Methode erstellen und zurückliefern
+     *
+     * Siehe auch: https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.3
+     *
+     * @return Descriptor der Methode
+     */
+    public String getTypeDescriptor() {
+        String descriptor = "(";
+        for (Field param : para.params) {
+            descriptor += param.ty.getTypeDescriptor();
+        }
+        descriptor += ")" + retty.getTypeDescriptor();
+
+        return descriptor;
     }
 }

@@ -61,7 +61,7 @@ public class While extends Stmt {
         // ob unsere Bedingung weiterhin erfüllt ist
         mv.visitLabel(loop);
 
-        stmt.codeGen(mv);
+        stmt.codeGen(cl, mv);
         mv.visitJumpInsn(Opcodes.GOTO, loop);
         mv.visitLabel(end);
     }
