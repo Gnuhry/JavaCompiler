@@ -1,4 +1,6 @@
 import java.lang.management.CompilationMXBean;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -39,39 +41,52 @@ public class Class implements TypeInterface{
     }
 
     public void codeGen() {
-        System.out.println("Start class compilation: " + ty.name);
+        System.out.println("[Class] Start class compilation: " + ty.name);
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, ty.name, null, "java/lang/Object", null);
 
-//        System.out.println(((Object) fields.get(0)).getClass());
-//        System.out.println(fields);
-
-        System.out.println("Compiling fields");
+        System.out.println("[Class] Compiling fields");
         for(Field field : fields) {
-            System.out.printf("Now compiling field: %s, Typ: %s\n", field.name, field.ty.name);
+            System.out.printf("[Class] Now compiling field: %s, Typ: %s\n", field.name, field.ty.name);
             field.codeGen(this, cw);
         }
 
-        System.out.println("Compiling methods");
+        System.out.println("[Class] Compiling methods");
         for(Method m : meth) {
-            System.out.printf("Now compiling method: %s\n", m.name);
+            System.out.println("--------------------");
+            System.out.printf("[Class] Now compiling method: %s\n", m.name);
             m.codeGen(this, cw);
         }
         cw.visitEnd();
 
         try
         {
-            System.out.println("Try writing class file");
+            System.out.println("[Class] Try writing class file");
             writeClassfile(cw);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Hole das Methoden-Objekt mit dem entsprechenden Namen
+     * Wird benötigt, um in der MethodCall-Klasse im codegen an den
+     * Descriptor der Methode zu kommen.
+     *
+     * @param name Name der Methode
+     * @return Methoden-Objekt, ansonsten null. Null dürfte eigentlich nicht auftreten.
+     */
+    public Method findMethodByName(String name) {
+        for (Method m : meth) {
+            if (m.name.equals(name))
+                return m;
+        }
+        return null;
+    }
+
     static void writeClassfile(ClassWriter cw) throws IOException {
         byte[] bytes = cw.toByteArray();
-        System.out.println("Hallo Welt!");
         String className = new ClassReader(bytes).getClassName();
         System.out.println("Writing Class: " + className);
         File outputFile = new File("./", className + ".class");

@@ -32,7 +32,7 @@ public class While extends Stmt {
         if (exp instanceof Binary){
             Binary binaryExpression = (Binary) exp;
 
-            switch (binaryExpression.st){
+            switch (binaryExpression.operator){
                 case "<":
                     mv.visitJumpInsn(Opcodes.IF_ICMPLT, end);
                     break;

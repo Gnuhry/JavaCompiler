@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import java.util.Vector;
@@ -22,7 +23,13 @@ public class Block extends Stmt {
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
+
+
+        // Der Javaparser gibt die Statements in der falschen Reihenfolge aus
+        // Annahme: Die Reihenfolge innerhalb gekaplseter Blöcke ist auch falsch
+        Collections.reverse(stmts);
         for (Stmt stmt : stmts) {
+            System.out.println("[Block] Next block statement type: " + stmt.getClass().getName());
             stmt.codeGen(cl, mv);
         }
     }

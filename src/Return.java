@@ -25,12 +25,15 @@ public class Return extends Stmt {
         if (exp == null) {
             mv.visitInsn(Opcodes.RETURN);
         } else {
+            System.out.println("[Return] Capsuled Expression: " + exp.getClass().getName());
             exp.codeGen(cl, mv);
 
             if (exp instanceof Bool || exp instanceof Char || exp instanceof JInteger) {
+                System.out.println("[Return] Inserting IRETURN");
                 mv.visitInsn(Opcodes.IRETURN);
             } else {
                 mv.visitInsn(Opcodes.ARETURN);
+                System.out.println("[Return] Inserting ARETURN");
             }
         }
     }

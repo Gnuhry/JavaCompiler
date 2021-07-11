@@ -28,5 +28,7 @@ public class Bool extends Expr{
             mv.visitInsn(Opcodes.ICONST_1);
         else
             mv.visitInsn(Opcodes.ICONST_0);
+
+        System.out.println("[Bool] Pushing boolean to stack: " + bo);
     }
 }

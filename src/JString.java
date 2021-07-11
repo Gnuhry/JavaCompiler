@@ -16,12 +16,16 @@ public class JString extends Expr{
     }
     @Override
     public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
-        return new Type("string");
+        // Ist die interne Darstellung für den String-Typen
+        // Kann sein dass es auch nur "string" ist
+        return new Type("java/lang/String");
     }
 
     @Override
     public void codeGen(Class cl, MethodVisitor mv) {
         // TODO java.lang.String statt String
         mv.visitLdcInsn(st);
+
+        System.out.println("[JString] Pushing string to stack: " + st);
     }
 }

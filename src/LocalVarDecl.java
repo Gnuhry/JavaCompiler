@@ -24,7 +24,7 @@ public class LocalVarDecl extends Stmt {
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
-        System.out.println("Lokale Variable definiert: " + st);
+        System.out.println("[LocalVarDecl] Define local variable: " + st);
 //        String descriptor = "?";
 //
 //        mv.visitLocalVariable(st, descriptor, null, );

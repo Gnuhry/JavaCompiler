@@ -21,5 +21,7 @@ public class JInteger extends Expr{
     // Siehe Hinweise bei der Klasse 'Bool'
     public void codeGen(Class cl, MethodVisitor mv) {
         mv.visitLdcInsn(in);
+
+        System.out.println("[JInteger] Pushing int to stack: " + in);
     }
 }

@@ -51,7 +51,7 @@ public class If extends Stmt {
             System.out.println("instanceof Binary");
             Binary binaryExpression = (Binary) exp;
 
-            switch (binaryExpression.st){
+            switch (binaryExpression.operator){
                 case "<":
                     mv.visitJumpInsn(Opcodes.IF_ICMPLT, jump_label);
                     System.out.println("<");

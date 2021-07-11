@@ -1,5 +1,6 @@
 import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Binary - Operation mit zwei Operanden, wie z.B. (1 <= 5) oder (1 + 4)
@@ -10,12 +11,12 @@ public class Binary extends Expr {
 
     // Operatoren - Mathematische Operatoren, Vergleichsoperatoren, Boolsche Operatoren
     // TODO Klären, ob bitweise Operatoren benötigt werden
-    java.lang.String st;
+    java.lang.String operator;
     Expr expr1;
     Expr expr2;
 
-    public Binary(java.lang.String st, Expr expr1, Expr expr2) {
-        this.st = st;
+    public Binary(java.lang.String operator, Expr expr1, Expr expr2) {
+        this.operator = operator;
         this.expr1 = expr1;
         this.expr2 = expr2;
     }
@@ -37,5 +38,15 @@ public class Binary extends Expr {
         // kann (siehe z.B. das switch-case in 'If' oder 'While'
         expr1.codeGen(cl, mv);
         expr2.codeGen(cl, mv);
+
+        // Mathematische Operatoren werden hier bearbeitet
+        // Vergleichsoperatoren werden in z.B. Klasse If und While bearbeitet
+        // TODO: Ggf. Vergleichsoperatoren hier reinmergen, falls möglich
+        switch (operator) {
+            case "+": mv.visitInsn(Opcodes.IADD); break;
+            case "-": mv.visitInsn(Opcodes.INEG); break;
+            case "*": mv.visitInsn(Opcodes.IMUL); break;
+            case "/": mv.visitInsn(Opcodes.IDIV); break;
+        }
     }
 }

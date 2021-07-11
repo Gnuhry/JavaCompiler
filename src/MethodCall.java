@@ -19,43 +19,49 @@ public class MethodCall extends StmtExpr {
     Expr expr;
 
     // Name der Methode
-    String st;
+    String methodName;
 
     // Parameter der Methode
-    Vector<Expr> exprs;
+    Vector<Expr> params;
 
     /**
      * Methode eines bestimmten Objektes aufrufen
      *
      * @param expr  Das jeweilige Objekt (object.method(...))
-     * @param st    Name der Methode
-     * @param exprs Parameter der Methode
+     * @param methodName    Name der Methode
+     * @param params Parameter der Methode
      */
-    public MethodCall(Expr expr, String st, Vector<Expr> exprs) {
+    public MethodCall(Expr expr, String methodName, Vector<Expr> params) {
         this.expr = expr;
-        this.st = st;
-        this.exprs = exprs;
+        this.methodName = methodName;
+        this.params = params;
     }
 
     /**
      * Methode des eigenen Objektes (this) aufrufen
      *
-     * @param st    Name der Methode
-     * @param exprs Parameter der Methode
+     * @param methodName    Name der Methode
+     * @param params Parameter der Methode
      */
-    public MethodCall(String st, Vector<Expr> exprs) {
+    public MethodCall(String methodName, Vector<Expr> params) {
         this.expr = new This();
-        this.st = st;
-        this.exprs = exprs;
+        this.methodName = methodName;
+        this.params = params;
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
 
         // Kontruktor benötigt Opcode INVOKESPECIAL, ansonsten INVOKEVIRTUAL
-        int opcode = st.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
+        int opcode = methodName.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
+
+        // Diese Implementierung hat einen sehr großen Nachteil:
+        // Es lassen sich nur Methoden der eigenen Klasse aufrufen
+        // TODO: Methoden anderer Klassen aufrufen?
+        System.out.println("[MethodCall] " + methodName);
+        String descriptor = cl.findMethodByName(methodName).getTypeDescriptor();
 
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist
-        mv.visitMethodInsn(opcode, cl.ty.name, st, null, false);
+        mv.visitMethodInsn(opcode, cl.ty.name, methodName, descriptor, false);
     }
 
     @Override
@@ -63,5 +69,4 @@ public class MethodCall extends StmtExpr {
         //TODO unsicher ob das so stimmt!
         return expr.typeCheck(localVars, thisClass);
     }
-
 }

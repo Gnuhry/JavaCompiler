@@ -48,7 +48,10 @@ public class Method implements TypeInterface{
         System.out.printf("Visiting: %s, returning %s\n", name, retty.name);
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
+//        mv.visitParameter();
+
         mv.visitCode();
+        System.out.println("[Method] Class name: " + stmt.getClass().getName());
         stmt.codeGen(cl, mv);
         mv.visitMaxs(0,0);
         mv.visitEnd();

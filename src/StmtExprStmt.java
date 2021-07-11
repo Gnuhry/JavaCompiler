@@ -25,6 +25,15 @@ public class StmtExprStmt extends Stmt{
 
     @Override
     public void codeGen(Class cl, MethodVisitor mv) {
-        
+        if (expr == null) {
+            System.out.println("[StmtExprStmt] => Null");
+        } else {
+            System.out.println("[StmtExprStmt] => Capsuled statement type: " + expr.getClass().getName());
+//            expr.codeGen(cl, mv);
+        }
+
+        if (expr != null) {
+            expr.codeGen(cl, mv);
+        }
     }
 }

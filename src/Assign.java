@@ -32,7 +32,7 @@ public class Assign extends StmtExpr {
     public void codeGen(Class cl, MethodVisitor mv) {
 
 //        typeCheck()
-        System.out.println("Assign: " + fieldOrVar.name);
+        System.out.println("[Assign] Assign: " + fieldOrVar.name);
 
         // ---- Temporärer Wert ----
         // Wenn man einen Wert (= Ergebnis einer Expression) in eine lokale

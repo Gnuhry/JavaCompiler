@@ -27,6 +27,7 @@ public class StmtExprExpr extends Expr{
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
+        System.out.println("[StmtExprExpr] => Capsuled statement type: " + stmtExpr.getClass().getName());
         stmtExpr.codeGen(cl, mv);
     }
 }
