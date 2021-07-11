@@ -11,26 +11,24 @@ import org.objectweb.asm.Opcodes;
 public class If extends Stmt {
     Expr exp;
     Stmt stmt;
-    Stmt maybeStmt;
-    //TODO Maybe Stmt
-
+    Stmt elseStmt;
 
     public If(Expr exp, Stmt stmt) {
         this.exp = exp;
         this.stmt = stmt;
     }
 
-    public If(Expr exp, Stmt stmt, Stmt maybeStmt) {
+    public If(Expr exp, Stmt stmt, Stmt elseStmt) {
         this.exp = exp;
         this.stmt = stmt;
-        this.maybeStmt = maybeStmt;
+        this.elseStmt = elseStmt;
     }
 
     @Override
     public
-    Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         if(exp.typeCheck(localVars, thisClass).equals(new Type("boolean"))){
-			if(stmt.typeCheck(localVars, thisClass).equals(maybeStmt.typeCheck(localVars, thisClass))){
+			if(stmt.typeCheck(localVars, thisClass).equals(elseStmt.typeCheck(localVars, thisClass))){
 				return stmt.typeCheck(localVars, thisClass);
 			}
 		}
@@ -38,6 +36,7 @@ public class If extends Stmt {
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
+        System.out.println("Compiling If-Statement");
         Label end = new Label();
         Label else_label = new Label();
 
@@ -45,29 +44,37 @@ public class If extends Stmt {
 
         // Insert here?
 
-        Label jump_label = maybeStmt == null ? end : else_label;
+        // Fall: If-Expression = false
+        Label jump_label = elseStmt == null ? end : else_label;
 
         if (exp instanceof Binary){
+            System.out.println("instanceof Binary");
             Binary binaryExpression = (Binary) exp;
 
             switch (binaryExpression.st){
                 case "<":
                     mv.visitJumpInsn(Opcodes.IF_ICMPLT, jump_label);
+                    System.out.println("<");
                     break;
                 case "<=":
                     mv.visitJumpInsn(Opcodes.IF_ICMPLE, jump_label);
+                    System.out.println("<=");
                     break;
                 case "==":
                     mv.visitJumpInsn(Opcodes.IF_ICMPEQ, jump_label);
+                    System.out.println("==");
                     break;
                 case "!=":
                     mv.visitJumpInsn(Opcodes.IF_ICMPNE, jump_label);
+                    System.out.println("!=");
                     break;
                 case ">=":
                     mv.visitJumpInsn(Opcodes.IF_ICMPGE, jump_label);
+                    System.out.println(">=");
                     break;
                 case ">":
                     mv.visitJumpInsn(Opcodes.IF_ICMPGT, jump_label);
+                    System.out.println(">");
                     break;
             }
         } else if(exp instanceof Bool) {
@@ -75,8 +82,11 @@ public class If extends Stmt {
         }
 
         stmt.codeGen(cl, mv);
-        mv.visitLabel(else_label);
-        maybeStmt.codeGen(cl, mv);
+
+        if (elseStmt != null) {
+            mv.visitLabel(else_label);
+            elseStmt.codeGen(cl, mv);
+        }
         mv.visitLabel(end);
     }
 }

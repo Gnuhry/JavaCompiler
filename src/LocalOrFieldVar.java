@@ -16,18 +16,17 @@ public class LocalOrFieldVar extends Expr {
     }
     
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        if(thisClass.fields.stream().anyMatch(f -> f.name.equals(st))){
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+        if (thisClass.fields.stream().anyMatch(f -> f.name.equals(name))) {
             return new Type("fieldVar");
-        }else if(localVars.keySet().contains(st)){
+        } else if (localVars.keySet().contains(name)) {
             return new Type("localVar");
-        }
-        else{
+        } else {
             throw new RuntimeException("Typecheck Error");
         }
+    }
 
     @Override
     public void codeGen(Class cl, MethodVisitor mv) {
-
     }
 }

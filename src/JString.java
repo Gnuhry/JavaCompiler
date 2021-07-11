@@ -15,12 +15,13 @@ public class JString extends Expr{
         this.st = st;
     }
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         return new Type("string");
     }
 
     @Override
     public void codeGen(Class cl, MethodVisitor mv) {
+        // TODO java.lang.String statt String
         mv.visitLdcInsn(st);
     }
 }

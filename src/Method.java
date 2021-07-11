@@ -22,6 +22,9 @@ public class Method implements TypeInterface{
     // Statements innerhalb der Methode, sozusagen der "Code"
     Stmt stmt;
 
+    // Map mit allen lokalen Variablen der Methode
+    Map<String, Type> localVars;
+
     // TODO Liste mit Variablen und deren Index
 
     public Method(Type retty, java.lang.String name, Parameter para, Stmt stmt) {
@@ -32,7 +35,7 @@ public class Method implements TypeInterface{
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         return retty;
     }
     
@@ -43,7 +46,6 @@ public class Method implements TypeInterface{
      */
     public void codeGen(Class cl, ClassWriter cw) {
         System.out.printf("Visiting: %s, returning %s\n", name, retty.name);
-//        MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, retty.typ, null, null);
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
         mv.visitCode();

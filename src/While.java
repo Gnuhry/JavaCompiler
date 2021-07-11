@@ -16,7 +16,7 @@ public class While extends Stmt {
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         return stmt.typeCheck(localVars, thisClass);
     }
     

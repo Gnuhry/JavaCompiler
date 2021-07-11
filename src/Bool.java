@@ -19,7 +19,7 @@ public class Bool extends Expr{
     }
     
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         return new Type("boolean");
     }
 

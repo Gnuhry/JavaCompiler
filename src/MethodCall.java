@@ -59,7 +59,7 @@ public class MethodCall extends StmtExpr {
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         //TODO unsicher ob das so stimmt!
         return expr.typeCheck(localVars, thisClass);
     }

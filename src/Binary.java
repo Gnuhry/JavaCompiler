@@ -21,7 +21,7 @@ public class Binary extends Expr {
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         if (expr1.typeCheck(localVars, thisClass).equals(expr2.typeCheck(localVars, thisClass))){
             return expr1.typeCheck(localVars, thisClass);
         }else{

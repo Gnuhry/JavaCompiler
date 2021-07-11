@@ -18,7 +18,7 @@ public class Unary extends Expr{
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         // TODO Auto-generated method stub
         return expr.typeCheck(localVars, thisClass);
     }

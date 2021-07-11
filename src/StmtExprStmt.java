@@ -19,7 +19,7 @@ public class StmtExprStmt extends Stmt{
         this.expr = expr;
     }
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
         return expr.typeCheck(localVars, thisClass);
     }
 

@@ -48,6 +48,6 @@ public class Type {
 
     @Override
     public boolean equals(Object obj) {
-        return typ.equals(((Type) obj).typ);
+        return name.equals(((Type) obj).name);
     }
 }

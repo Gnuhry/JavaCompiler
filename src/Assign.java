@@ -21,15 +21,18 @@ public class Assign extends StmtExpr {
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
 
-        if(var.typeCheck(localVars, thisClass).equals(ex.typeCheck(localVars, thisClass))) {
-            return var.typeCheck(localVars, thisClass);
+        if(fieldOrVar.typeCheck(localVars, thisClass).equals(ex.typeCheck(localVars, thisClass))) {
+            return fieldOrVar.typeCheck(localVars, thisClass);
         }
         throw new RuntimeException("Typecheck Error");
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
+
+//        typeCheck()
+        System.out.println("Assign: " + fieldOrVar.name);
 
         // ---- Temporärer Wert ----
         // Wenn man einen Wert (= Ergebnis einer Expression) in eine lokale
