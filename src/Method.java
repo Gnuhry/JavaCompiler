@@ -1,4 +1,6 @@
-public class Method {
+import java.util.Map;
+
+public class Method implements TypeInterface{
 
     Type retty;
     java.lang.String name;
@@ -10,5 +12,10 @@ public class Method {
         this.name = name;
         this.para = para;
         this.stmt = stmt;
+    }
+
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return retty;
     }
 }

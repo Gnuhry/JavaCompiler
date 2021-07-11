@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Binary extends Expr {
     java.lang.String st;
     Expr expr1;
@@ -7,5 +9,13 @@ public class Binary extends Expr {
         this.st = st;
         this.expr1 = expr1;
         this.expr2 = expr2;
+    }
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        if (expr1.typeCheck(localVars, thisClass).equals(expr2.typeCheck(localVars, thisClass))){
+            return expr1.typeCheck(localVars, thisClass);
+        }else{
+            throw new RuntimeException("Typecheck Error");
+        }
     }
 }

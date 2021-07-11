@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Return extends Stmt {
     Expr exp;
 
@@ -6,5 +8,9 @@ public class Return extends Stmt {
     }
 
     public Return() {
+    }
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return exp.typeCheck(localVars, thisClass);
     }
 }

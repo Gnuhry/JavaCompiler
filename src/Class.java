@@ -1,6 +1,7 @@
+import java.util.Map;
 import java.util.Vector;
 
-public class Class {
+public class Class implements TypeInterface{
     Type ty;
     Vector<Field> fields;
     Vector<Method> meth;
@@ -12,7 +13,9 @@ public class Class {
         this.meth = meth;
     }
 
-    public void typeCheck() {
+    @Override
+    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
+        return ty;
     }
 
     public void codeGen() {
