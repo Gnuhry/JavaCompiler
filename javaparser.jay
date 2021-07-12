@@ -78,6 +78,8 @@ Field: Type TEXT SEMICOLON {
 
 Method: Type TEXT OPENROUNDBRACKET Parameters CLOSEROUNDBRACKET block {
 	$$ = new Method($1, $2, new Parameter($4), $6);
+} | Type TEXT OPENROUNDBRACKET CLOSEROUNDBRACKET block {
+    	$$ = new Method($1, $2, new Parameter(new Vector<Field>()), $5);
 }
 
 Parameter: Type TEXT {
@@ -116,7 +118,7 @@ statements: Stmt {
     v.add($1);
     $$ = v;
 } | statements Stmt {
-    $1.insertElementAt($2, 0);
+    $1.add($2);
     $$ = $1;
 }
 
