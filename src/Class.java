@@ -1,7 +1,3 @@
-import java.lang.management.CompilationMXBean;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -9,6 +5,7 @@ import org.objectweb.asm.Opcodes;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -36,7 +33,7 @@ public class Class implements TypeInterface{
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return ty;
     }
 
@@ -81,6 +78,20 @@ public class Class implements TypeInterface{
         for (Method m : meth) {
             if (m.name.equals(name))
                 return m;
+        }
+        return null;
+    }
+
+    /**
+     * Hole das Field-Objekt mit dem entsprechenden Namen
+     *
+     * @param name Name des Felds
+     * @return Field-Objekt, ansonsten null. Null dürfte eigentlich nicht auftreten.
+     */
+    public Field findFieldByName(String name) {
+        for (Field f : fields) {
+            if (f.name.equals(name))
+                return f;
         }
         return null;
     }

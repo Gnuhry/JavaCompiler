@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -19,11 +20,11 @@ public class Bool extends Expr{
     }
     
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return new Type("boolean");
     }
 
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         if (bo)
             mv.visitInsn(Opcodes.ICONST_1);
         else

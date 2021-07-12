@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -14,12 +15,12 @@ public class JInteger extends Expr{
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return new Type("integer");
     }
     
     // Siehe Hinweise bei der Klasse 'Bool'
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         mv.visitLdcInsn(in);
 
         System.out.println("[JInteger] Pushing int to stack: " + in);

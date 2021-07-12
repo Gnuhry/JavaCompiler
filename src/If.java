@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -26,7 +27,7 @@ public class If extends Stmt {
 
     @Override
     public
-    Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    Type typeCheck(List<Field> localVars, Class thisClass) {
         if(exp.typeCheck(localVars, thisClass).equals(new Type("boolean"))){
 			if(stmt.typeCheck(localVars, thisClass).equals(elseStmt.typeCheck(localVars, thisClass))){
 				return stmt.typeCheck(localVars, thisClass);
@@ -35,12 +36,12 @@ public class If extends Stmt {
         throw new RuntimeException("Typecheck Error");
     }
 
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         System.out.println("[If] Compiling If-Statement");
         Label end = new Label();
         Label else_label = new Label();
 
-        exp.codeGen(cl, mv);
+        exp.codeGen(cl, meth, mv);
 
         // Insert here?
 
@@ -81,11 +82,11 @@ public class If extends Stmt {
             mv.visitJumpInsn(Opcodes.IFEQ, jump_label);
         }
 
-        stmt.codeGen(cl, mv);
+        stmt.codeGen(cl, meth, mv);
 
         if (elseStmt != null) {
             mv.visitLabel(else_label);
-            elseStmt.codeGen(cl, mv);
+            elseStmt.codeGen(cl, meth, mv);
         }
         mv.visitLabel(end);
     }

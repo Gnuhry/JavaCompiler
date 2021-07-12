@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -21,7 +22,7 @@ public class Assign extends StmtExpr {
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
 
         if(fieldOrVar.typeCheck(localVars, thisClass).equals(ex.typeCheck(localVars, thisClass))) {
             return fieldOrVar.typeCheck(localVars, thisClass);
@@ -29,7 +30,7 @@ public class Assign extends StmtExpr {
         throw new RuntimeException("Typecheck Error");
     }
 
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
 //        typeCheck()
         System.out.println("[Assign] Assign: " + fieldOrVar.name);

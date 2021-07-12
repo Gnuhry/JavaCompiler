@@ -1,6 +1,7 @@
-import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -49,7 +50,7 @@ public class MethodCall extends StmtExpr {
         this.params = params;
     }
 
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
         // Kontruktor benötigt Opcode INVOKESPECIAL, ansonsten INVOKEVIRTUAL
         int opcode = methodName.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
@@ -65,7 +66,7 @@ public class MethodCall extends StmtExpr {
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         //TODO unsicher ob das so stimmt!
         return expr.typeCheck(localVars, thisClass);
     }

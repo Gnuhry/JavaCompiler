@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -15,12 +16,12 @@ public class Char extends Expr{
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return new Type("char");
     }
     
     // Siehe Hinweise bei der Klasse 'Bool'
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         // Datentyp Char ist 1 Byte lang, BIPUSH packt 1 Byte auf den Stack
         mv.visitVarInsn(Opcodes.BIPUSH, ch);
 

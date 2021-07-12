@@ -3,14 +3,16 @@ class TestClass{
     char c;
 
     void test2(int a, String b) {
-
+        if (a < 5) {
+            return;
+        }
     }
 
     String t;
 
     int test32(int a) {
-        if (true || false) {
-            return 3;
+        if (a > 5) {
+            return 1;
         }
         t = t;
         Object o;

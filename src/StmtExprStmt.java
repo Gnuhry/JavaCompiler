@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -19,12 +20,12 @@ public class StmtExprStmt extends Stmt{
         this.expr = expr;
     }
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return expr.typeCheck(localVars, thisClass);
     }
 
     @Override
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         if (expr == null) {
             System.out.println("[StmtExprStmt] => Null");
         } else {
@@ -33,7 +34,7 @@ public class StmtExprStmt extends Stmt{
         }
 
         if (expr != null) {
-            expr.codeGen(cl, mv);
+            expr.codeGen(cl, meth, mv);
         }
     }
 }

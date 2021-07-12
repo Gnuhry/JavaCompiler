@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -10,12 +11,12 @@ import org.objectweb.asm.Opcodes;
 public class Jnull extends Expr{
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return new Type("null");
     }
     
     // Siehe Hinweis bei der Klasse 'Bool'
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         mv.visitInsn(Opcodes.ACONST_NULL);
 
         System.out.println("[Jnull] Pushing null to stack");

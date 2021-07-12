@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -15,14 +16,14 @@ public class JString extends Expr{
         this.st = st;
     }
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         // Ist die interne Darstellung für den String-Typen
         // Kann sein dass es auch nur "string" ist
         return new Type("java/lang/String");
     }
 
     @Override
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         // TODO java.lang.String statt String
         mv.visitLdcInsn(st);
 

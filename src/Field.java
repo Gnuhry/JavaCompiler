@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
@@ -18,7 +19,7 @@ public class Field implements TypeInterface {
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return ty;
     }
     

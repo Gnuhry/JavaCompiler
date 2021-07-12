@@ -1,7 +1,7 @@
-import java.util.Map;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -19,14 +19,14 @@ public class New extends StmtExpr{
     }
 
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return ty;
     }
     
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
         for (Expr expr : exprs) {
-            expr.codeGen(cl, mv);
+            expr.codeGen(cl, meth, mv);
         }
 
         mv.visitTypeInsn(Opcodes.NEW, ty.name);

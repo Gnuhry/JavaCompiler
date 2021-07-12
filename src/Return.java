@@ -1,4 +1,5 @@
-import java.util.Map;
+import java.util.List;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -17,16 +18,16 @@ public class Return extends Stmt {
     public Return() {
     }
     @Override
-    public Type typeCheck(Map<String, Type> localVars, Class thisClass) {
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
         return exp.typeCheck(localVars, thisClass);
     }
 
-    public void codeGen(Class cl, MethodVisitor mv) {
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         if (exp == null) {
             mv.visitInsn(Opcodes.RETURN);
         } else {
             System.out.println("[Return] Capsuled Expression: " + exp.getClass().getName());
-            exp.codeGen(cl, mv);
+            exp.codeGen(cl, meth, mv);
 
             if (exp instanceof Bool || exp instanceof Char || exp instanceof JInteger) {
                 System.out.println("[Return] Inserting IRETURN");
