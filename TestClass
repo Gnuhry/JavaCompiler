@@ -17,10 +17,14 @@ class Test{
 	  i = 3;
 	  i = new Test();
 	  u.t;
+	  silas();
 	  super.method();
-	  this.test();
 	  while ("Test" == "Test") {}
 	  
 	  return "String"+ "Test";
+      }
+
+      String silas() {
+      	  return "BIER";
       }
 }

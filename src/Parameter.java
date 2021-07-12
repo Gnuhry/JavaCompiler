@@ -7,6 +7,6 @@ public class Parameter{
         this.params = params;
     }
 
-    //Kein typeCheck: Parameter von Methoden müssen nicht gleichen Type haben, also kann mMn kein Type der Parameter bestimmt werden.
+    //Kein typeCheck: Parameter von Methoden muessen nicht gleichen Type haben, also kann mMn kein Type der Parameter bestimmt werden.
     
 }
