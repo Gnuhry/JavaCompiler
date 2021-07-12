@@ -36,7 +36,7 @@ public class If extends Stmt {
     }
 
     public void codeGen(Class cl, MethodVisitor mv) {
-        System.out.println("Compiling If-Statement");
+        System.out.println("[If] Compiling If-Statement");
         Label end = new Label();
         Label else_label = new Label();
 
@@ -48,7 +48,7 @@ public class If extends Stmt {
         Label jump_label = elseStmt == null ? end : else_label;
 
         if (exp instanceof Binary){
-            System.out.println("instanceof Binary");
+            System.out.println("[If] Expr is instanceof Binary");
             Binary binaryExpression = (Binary) exp;
 
             switch (binaryExpression.operator){

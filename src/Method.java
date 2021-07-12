@@ -45,10 +45,13 @@ public class Method implements TypeInterface{
      * @param cw ClassWriter
      */
     public void codeGen(Class cl, ClassWriter cw) {
-        System.out.printf("Visiting: %s, returning %s\n", name, retty.name);
+        System.out.printf("[Method] Visiting: %s, returning %s\n", name, retty.name);
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
-//        mv.visitParameter();
+        for (Field f : para.params) {
+            System.out.println("[Method] Visition method parameter: " + f.name);
+            mv.visitParameter(f.name, Opcodes.ACC_PUBLIC);
+        }
 
         mv.visitCode();
         System.out.println("[Method] Class name: " + stmt.getClass().getName());
