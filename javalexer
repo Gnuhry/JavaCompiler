@@ -18,6 +18,7 @@ string = \"([^\"]|\\\")+[^\\]\"|\"\"
 
 %%
 class { System.out.println("Class: " + yytext()); return new CLASS(); }
+if { return new IF(); }
 else { return new ELSE(); }
 null { return new JNULL(); }
 new { return new NEW(); }
