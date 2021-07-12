@@ -2,12 +2,216 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="0.0" y="420.0">New</node>
+    <node x="604.0" y="420.0">InstVar</node>
+    <node x="302.0" y="398.0">MethodCall</node>
+    <node x="5436.0" y="431.0">StmtExprStmt</node>
+    <node x="5436.0" y="168.0">Stmt</node>
+    <node x="2718.0" y="431.0">JInteger</node>
+    <node x="5738.0" y="136.0">Field</node>
+    <node x="2416.0" y="473.0">Super</node>
+    <node x="1208.0" y="431.0">Bool</node>
+    <node x="1812.0" y="431.0">Char</node>
+    <node x="1510.0" y="473.0">Jnull</node>
+    <node x="3926.0" y="431.0">LocalOrFieldVar</node>
+    <node x="6342.0" y="420.0">LocalVarDecl</node>
+    <node x="2114.0" y="473.0">This</node>
+    <node x="3926.0" y="0.0">TypeInterface</node>
+    <node x="6040.0" y="473.0">EmptyStmt</node>
+    <node x="4832.0" y="420.0">Return</node>
+    <node x="458.15590013434803" y="168.0">StmtExpr</node>
+    <node x="4077.0" y="114.0">Method</node>
+    <node x="5738.0" y="420.0">While</node>
+    <node x="3624.0" y="420.0">Unary</node>
+    <node x="0.0" y="647.0">Type</node>
+    <node x="2718.0" y="168.0">Expr</node>
+    <node x="3020.0" y="431.0">StmtExprExpr</node>
+    <node x="5134.0" y="431.0">Block</node>
+    <node x="217.0" y="647.0">Parameter</node>
+    <node x="1533.498656515898" y="114.0">Class</node>
+    <node x="906.0" y="420.0">Assign</node>
+    <node x="3322.0" y="409.0">Binary</node>
+    <node x="4228.0" y="431.0">JString</node>
+    <node x="4530.0" y="398.0">If</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="0.0" y="0.0" />
+  <edges>
+    <edge source="New" target="StmtExpr">
+      <point x="0.0" y="-80.0" />
+      <point x="141.0" y="368.0" />
+      <point x="493.40590013434803" y="368.0" />
+      <point x="-105.75" y="48.0" />
+    </edge>
+    <edge source="Return" target="Stmt">
+      <point x="0.0" y="-80.0" />
+      <point x="4973.0" y="368.0" />
+      <point x="5496.428571428572" y="368.0" />
+      <point x="-80.57142857142844" y="48.0" />
+    </edge>
+    <edge source="Jnull" target="Expr">
+      <point x="0.0" y="-27.0" />
+      <point x="1651.0" y="348.0" />
+      <point x="2756.4545454545455" y="348.0" />
+      <point x="-102.5454545454545" y="48.0" />
+    </edge>
+    <edge source="StmtExprExpr" target="Expr">
+      <point x="0.0" y="-69.0" />
+      <point x="3161.0" y="378.0" />
+      <point x="2884.6363636363635" y="378.0" />
+      <point x="25.636363636363512" y="48.0" />
+    </edge>
+    <edge source="LocalVarDecl" target="Stmt">
+      <point x="0.0" y="-80.0" />
+      <point x="6483.0" y="358.0" />
+      <point x="5697.857142857143" y="358.0" />
+      <point x="120.85714285714312" y="48.0" />
+    </edge>
+    <edge source="Unary" target="Expr">
+      <point x="0.0" y="-80.0" />
+      <point x="3765.0" y="358.0" />
+      <point x="2935.909090909091" y="358.0" />
+      <point x="76.90909090909099" y="48.0" />
+    </edge>
+    <edge source="Method" target="TypeInterface">
+      <point x="0.0" y="-102.0" />
+      <point x="4218.0" y="94.0" />
+      <point x="4090.5" y="94.0" />
+      <point x="23.5" y="27.0" />
+    </edge>
+    <edge source="EmptyStmt" target="Stmt">
+      <point x="0.0" y="-27.0" />
+      <point x="6181.0" y="368.0" />
+      <point x="5657.571428571428" y="368.0" />
+      <point x="80.57142857142844" y="48.0" />
+    </edge>
+    <edge source="Char" target="Expr">
+      <point x="-2.2737367544323206E-13" y="-69.0" />
+      <point x="1952.9999999999998" y="358.0" />
+      <point x="2782.090909090909" y="358.0" />
+      <point x="-76.90909090909099" y="48.0" />
+    </edge>
+    <edge source="Assign" target="StmtExpr">
+      <point x="0.0" y="-80.0" />
+      <point x="1047.0" y="368.0" />
+      <point x="704.905900134348" y="368.0" />
+      <point x="105.75" y="48.0" />
+    </edge>
+    <edge source="If" target="Stmt">
+      <point x="0.0" y="-102.0" />
+      <point x="4671.0" y="358.0" />
+      <point x="5456.142857142857" y="358.0" />
+      <point x="-120.85714285714312" y="48.0" />
+    </edge>
+    <edge source="Expr" target="TypeInterface">
+      <point x="0.0" y="-48.0" />
+      <point x="2859.0" y="94.0" />
+      <point x="4043.5" y="94.0" />
+      <point x="-23.5" y="27.0" />
+    </edge>
+    <edge source="This" target="Expr">
+      <point x="0.0" y="-27.0" />
+      <point x="2255.0" y="368.0" />
+      <point x="2807.7272727272725" y="368.0" />
+      <point x="-51.27272727272748" y="48.0" />
+    </edge>
+    <edge source="LocalOrFieldVar" target="Expr">
+      <point x="0.0" y="-69.0" />
+      <point x="4067.0" y="348.0" />
+      <point x="2961.5454545454545" y="348.0" />
+      <point x="102.5454545454545" y="48.0" />
+    </edge>
+    <edge source="Field" target="TypeInterface">
+      <point x="0.0" y="-80.0" />
+      <point x="5879.0" y="74.0" />
+      <point x="4184.5" y="74.0" />
+      <point x="117.5" y="27.0" />
+    </edge>
+    <edge source="MethodCall" target="StmtExpr">
+      <point x="0.0" y="-102.0" />
+      <point x="443.0" y="378.0" />
+      <point x="563.905900134348" y="378.0" />
+      <point x="-35.25" y="48.0" />
+    </edge>
+    <edge source="StmtExprStmt" target="Stmt">
+      <point x="0.0" y="-69.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="Binary" target="Expr">
+      <point x="0.0" y="-91.0" />
+      <point x="3463.0" y="368.0" />
+      <point x="2910.272727272727" y="368.0" />
+      <point x="51.272727272727025" y="48.0" />
+    </edge>
+    <edge source="Super" target="Expr">
+      <point x="0.0" y="-27.0" />
+      <point x="2557.0" y="378.0" />
+      <point x="2833.3636363636365" y="378.0" />
+      <point x="-25.636363636363512" y="48.0" />
+    </edge>
+    <edge source="Block" target="Stmt">
+      <point x="0.0" y="-69.0" />
+      <point x="5275.0" y="378.0" />
+      <point x="5536.714285714285" y="378.0" />
+      <point x="-40.285714285714675" y="48.0" />
+    </edge>
+    <edge source="InstVar" target="StmtExpr">
+      <point x="0.0" y="-80.0" />
+      <point x="745.0" y="378.0" />
+      <point x="634.405900134348" y="378.0" />
+      <point x="35.25" y="48.0" />
+    </edge>
+    <edge source="StmtExpr" target="TypeInterface">
+      <point x="0.0" y="-48.0" />
+      <point x="599.155900134348" y="74.0" />
+      <point x="3949.5" y="74.0" />
+      <point x="-117.5" y="27.0" />
+    </edge>
+    <edge source="Stmt" target="TypeInterface">
+      <point x="0.0" y="-48.0" />
+      <point x="5577.0" y="84.0" />
+      <point x="4137.5" y="84.0" />
+      <point x="70.5" y="27.0" />
+    </edge>
+    <edge source="Bool" target="Expr">
+      <point x="0.0" y="-69.0" />
+      <point x="1349.0" y="338.0" />
+      <point x="2730.818181818182" y="338.0" />
+      <point x="-128.18181818181802" y="48.0" />
+    </edge>
+    <edge source="JString" target="Expr">
+      <point x="0.0" y="-69.0" />
+      <point x="4369.0" y="338.0" />
+      <point x="2987.181818181818" y="338.0" />
+      <point x="128.18181818181802" y="48.0" />
+    </edge>
+    <edge source="Class" target="TypeInterface">
+      <point x="0.0" y="-102.0" />
+      <point x="1678.998656515898" y="84.0" />
+      <point x="3996.5" y="84.0" />
+      <point x="-70.5" y="27.0" />
+    </edge>
+    <edge source="While" target="Stmt">
+      <point x="0.0" y="-80.0" />
+      <point x="5879.0" y="378.0" />
+      <point x="5617.285714285715" y="378.0" />
+      <point x="40.285714285714675" y="48.0" />
+    </edge>
+    <edge source="JInteger" target="Expr">
+      <point x="0.0" y="-69.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5191740412979351" x="1336.0" y="196.5" />
   <SelectedNodes />
-  <Categories />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 
