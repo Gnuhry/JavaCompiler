@@ -17,14 +17,14 @@ public class JString extends Expr{
     }
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        // Ist die interne Darstellung für den String-Typen
-        // Kann sein dass es auch nur "string" ist
-        return new Type("java/lang/String");
+        // TODO Muss evt. durch java/lang/String ausgetauscht werden
+        // Problem: Irgendwo kommt manchmal auch Objekte mit Typ "String" ohne Pfadangabe her
+        // Idee: In der Type-Klasse
+        return new Type("String");
     }
 
     @Override
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        // TODO java.lang.String statt String
         mv.visitLdcInsn(st);
 
         System.out.println("[JString] Pushing string to stack: " + st);

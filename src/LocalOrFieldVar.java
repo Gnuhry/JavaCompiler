@@ -19,10 +19,9 @@ public class LocalOrFieldVar extends Expr {
     
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        if (thisClass.fields.stream().anyMatch(f -> f.name.equals(name))) {
+        if (thisClass.fields.stream().anyMatch(f -> f.name.equals(this.name))) {
             return new Type("fieldVar");
-//        } else if (localVars.contains(name)) {
-        } else if (localVars.stream().anyMatch(f -> f.name.equals(name))) {
+        } else if (localVars.stream().anyMatch(f -> f.name.equals(this.name))) {
             return new Type("localVar");
         } else {
             throw new RuntimeException("Typecheck Error");
@@ -31,6 +30,9 @@ public class LocalOrFieldVar extends Expr {
 
     @Override
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+        System.out.println("[LocalOrFieldVar] Accessing LOrFVar: " + this.name);
+
+
         if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.name);
             System.out.println("[LocalOrFieldVar] Accessing LocalVar: " + f.ty.name);

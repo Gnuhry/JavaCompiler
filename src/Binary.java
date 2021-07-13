@@ -11,7 +11,6 @@ import org.objectweb.asm.Opcodes;
 public class Binary extends Expr {
 
     // Operatoren - Mathematische Operatoren, Vergleichsoperatoren, Boolsche Operatoren
-    // TODO Klären, ob bitweise Operatoren benötigt werden
     java.lang.String operator;
     Expr expr1;
     Expr expr2;

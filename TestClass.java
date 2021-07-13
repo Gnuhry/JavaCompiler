@@ -16,7 +16,7 @@ class TestClass{
         }
         t = t;
         Object o;
-        t = null;
+        t = "null";
         t = "5head";
         c = 'X';
         o = new Object();

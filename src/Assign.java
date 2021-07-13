@@ -21,42 +21,86 @@ public class Assign extends StmtExpr {
         this.ex = ex;
     }
 
+    /**
+     * Typechecking-Methode
+     *
+     * Gibt in diesem Fall entweder "fieldVar" oder "localVar" zurück.
+     * Wird nur benötigt um zu unterscheiden, ob man einen Wert zu einem Feld
+     * oder zu einer lokalen Variable zuweist.
+     *
+     * @param localVars Liste mit allen lokalen Variablen zu einer Methode
+     * @param thisClass Die zu kompilierende Klasse
+     * @return Entweder "fieldVar" oder "localVar"
+     */
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
 
-        if(fieldOrVar.typeCheck(localVars, thisClass).equals(ex.typeCheck(localVars, thisClass))) {
-            return fieldOrVar.typeCheck(localVars, thisClass);
+        String varType = fieldOrVar.typeCheck(localVars, thisClass).name;
+        String expType = ex.typeCheck(localVars, thisClass).name;
+
+        // Fall: Expression ist lokale Variable oder Feld
+        // ex.typeCheck() würde hier "fieldVar" oder "localVar" zurückgeben und nicht den
+        // "richtigen Datentyp" der Variable bzw. des Feldes.
+        // Muss man stattdessen erst ein Field-Objekt draus machen und davon den Typ nehmen
+        if (ex instanceof LocalOrFieldVar) {
+            if (expType.equals("fieldVar")) {
+                expType = thisClass.findFieldByName(((LocalOrFieldVar) ex).name).ty.name;
+            } else if (expType.equals("localVar")) {
+                expType = Method.findLocalVarByName(((LocalOrFieldVar) ex).name, localVars).ty.name;
+            }
         }
-        throw new RuntimeException("Typecheck Error");
+
+
+        if (varType.equals("fieldVar")) {
+            Field f = thisClass.findFieldByName(fieldOrVar.name);
+
+
+
+            System.out.println("1 - " + f);
+            // Wenn wir es mit einem Feld zu tun haben, müssen wir prüfen, ob das Feld
+            // den selben Typ hat wie das Ergebnis der Expression, welches wir zuweisen wollen
+            System.out.println(f.ty.name);
+            System.out.println(ex.typeCheck(localVars, thisClass).name);
+
+            if (f != null && f.ty.name.equals(expType)) {
+                return new Type("fieldVar");
+            }
+        } else if (varType.equals("localVar")) {
+            Field f = Method.findLocalVarByName(fieldOrVar.name, localVars);
+            System.out.println("2 - " + f);
+            System.out.println(f.ty.name);
+            System.out.println(ex.typeCheck(localVars, thisClass).name);
+            // Ähnlich mit lokalen Variablen
+            if (f != null && f.ty.name.equals(expType)) {
+                return new Type("localVar");
+            }
+        }
+
+        // Falls Typecheck fehlschlägt
+        throw new RuntimeException("Typecheck Error, Type1: " +
+                fieldOrVar.typeCheck(localVars, thisClass).name +
+                ", Type2: " +
+                ex.typeCheck(localVars, thisClass).name);
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
-//        typeCheck()
-        System.out.println("[Assign] Assign: " + fieldOrVar.name);
+        System.out.println("[Assign] Type of expression: " + ex.typeCheck(meth.localVars, cl).name);
 
-        // ---- Temporärer Wert ----
-        // Wenn man einen Wert (= Ergebnis einer Expression) in eine lokale
-        // Variable packen will (Felder/Klassenvariablen werden anders behandelt)
-        // muss man einen Index für die Variable im Code angeben.
-        // Der Index 0 ist immer 'this', die erste erstellte Variable ist 1...
-        // TODO Wie komme ich an den richtigen Index der Variable?
-        int index = 0;
-
-
-        // Für den Fall: 'var' ist lokale Variable
-        if (ex instanceof Bool || ex instanceof Char || ex instanceof JInteger) {
-            mv.visitVarInsn(Opcodes.ISTORE, index);
-        } else {
-            mv.visitVarInsn(Opcodes.ASTORE, index);
+        if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
+            Field f = meth.findLocalVarByName(this.fieldOrVar.name);
+            System.out.println("[Assign] Assigning to LocalVar: " + f.ty.name);
+            System.out.println("[Assign] Type of field: " + f.ty.name);
+            switch (f.ty.name) {
+                case "boolean":
+                case "int":
+                case "char": mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f)); break;
+                default:  mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
+            }
+        } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
+            Field f = cl.findFieldByName(this.fieldOrVar.name);
+            System.out.println("[Assign] Assigning to Field: " + f.ty.name);
+            mv.visitFieldInsn(Opcodes.PUTFIELD, cl.ty.name, f.name, f.ty.getTypeDescriptor());
         }
-
-
-        // Für den Fall: 'var' ist Feld bzw. Klassenvariable
-        // Hier muss man dazu den Owner (Name der Klasse, wo sie definiert ist)
-        // und den Descriptor (interne Beschreibung des Datentyps angeben)
-        // TODO Wie komme ich an den Owner des Felds?
-        // TODO Wie komme ich an den Descriptor des Felds?
-        mv.visitFieldInsn(Opcodes.PUTFIELD, cl.ty.name, fieldOrVar.name, "I");
     }
 }

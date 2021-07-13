@@ -16,7 +16,7 @@ public class JInteger extends Expr{
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return new Type("integer");
+        return new Type("int");
     }
     
     // Siehe Hinweise bei der Klasse 'Bool'

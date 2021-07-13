@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -30,7 +31,12 @@ public class Method implements TypeInterface{
     // richtige Variable bzw. den richtigen Parameter zuzugreifen
     List<Field> localVars;
 
-    // TODO Liste mit Variablen und deren Index
+    // Speichere den Anfang und das Ende der Methode in einem Label
+    // Wird benötigt, um bei der Definition von lokalen Variablen den
+    // Scope zu definieren.
+    // Hack: Aktuell wäre eine lokale Variable in der gesamten Methode gültig, egal wo sie definiert wird.
+    Label startLabel;
+    Label endLabel;
 
     public Method(Type retty, java.lang.String name, Parameter para, Stmt stmt) {
         this.retty = retty;
@@ -58,6 +64,11 @@ public class Method implements TypeInterface{
         // obviously den selben Typ die die umschließende Klasse
         localVars.add(new Field(cl.ty, "this"));
 
+        startLabel = new Label();
+        endLabel = new Label();
+        mv.visitLabel(startLabel);
+        // TODO Prüfen: Muss this auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
+
         for (Field f : para.params) {
             System.out.println("[Method] Visition method parameter: " + f.name);
 
@@ -65,17 +76,41 @@ public class Method implements TypeInterface{
             // Die benötigen für den Zugriff auch einen Index
             localVars.add(f);
             mv.visitParameter(f.name, Opcodes.ACC_PUBLIC);
+            // TODO Prüfen: Müssen Parameter auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
         }
 
         mv.visitCode();
         System.out.println("[Method] Class name: " + stmt.getClass().getName());
         stmt.codeGen(cl, this, mv);
+        mv.visitLabel(endLabel);
         mv.visitMaxs(0,0);
         mv.visitEnd();
     }
 
+    /**
+     * Hole die lokale Variable mit dem entsprechenden Namen
+     *
+     * Es wird in der Liste gesucht, welche sich im Method-Objekt befindet.
+     *
+     * @param name Name der lokalen Variable
+     * @return Lokale Variable als Field-Objekt, ansonsten null.
+     *         Null dürfte eigentlich nicht auftreten.
+     */
     public Field findLocalVarByName(String name) {
-        for (Field f : localVars) {
+        return findLocalVarByName(name, this.localVars);
+    }
+    /**
+     * Hole die lokale Variable mit dem entsprechenden Namen
+     *
+     * Es wird in der Liste gesucht, welche der Methode übergeben wird.
+     *
+     * @param name Name der lokalen Variable
+     * @param localVarList Liste mit lokalen Variablen
+     * @return Lokale Variable als Field-Objekt, ansonsten null.
+     *         Null dürfte eigentlich nicht auftreten.
+     */
+    public static Field findLocalVarByName(String name, List<Field> localVarList) {
+        for (Field f : localVarList) {
             if (f.name.equals(name))
                 return f;
         }
