@@ -10,7 +10,7 @@ import org.objectweb.asm.Opcodes;
  */
 public class Assign extends StmtExpr {
 
-    // Lokale Variable bzw. Feld, in welchem etwas gespiechert werden soll
+    // Lokale Variable bzw. Feld, in welchem etwas gespeichert werden soll
     LocalOrFieldVar fieldOrVar;
 
     // Expression, dessen Ergebnis der Variable bzw. Feld zugewiesen wird
@@ -83,10 +83,22 @@ public class Assign extends StmtExpr {
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
         System.out.println("[Assign] Type of expression: " + expr.typeCheck(meth.localVars, cl).name);
+        String varType = typeCheck(meth.localVars, cl).name;
+
+        // Wenn es sich um ein Feld handelt, muss man noch das Objekt auf den Stack pushen,
+        // in welchem sich das jeweilige Feld befindet.
+        // In unserem Fall wird das meistens "this" sein.
+        // Mit diesem Hack sollte es allerdings nicht möglich sein, auf die Felder anderer Objekte
+        // zuzugreifen und wenn man was als "this.irgendwas" schreibt kanns sein dass es net geht
+        // TODO Hack entfernen?
+        if (varType.equals("fieldVar")) {
+            System.out.println("[Assign] visitVarInsn(ALOAD) (HACK!)");
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+        }
 
         expr.codeGen(cl, meth, mv);
 
-        if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
+        if (varType.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.fieldOrVar.name);
             System.out.println("[Assign] Assigning to LocalVar: " + f.type.name);
             System.out.println("[Assign] Type of field: " + f.type.name);
@@ -102,7 +114,7 @@ public class Assign extends StmtExpr {
                     mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
             }
             System.out.println("Index: " + meth.localVars.indexOf(f));
-        } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
+        } else if (varType.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.fieldOrVar.name);
             System.out.println("[Assign] Assigning to Field: " + f.type.name);
             System.out.println("[Assign] visitFieldInsn(PUTFIELD)");

@@ -24,7 +24,7 @@ public class Char extends Expr{
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         // Datentyp Char ist 1 Byte lang, BIPUSH packt 1 Byte auf den Stack
 
-        System.out.println("[Char] visitIntInsn(BIPUSH)");
+        System.out.println("[Char] visitIntInsn(BIPUSH): '" + ch + "'");
         mv.visitIntInsn(Opcodes.BIPUSH, ch);
 
         System.out.println("[Char] Pushing char to stack: " + ch);

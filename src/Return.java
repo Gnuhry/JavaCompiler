@@ -31,12 +31,33 @@ public class Return extends Stmt {
             System.out.println("[Return] Capsuled Expression: " + expr.getClass().getName());
             expr.codeGen(cl, meth, mv);
 
-            if (expr instanceof Bool || expr instanceof Char || expr instanceof JInteger) {
-                System.out.println("[Return] visitInsn(IRETURN)");
-                mv.visitInsn(Opcodes.IRETURN);
-            } else {
-                System.out.println("[Return] visitInsn(ARETURN)");
-                mv.visitInsn(Opcodes.ARETURN);
+            // Bei Return ist es wichtig, den Typ zu kennen
+            String returnType = expr.typeCheck(meth.localVars, cl).name;
+
+            // Falls Expr eine Variable oder Feld ist, muss der genaue Datentyp
+            // bestimmt werden
+            // TODO Der Kram muss dringend vereinfacht/ausgelagert werden
+            if (expr instanceof LocalOrFieldVar) {
+                LocalOrFieldVar lOrFieldVar = (LocalOrFieldVar) expr;
+                if (returnType.equals("localVar")) {
+                    Field f = meth.findLocalVarByName(lOrFieldVar.name);
+                    returnType = f.type.name;
+                } else if (returnType.equals("fieldVar")) {
+                    Field f = cl.findFieldByName(lOrFieldVar.name);
+                    returnType = f.type.name;
+                }
+            }
+
+            switch (returnType) {
+                case "boolean":
+                case "int":
+                case "char":
+                    System.out.println("[Return] visitInsn(IRETURN)");
+                    mv.visitInsn(Opcodes.IRETURN);
+                    break;
+                default:
+                    System.out.println("[Return] visitInsn(ARETURN)");
+                    mv.visitInsn(Opcodes.ARETURN);
             }
         }
     }

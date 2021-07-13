@@ -27,11 +27,18 @@ public class While extends Stmt {
      * Darüber hinaus ist auch noch nicht klar, ob das überhaupt stimmt
      */
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+        System.out.println("[While] Compiling While-Loop");
         Label loop = new Label();
         Label end = new Label();
 
+        System.out.println("[While] visitLabel(loop)");
+        mv.visitLabel(loop);
+
         if (exp instanceof Binary){
             Binary binaryExpression = (Binary) exp;
+
+            binaryExpression.leftExpr.codeGen(cl, meth, mv);
+            binaryExpression.rightExpr.codeGen(cl, meth, mv);
 
             switch (binaryExpression.operator){
                 case "<":
@@ -68,12 +75,9 @@ public class While extends Stmt {
         // Man loopt ja sozusagen wieder zum Anfang und muss ja erneut prüfen,
         // ob unsere Bedingung weiterhin erfüllt ist
 
-        System.out.println("[While] visitLabel(loop)");
-        mv.visitLabel(loop);
-
         stmt.codeGen(cl, meth, mv);
 
-        System.out.println("[While] visitJumpInsn(GOTO)");
+        System.out.println("[While] visitJumpInsn(GOTO): loop");
         mv.visitJumpInsn(Opcodes.GOTO, loop);
 
         System.out.println("[While] visitLabel(end)");

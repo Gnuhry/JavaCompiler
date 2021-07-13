@@ -31,7 +31,7 @@ public class New extends StmtExpr{
 
         // TODO Das scheint mir hier noch alles etwas suspekt
 
-        System.out.println("[New] visitTypeInsn(NEW)");
+        System.out.println("[New] visitTypeInsn(NEW): " + type.name);
         mv.visitTypeInsn(Opcodes.NEW, type.name);
 
         System.out.println("[New] visitInsn(DUP)");

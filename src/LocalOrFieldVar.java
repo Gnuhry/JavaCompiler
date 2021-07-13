@@ -50,6 +50,16 @@ public class LocalOrFieldVar extends Expr {
             Field f = cl.findFieldByName(this.name);
             System.out.println("[LocalOrFieldVar] Field has type: " + f.type.name);
             System.out.println("[LocalOrFieldVar] visitFieldInsn(GETFIELD)");
+
+            // Wenn es sich um ein Feld handelt, muss man noch das Objekt auf den Stack pushen,
+            // in welchem sich das jeweilige Feld befindet.
+            // In unserem Fall wird das meistens "this" sein.
+            // Mit diesem Hack sollte es allerdings nicht möglich sein, auf die Felder anderer Objekte
+            // zuzugreifen und wenn man was als "this.irgendwas" schreibt kanns sein dass es net geht
+            // TODO Hack entfernen?
+            System.out.println("[LocalOrFieldVar] visitVarInsn(ALOAD) (HACK!)");
+            mv.visitVarInsn(Opcodes.ALOAD, 0);
+
             mv.visitFieldInsn(Opcodes.GETFIELD, cl.type.name, this.name, f.type.getTypeDescriptor());
         }
     }

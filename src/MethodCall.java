@@ -53,7 +53,9 @@ public class MethodCall extends StmtExpr {
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
         // Kontruktor benötigt Opcode INVOKESPECIAL, ansonsten INVOKEVIRTUAL
-        int opcode = methodName.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
+        //int opcode = methodName.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
+
+        int opcode = Opcodes.INVOKEVIRTUAL;
 
         // Diese Implementierung hat einen sehr großen Nachteil:
         // Es lassen sich nur Methoden der eigenen Klasse aufrufen
@@ -62,7 +64,7 @@ public class MethodCall extends StmtExpr {
         String descriptor = cl.findMethodByName(methodName).getTypeDescriptor();
 
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist
-        System.out.println("[MethodCall] visitMethodInsn()");
+        System.out.println("[MethodCall] visitMethodInsn(INVOKEVIRTUAL): " + methodName);
         mv.visitMethodInsn(opcode, cl.type.name, methodName, descriptor, false);
     }
 

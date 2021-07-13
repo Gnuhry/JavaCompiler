@@ -76,7 +76,7 @@ public class Method implements TypeInterface{
             // Vor den lokalen Variablen kommen Parameter
             // Die benötigen für den Zugriff auch einen Index
             localVars.add(f);
-            System.out.println("[Method] visitParameter()");
+            System.out.println("[Method] visitParameter(): " + f.name);
             mv.visitParameter(f.name, Opcodes.ACC_FINAL);
             // TODO Prüfen: Müssen Parameter auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
         }

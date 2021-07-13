@@ -25,7 +25,7 @@ public class JString extends Expr{
 
     @Override
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        System.out.println("[JString] visitLdcInsn(string)");
+        System.out.println("[JString] visitLdcInsn(string): \"" + string + "\"");
         mv.visitLdcInsn(string);
 
         System.out.println("[JString] Pushing string to stack: " + string);
