@@ -84,6 +84,8 @@ public class Assign extends StmtExpr {
 
         System.out.println("[Assign] Type of expression: " + expr.typeCheck(meth.localVars, cl).name);
 
+        expr.codeGen(cl, meth, mv);
+
         if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.fieldOrVar.name);
             System.out.println("[Assign] Assigning to LocalVar: " + f.type.name);
