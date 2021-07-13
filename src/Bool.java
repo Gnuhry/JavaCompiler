@@ -13,10 +13,10 @@ import org.objectweb.asm.Opcodes;
  * Status: Unsicher
  */
 public class Bool extends Expr{
-    boolean bo;
+    boolean bool;
 
-    public Bool(boolean bo) {
-        this.bo = bo;
+    public Bool(boolean bool) {
+        this.bool = bool;
     }
     
     @Override
@@ -25,11 +25,11 @@ public class Bool extends Expr{
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        if (bo)
+        if (bool)
             mv.visitInsn(Opcodes.ICONST_1);
         else
             mv.visitInsn(Opcodes.ICONST_0);
 
-        System.out.println("[Bool] Pushing boolean to stack: " + bo);
+        System.out.println("[Bool] Pushing boolean to stack: " + bool);
     }
 }

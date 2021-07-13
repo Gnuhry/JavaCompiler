@@ -21,36 +21,36 @@ import java.util.Vector;
  */
 public class Class implements TypeInterface{
 
-    Type ty;
+    Type type;
     Vector<Field> fields;
-    Vector<Method> meth;
+    Vector<Method> methods;
 
-    public Class(Type ty, Vector<Field> fields, Vector<Method> meth) {
-        this.ty = ty;
+    public Class(Type type, Vector<Field> fields, Vector<Method> methods) {
+        this.type = type;
         this.fields = fields;
-        this.meth = meth;
+        this.methods = methods;
         codeGen();
     }
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return ty;
+        return type;
     }
 
     public void codeGen() {
-        System.out.println("[Class] Start class compilation: " + ty.name);
+        System.out.println("[Class] Start class compilation: " + type.name);
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, ty.name, null, "java/lang/Object", null);
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, type.name, null, "java/lang/Object", null);
 
         System.out.println("[Class] Compiling fields");
         for(Field field : fields) {
-            System.out.printf("[Class] Now compiling field: %s, Typ: %s\n", field.name, field.ty.name);
+            System.out.printf("[Class] Now compiling field: %s, Typ: %s\n", field.name, field.type.name);
             field.codeGen(this, cw);
         }
 
         System.out.println("[Class] Compiling methods");
-        for(Method m : meth) {
+        for(Method m : methods) {
             System.out.println("--------------------");
             System.out.printf("[Class] Now compiling method: %s\n", m.name);
             m.codeGen(this, cw);
@@ -75,7 +75,7 @@ public class Class implements TypeInterface{
      * @return Methoden-Objekt, ansonsten null. Null dürfte eigentlich nicht auftreten.
      */
     public Method findMethodByName(String name) {
-        for (Method m : meth) {
+        for (Method m : methods) {
             if (m.name.equals(name))
                 return m;
         }

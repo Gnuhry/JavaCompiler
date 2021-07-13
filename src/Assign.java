@@ -14,11 +14,11 @@ public class Assign extends StmtExpr {
     LocalOrFieldVar fieldOrVar;
 
     // Expression, dessen Ergebnis der Variable bzw. Feld zugewiesen wird
-    Expr ex;
+    Expr expr;
 
-    public Assign(LocalOrFieldVar fieldOrVar, Expr ex) {
+    public Assign(LocalOrFieldVar fieldOrVar, Expr expr) {
         this.fieldOrVar = fieldOrVar;
-        this.ex = ex;
+        this.expr = expr;
     }
 
     /**
@@ -36,17 +36,17 @@ public class Assign extends StmtExpr {
     public Type typeCheck(List<Field> localVars, Class thisClass) {
 
         String varType = fieldOrVar.typeCheck(localVars, thisClass).name;
-        String expType = ex.typeCheck(localVars, thisClass).name;
+        String expType = expr.typeCheck(localVars, thisClass).name;
 
         // Fall: Expression ist lokale Variable oder Feld
         // ex.typeCheck() würde hier "fieldVar" oder "localVar" zurückgeben und nicht den
         // "richtigen Datentyp" der Variable bzw. des Feldes.
         // Muss man stattdessen erst ein Field-Objekt draus machen und davon den Typ nehmen
-        if (ex instanceof LocalOrFieldVar) {
+        if (expr instanceof LocalOrFieldVar) {
             if (expType.equals("fieldVar")) {
-                expType = thisClass.findFieldByName(((LocalOrFieldVar) ex).name).ty.name;
+                expType = thisClass.findFieldByName(((LocalOrFieldVar) expr).name).type.name;
             } else if (expType.equals("localVar")) {
-                expType = Method.findLocalVarByName(((LocalOrFieldVar) ex).name, localVars).ty.name;
+                expType = Method.findLocalVarByName(((LocalOrFieldVar) expr).name, localVars).type.name;
             }
         }
 
@@ -59,19 +59,19 @@ public class Assign extends StmtExpr {
             System.out.println("1 - " + f);
             // Wenn wir es mit einem Feld zu tun haben, müssen wir prüfen, ob das Feld
             // den selben Typ hat wie das Ergebnis der Expression, welches wir zuweisen wollen
-            System.out.println(f.ty.name);
-            System.out.println(ex.typeCheck(localVars, thisClass).name);
+            System.out.println(f.type.name);
+            System.out.println(expr.typeCheck(localVars, thisClass).name);
 
-            if (f != null && f.ty.name.equals(expType)) {
+            if (f != null && f.type.name.equals(expType)) {
                 return new Type("fieldVar");
             }
         } else if (varType.equals("localVar")) {
             Field f = Method.findLocalVarByName(fieldOrVar.name, localVars);
             System.out.println("2 - " + f);
-            System.out.println(f.ty.name);
-            System.out.println(ex.typeCheck(localVars, thisClass).name);
+            System.out.println(f.type.name);
+            System.out.println(expr.typeCheck(localVars, thisClass).name);
             // Ähnlich mit lokalen Variablen
-            if (f != null && f.ty.name.equals(expType)) {
+            if (f != null && f.type.name.equals(expType)) {
                 return new Type("localVar");
             }
         }
@@ -80,18 +80,18 @@ public class Assign extends StmtExpr {
         throw new RuntimeException("Typecheck Error, Type1: " +
                 fieldOrVar.typeCheck(localVars, thisClass).name +
                 ", Type2: " +
-                ex.typeCheck(localVars, thisClass).name);
+                expr.typeCheck(localVars, thisClass).name);
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
-        System.out.println("[Assign] Type of expression: " + ex.typeCheck(meth.localVars, cl).name);
+        System.out.println("[Assign] Type of expression: " + expr.typeCheck(meth.localVars, cl).name);
 
         if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.fieldOrVar.name);
-            System.out.println("[Assign] Assigning to LocalVar: " + f.ty.name);
-            System.out.println("[Assign] Type of field: " + f.ty.name);
-            switch (f.ty.name) {
+            System.out.println("[Assign] Assigning to LocalVar: " + f.type.name);
+            System.out.println("[Assign] Type of field: " + f.type.name);
+            switch (f.type.name) {
                 case "boolean":
                 case "int":
                 case "char": mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f)); break;
@@ -99,8 +99,8 @@ public class Assign extends StmtExpr {
             }
         } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.fieldOrVar.name);
-            System.out.println("[Assign] Assigning to Field: " + f.ty.name);
-            mv.visitFieldInsn(Opcodes.PUTFIELD, cl.ty.name, f.name, f.ty.getTypeDescriptor());
+            System.out.println("[Assign] Assigning to Field: " + f.type.name);
+            mv.visitFieldInsn(Opcodes.PUTFIELD, cl.type.name, f.name, f.type.getTypeDescriptor());
         }
     }
 }

@@ -14,27 +14,27 @@ import org.objectweb.asm.MethodVisitor;
  * Laut Folien kann StmtExprStmt ein Assign kapseln (?)
  */
 public class StmtExprStmt extends Stmt{
-    StmtExpr expr;
+    StmtExpr stmtExpr;
 
-    public StmtExprStmt(StmtExpr expr) {
-        this.expr = expr;
+    public StmtExprStmt(StmtExpr stmtExpr) {
+        this.stmtExpr = stmtExpr;
     }
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return expr.typeCheck(localVars, thisClass);
+        return stmtExpr.typeCheck(localVars, thisClass);
     }
 
     @Override
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        if (expr == null) {
+        if (stmtExpr == null) {
             System.out.println("[StmtExprStmt] => Null");
         } else {
-            System.out.println("[StmtExprStmt] => Capsuled statement type: " + expr.getClass().getName());
+            System.out.println("[StmtExprStmt] => Capsuled statement type: " + stmtExpr.getClass().getName());
 //            expr.codeGen(cl, mv);
         }
 
-        if (expr != null) {
-            expr.codeGen(cl, meth, mv);
+        if (stmtExpr != null) {
+            stmtExpr.codeGen(cl, meth, mv);
         }
     }
 }

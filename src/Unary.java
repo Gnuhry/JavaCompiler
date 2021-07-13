@@ -10,11 +10,11 @@ import org.objectweb.asm.MethodVisitor;
  * Oder auch ++, -- und ! (not)
  */
 public class Unary extends Expr{
-    java.lang.String st;
+    java.lang.String operation;
     Expr expr;
 
-    public Unary(java.lang.String st, Expr expr) {
-        this.st = st;
+    public Unary(java.lang.String operation, Expr expr) {
+        this.operation = operation;
         this.expr = expr;
     }
 

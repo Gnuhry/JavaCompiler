@@ -9,27 +9,28 @@ import org.objectweb.asm.Opcodes;
  * Status: Vermutlich vollständig
  */
 public class Return extends Stmt {
-    Expr exp;
+    Expr expr;
 
-    public Return(Expr exp) {
-        this.exp = exp;
+    public Return(Expr expr) {
+        this.expr = expr;
     }
 
     public Return() {
     }
+    
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return exp.typeCheck(localVars, thisClass);
+        return expr.typeCheck(localVars, thisClass);
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        if (exp == null) {
+        if (expr == null) {
             mv.visitInsn(Opcodes.RETURN);
         } else {
-            System.out.println("[Return] Capsuled Expression: " + exp.getClass().getName());
-            exp.codeGen(cl, meth, mv);
+            System.out.println("[Return] Capsuled Expression: " + expr.getClass().getName());
+            expr.codeGen(cl, meth, mv);
 
-            if (exp instanceof Bool || exp instanceof Char || exp instanceof JInteger) {
+            if (expr instanceof Bool || expr instanceof Char || expr instanceof JInteger) {
                 System.out.println("[Return] Inserting IRETURN");
                 mv.visitInsn(Opcodes.IRETURN);
             } else {

@@ -10,17 +10,17 @@ import org.objectweb.asm.Opcodes;
  * Status: Unsicher
  */
 public class If extends Stmt {
-    Expr exp;
+    Expr expr;
     Stmt stmt;
     Stmt elseStmt;
 
-    public If(Expr exp, Stmt stmt) {
-        this.exp = exp;
+    public If(Expr expr, Stmt stmt) {
+        this.expr = expr;
         this.stmt = stmt;
     }
 
-    public If(Expr exp, Stmt stmt, Stmt elseStmt) {
-        this.exp = exp;
+    public If(Expr expr, Stmt stmt, Stmt elseStmt) {
+        this.expr = expr;
         this.stmt = stmt;
         this.elseStmt = elseStmt;
     }
@@ -28,7 +28,7 @@ public class If extends Stmt {
     @Override
     public
     Type typeCheck(List<Field> localVars, Class thisClass) {
-        if(exp.typeCheck(localVars, thisClass).equals(new Type("boolean"))){
+        if(expr.typeCheck(localVars, thisClass).equals(new Type("boolean"))){
 			if(stmt.typeCheck(localVars, thisClass).equals(elseStmt.typeCheck(localVars, thisClass))){
 				return stmt.typeCheck(localVars, thisClass);
 			}
@@ -41,16 +41,16 @@ public class If extends Stmt {
         Label end = new Label();
         Label else_label = new Label();
 
-        exp.codeGen(cl, meth, mv);
+        expr.codeGen(cl, meth, mv);
 
         // Insert here?
 
         // Fall: If-Expression = false
         Label jump_label = elseStmt == null ? end : else_label;
 
-        if (exp instanceof Binary){
+        if (expr instanceof Binary){
             System.out.println("[If] Expr is instanceof Binary");
-            Binary binaryExpression = (Binary) exp;
+            Binary binaryExpression = (Binary) expr;
 
             switch (binaryExpression.operator){
                 case "<":
@@ -78,7 +78,7 @@ public class If extends Stmt {
                     System.out.println(">");
                     break;
             }
-        } else if(exp instanceof Bool) {
+        } else if(expr instanceof Bool) {
             mv.visitJumpInsn(Opcodes.IFEQ, jump_label);
         }
 

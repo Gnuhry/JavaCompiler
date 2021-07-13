@@ -24,11 +24,11 @@ public class InstVar extends StmtExpr{
     Expr expr;
 
     // Bezeichnung der Variable, auf welche zugegriffen wird
-    java.lang.String st;
+    java.lang.String name;
 
-    public InstVar(Expr expr, java.lang.String st) {
+    public InstVar(Expr expr, java.lang.String name) {
         this.expr = expr;
-        this.st = st;
+        this.name = name;
     }
 
     @Override

@@ -35,8 +35,8 @@ public class LocalOrFieldVar extends Expr {
 
         if (typeCheck(meth.localVars, cl).name.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.name);
-            System.out.println("[LocalOrFieldVar] Accessing LocalVar: " + f.ty.name);
-            switch (f.ty.name) {
+            System.out.println("[LocalOrFieldVar] Accessing LocalVar: " + f.type.name);
+            switch (f.type.name) {
                 case "boolean":
                 case "int":
                 case "char": mv.visitVarInsn(Opcodes.ILOAD, meth.localVars.indexOf(f)); break;
@@ -44,8 +44,8 @@ public class LocalOrFieldVar extends Expr {
             }
         } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.name);
-            System.out.println("[LocalOrFieldVar] Accessing Field: " + f.ty.name);
-            mv.visitFieldInsn(Opcodes.GETFIELD, cl.ty.name, this.name, f.ty.getTypeDescriptor());
+            System.out.println("[LocalOrFieldVar] Accessing Field: " + f.type.name);
+            mv.visitFieldInsn(Opcodes.GETFIELD, cl.type.name, this.name, f.type.getTypeDescriptor());
         }
     }
 }

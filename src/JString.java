@@ -10,10 +10,10 @@ import org.objectweb.asm.MethodVisitor;
  * Siehe Hinweis bei der Klasse 'Bool'
  */
 public class JString extends Expr{
-    String st;
+    String string;
 
-    public JString(String st) {
-        this.st = st;
+    public JString(String string) {
+        this.string = string;
     }
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
@@ -25,8 +25,8 @@ public class JString extends Expr{
 
     @Override
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        mv.visitLdcInsn(st);
+        mv.visitLdcInsn(string);
 
-        System.out.println("[JString] Pushing string to stack: " + st);
+        System.out.println("[JString] Pushing string to stack: " + string);
     }
 }

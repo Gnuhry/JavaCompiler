@@ -12,7 +12,7 @@ public class EmptyStmt extends Stmt {
     
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return new Type("null");
+        return new Type("");
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {

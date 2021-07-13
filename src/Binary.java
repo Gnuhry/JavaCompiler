@@ -12,19 +12,19 @@ public class Binary extends Expr {
 
     // Operatoren - Mathematische Operatoren, Vergleichsoperatoren, Boolsche Operatoren
     java.lang.String operator;
-    Expr expr1;
-    Expr expr2;
+    Expr leftExpr;
+    Expr rightExpr;
 
-    public Binary(java.lang.String operator, Expr expr1, Expr expr2) {
+    public Binary(java.lang.String operator, Expr leftExpr, Expr rightExpr) {
         this.operator = operator;
-        this.expr1 = expr1;
-        this.expr2 = expr2;
+        this.leftExpr = leftExpr;
+        this.rightExpr = rightExpr;
     }
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        if (expr1.typeCheck(localVars, thisClass).equals(expr2.typeCheck(localVars, thisClass))){
-            return expr1.typeCheck(localVars, thisClass);
+        if (leftExpr.typeCheck(localVars, thisClass).equals(rightExpr.typeCheck(localVars, thisClass))){
+            return leftExpr.typeCheck(localVars, thisClass);
         }else{
             throw new RuntimeException("Typecheck Error");
         }
@@ -37,10 +37,10 @@ public class Binary extends Expr {
         // sodass in einer übergeordneten Klasse jeweils darauf reagiert werden
         // kann (siehe z.B. das switch-case in 'If' oder 'While'
 
-        System.out.printf("[Binary] Exp1: %s, Exp2: %s, Operator: %s\n", expr1.getClass().getName(), expr2.getClass().getName(), operator);
+        System.out.printf("[Binary] Exp1: %s, Exp2: %s, Operator: %s\n", leftExpr.getClass().getName(), rightExpr.getClass().getName(), operator);
 
-        expr1.codeGen(cl, meth, mv);
-        expr2.codeGen(cl, meth, mv);
+        leftExpr.codeGen(cl, meth, mv);
+        rightExpr.codeGen(cl, meth, mv);
 
         // Mathematische Operatoren werden hier bearbeitet
         // Vergleichsoperatoren werden in z.B. Klasse If und While bearbeitet

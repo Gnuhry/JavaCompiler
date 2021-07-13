@@ -14,13 +14,13 @@ import org.objectweb.asm.Opcodes;
 public class Method implements TypeInterface{
 
     // Return-Type
-    Type retty;
+    Type returnType;
 
     // Name der Methode
     java.lang.String name;
 
     // Parameter der Metode
-    Parameter para;
+    Parameter params;
 
     // Statements innerhalb der Methode, sozusagen der "Code"
     Stmt stmt;
@@ -38,16 +38,16 @@ public class Method implements TypeInterface{
     Label startLabel;
     Label endLabel;
 
-    public Method(Type retty, java.lang.String name, Parameter para, Stmt stmt) {
-        this.retty = retty;
+    public Method(Type returnType, java.lang.String name, Parameter para, Stmt stmt) {
+        this.returnType = returnType;
         this.name = name;
-        this.para = para;
+        this.params = para;
         this.stmt = stmt;
     }
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        return retty;
+        return returnType;
     }
     
     /**
@@ -56,20 +56,20 @@ public class Method implements TypeInterface{
      * @param cw ClassWriter
      */
     public void codeGen(Class cl, ClassWriter cw) {
-        System.out.printf("[Method] Visiting: %s, returning %s\n", name, retty.name);
+        System.out.printf("[Method] Visiting: %s, returning %s\n", name, returnType.name);
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
         localVars = new ArrayList<>();
         // Die erste Variable innerhalb einer Methode ist immer "this" und hat
         // obviously den selben Typ die die umschließende Klasse
-        localVars.add(new Field(cl.ty, "this"));
+        localVars.add(new Field(cl.type, "this"));
 
         startLabel = new Label();
         endLabel = new Label();
         mv.visitLabel(startLabel);
         // TODO Prüfen: Muss this auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
 
-        for (Field f : para.params) {
+        for (Field f : params.params) {
             System.out.println("[Method] Visition method parameter: " + f.name);
 
             // Vor den lokalen Variablen kommen Parameter
@@ -126,10 +126,10 @@ public class Method implements TypeInterface{
      */
     public String getTypeDescriptor() {
         String descriptor = "(";
-        for (Field param : para.params) {
-            descriptor += param.ty.getTypeDescriptor();
+        for (Field param : params.params) {
+            descriptor += param.type.getTypeDescriptor();
         }
-        descriptor += ")" + retty.getTypeDescriptor();
+        descriptor += ")" + returnType.getTypeDescriptor();
 
         return descriptor;
     }
