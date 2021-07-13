@@ -25,10 +25,14 @@ public class Bool extends Expr{
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-        if (bool)
+        if (bool) {
+            System.out.println("[Bool] visitInsn(ICONST_1)");
             mv.visitInsn(Opcodes.ICONST_1);
-        else
+        }
+        else {
+            System.out.println("[Bool] visitInsn(ICONST_0)");
             mv.visitInsn(Opcodes.ICONST_0);
+        }
 
         System.out.println("[Bool] Pushing boolean to stack: " + bool);
     }

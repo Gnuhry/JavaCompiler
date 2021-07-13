@@ -41,6 +41,8 @@ public class Class implements TypeInterface{
         System.out.println("[Class] Start class compilation: " + type.name);
 
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+
+        System.out.println("[Class] cw.visit()");
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, type.name, null, "java/lang/Object", null);
 
         System.out.println("[Class] Compiling fields");
@@ -55,6 +57,8 @@ public class Class implements TypeInterface{
             System.out.printf("[Class] Now compiling method: %s\n", m.name);
             m.codeGen(this, cw);
         }
+
+        System.out.println("[Class] cw.visitEnd()");
         cw.visitEnd();
 
         try

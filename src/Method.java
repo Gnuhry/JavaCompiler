@@ -56,7 +56,7 @@ public class Method implements TypeInterface{
      * @param cw ClassWriter
      */
     public void codeGen(Class cl, ClassWriter cw) {
-        System.out.printf("[Method] Visiting: %s, returning %s\n", name, returnType.name);
+        System.out.printf("[Method] visitMethod(): %s, returning %s\n", name, returnType.name);
         MethodVisitor mv = cw.visitMethod(Opcodes.ACC_PUBLIC, name, this.getTypeDescriptor(), null, null);
 
         localVars = new ArrayList<>();
@@ -66,6 +66,7 @@ public class Method implements TypeInterface{
 
         startLabel = new Label();
         endLabel = new Label();
+        System.out.println("[Method] visitLabel(startLabel)");
         mv.visitLabel(startLabel);
         // TODO Prüfen: Muss this auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
 
@@ -75,15 +76,23 @@ public class Method implements TypeInterface{
             // Vor den lokalen Variablen kommen Parameter
             // Die benötigen für den Zugriff auch einen Index
             localVars.add(f);
-            mv.visitParameter(f.name, Opcodes.ACC_PUBLIC);
+            System.out.println("[Method] visitParameter()");
+            mv.visitParameter(f.name, Opcodes.ACC_FINAL);
             // TODO Prüfen: Müssen Parameter auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
         }
 
+        System.out.println("[Method] visitCode()");
         mv.visitCode();
         System.out.println("[Method] Class name: " + stmt.getClass().getName());
         stmt.codeGen(cl, this, mv);
+
+        System.out.println("[Method] visitLabel(endLabel)");
         mv.visitLabel(endLabel);
+
+        System.out.println("[Method] visitMaxs()");
         mv.visitMaxs(0,0);
+
+        System.out.println("[Method] visitEnd()");
         mv.visitEnd();
     }
 

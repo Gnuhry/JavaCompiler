@@ -50,11 +50,8 @@ public class Assign extends StmtExpr {
             }
         }
 
-
         if (varType.equals("fieldVar")) {
             Field f = thisClass.findFieldByName(fieldOrVar.name);
-
-
 
             System.out.println("1 - " + f);
             // Wenn wir es mit einem Feld zu tun haben, müssen wir prüfen, ob das Feld
@@ -94,12 +91,19 @@ public class Assign extends StmtExpr {
             switch (f.type.name) {
                 case "boolean":
                 case "int":
-                case "char": mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f)); break;
-                default:  mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
+                case "char":
+                    System.out.println("[Assign] visitVarInsn(ISTORE)");
+                    mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f));
+                    break;
+                default:
+                    System.out.println("[Assign] visitVarInsn(ASTORE)");
+                    mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
             }
+            System.out.println("Index: " + meth.localVars.indexOf(f));
         } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.fieldOrVar.name);
             System.out.println("[Assign] Assigning to Field: " + f.type.name);
+            System.out.println("[Assign] visitFieldInsn(PUTFIELD)");
             mv.visitFieldInsn(Opcodes.PUTFIELD, cl.type.name, f.name, f.type.getTypeDescriptor());
         }
     }

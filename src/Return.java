@@ -25,17 +25,18 @@ public class Return extends Stmt {
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         if (expr == null) {
+            System.out.println("[Return] visitInsn(RETURN)");
             mv.visitInsn(Opcodes.RETURN);
         } else {
             System.out.println("[Return] Capsuled Expression: " + expr.getClass().getName());
             expr.codeGen(cl, meth, mv);
 
             if (expr instanceof Bool || expr instanceof Char || expr instanceof JInteger) {
-                System.out.println("[Return] Inserting IRETURN");
+                System.out.println("[Return] visitInsn(IRETURN)");
                 mv.visitInsn(Opcodes.IRETURN);
             } else {
+                System.out.println("[Return] visitInsn(ARETURN)");
                 mv.visitInsn(Opcodes.ARETURN);
-                System.out.println("[Return] Inserting ARETURN");
             }
         }
     }

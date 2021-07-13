@@ -32,6 +32,7 @@ public class LocalVarDecl extends Stmt {
         // TODO Start und End-Label ist höchstwahrscheinlich falsch
         // Idee: Wir sagen der Einfachheit halber, dass der Scope in der Methode definiert wird
         // Somit sind alle Variablen innerhalb der gesamten Methode verfügbar
+        System.out.println("[LocalVarDecl] visitLocalVariable()");
         mv.visitLocalVariable(this.name, type.getTypeDescriptor(), null, meth.startLabel, meth.endLabel, meth.localVars.size()-1);
     }
 }

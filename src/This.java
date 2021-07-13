@@ -19,6 +19,8 @@ public class This extends Expr{
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         // "this" ist immer die Lokale Variable mit dem Index 0
         // Die wird hier auf den Stack geladen und kann verwendet werden
+
+        System.out.println("[This] visitVarInsn(ALOAD)");
         mv.visitVarInsn(Opcodes.ALOAD, 0);
     }
 }

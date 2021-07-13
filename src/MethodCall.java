@@ -62,6 +62,7 @@ public class MethodCall extends StmtExpr {
         String descriptor = cl.findMethodByName(methodName).getTypeDescriptor();
 
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist
+        System.out.println("[MethodCall] visitMethodInsn()");
         mv.visitMethodInsn(opcode, cl.type.name, methodName, descriptor, false);
     }
 

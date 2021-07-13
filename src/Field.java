@@ -32,6 +32,7 @@ public class Field implements TypeInterface {
         // Neuer Code - Nimmt Typdescriptor statt Typname an
         // Ich hatte es mal mit dem Namen des Typs ausprobiert, aber das hat nicht funktioniert
         // Java-VM meckert, dass er dann den jeweiligen internen Typen nicht kennt
+        System.out.println("[Field] visitField(): " + name);
         cw.visitField(Opcodes.ACC_PUBLIC, name, type.getTypeDescriptor(), null, null);
     }
 }

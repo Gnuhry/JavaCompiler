@@ -17,6 +17,7 @@ public class Jnull extends Expr{
     
     // Siehe Hinweis bei der Klasse 'Bool'
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+        System.out.println("[Jnull] visitInsn(ACONST_NULL)");
         mv.visitInsn(Opcodes.ACONST_NULL);
 
         System.out.println("[Jnull] Pushing null to stack");

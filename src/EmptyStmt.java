@@ -16,6 +16,7 @@ public class EmptyStmt extends Stmt {
     }
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+        System.out.println("[EmptyStmt] visitInsn(NOP)");
         mv.visitInsn(Opcodes.NOP);
     }
 }
