@@ -66,6 +66,7 @@ public class Assign extends StmtExpr {
             Field f = Method.findLocalVarByName(fieldOrVar.name, localVars);
             System.out.println("2 - " + f);
             System.out.println(f.type.name);
+            System.out.println("Klasse: " + expr.getClass().getName());
             System.out.println(expr.typeCheck(localVars, thisClass).name);
             // Ähnlich mit lokalen Variablen
             if (f != null && f.type.name.equals(expType)) {

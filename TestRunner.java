@@ -12,5 +12,7 @@ public class TestRunner {
         tc.test2(3, "Hallo");
         System.out.println("test32(100)" + tc.test32(100));
         System.out.println("test32(100)" + tc.test32(2));
+
+        System.out.println("addition(5 + 9): " + tc.addition(5, 9));
     }
 }

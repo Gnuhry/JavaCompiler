@@ -23,8 +23,30 @@ public class Binary extends Expr {
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        if (leftExpr.typeCheck(localVars, thisClass).equals(rightExpr.typeCheck(localVars, thisClass))){
-            return leftExpr.typeCheck(localVars, thisClass);
+
+        String leftExpType = leftExpr.typeCheck(localVars, thisClass).name;
+        String rightExpType = rightExpr.typeCheck(localVars, thisClass).name;
+
+        if (leftExpr instanceof LocalOrFieldVar) {
+            if (leftExpType.equals("fieldVar")) {
+                leftExpType = thisClass.findFieldByName(((LocalOrFieldVar) leftExpr).name).type.name;
+            } else if (leftExpType.equals("localVar")) {
+                leftExpType = Method.findLocalVarByName(((LocalOrFieldVar) leftExpr).name, localVars).type.name;
+            }
+        }
+
+        if (rightExpr instanceof LocalOrFieldVar) {
+            if (rightExpType.equals("fieldVar")) {
+                rightExpType = thisClass.findFieldByName(((LocalOrFieldVar) rightExpr).name).type.name;
+            } else if (rightExpType.equals("localVar")) {
+                rightExpType = Method.findLocalVarByName(((LocalOrFieldVar) rightExpr).name, localVars).type.name;
+            }
+        }
+
+
+
+        if (leftExpType.equals(rightExpType)) {
+            return new Type(leftExpType);
         }else{
             throw new RuntimeException("Typecheck Error");
         }

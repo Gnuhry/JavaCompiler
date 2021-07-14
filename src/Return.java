@@ -48,6 +48,7 @@ public class Return extends Stmt {
                 }
             }
 
+            System.out.println("Returntype überprüfen: " + returnType);
             switch (returnType) {
                 case "boolean":
                 case "int":

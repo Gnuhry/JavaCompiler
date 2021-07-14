@@ -10,6 +10,8 @@ class TestClass{
         i = 17;
     }
 
+
+
     String t;
 
     int test32(int a) {
@@ -22,12 +24,8 @@ class TestClass{
         t = "5head";
         c = 'X';
         o = new Object();
-
-
         String testString;
-
-
-        testString = "testString";
+        testString = "null";
 
         a = 1;
 
@@ -45,5 +43,11 @@ class TestClass{
 
     String silas() {
         return "BIER";
+    }
+
+    int addition(int a, int b) {
+        int erg;
+        erg =  a + b;
+        return erg;
     }
 }
