@@ -1,0 +1,3 @@
+Bedienungsanleitung Java Compiler: 
+
+1. Im Terminal des JavaCompiler "make" aufrufen. (Testsuit wird kompiliert und ausgeführt)
