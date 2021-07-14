@@ -1,0 +1,17 @@
+Kurz Doc über erledigte Aufgaben: 
+
+• Scannen (1 Personen): Elisabeth Bürger
+    - Elisabeth Bürger = 
+
+• Parsen (3 Personen): Jannik Junker & Silas Wessely & Xuan Truong
+    - Silas Wessely =
+    - Jannik Junker = 
+    - Xuan Truong   =
+    
+• Semantische Analyse (2 Person): Oliver Döring & Leander Prange
+    - Oliver Döring  =
+    - Leander Prange = 
+
+• Codeerzeugung (2 Person): Christian Schuhmann & Christian Attrot
+    - Christian Schuhmann =
+    - Christian Attrot    =
