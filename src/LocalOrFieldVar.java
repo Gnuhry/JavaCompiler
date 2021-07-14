@@ -56,8 +56,8 @@ public class LocalOrFieldVar extends Expr {
             // In unserem Fall wird das meistens "this" sein.
             // Mit diesem Hack sollte es allerdings nicht möglich sein, auf die Felder anderer Objekte
             // zuzugreifen und wenn man was als "this.irgendwas" schreibt kanns sein dass es net geht
-            // TODO Hack entfernen?
-            System.out.println("[LocalOrFieldVar] visitVarInsn(ALOAD) (HACK!)");
+
+            System.out.println("[LocalOrFieldVar] visitVarInsn(ALOAD_0)");
             mv.visitVarInsn(Opcodes.ALOAD, 0);
 
             System.out.println("[LocalOrFieldVar] visitFieldInsn(GETFIELD)");

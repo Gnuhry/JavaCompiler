@@ -17,8 +17,6 @@ import java.util.Vector;
  * Diese Klasse muss eventuell noch erweitert werden, da man
  * möglicheriwese in der Assign-Klasse noch Daten aus der Klasse
  * benötigt, sofern man einen Wert einer Klassenvariable zuweisen möchte.
- *
- * TODO: Wenn kein Konstruktor da: Automatisch generieren
  */
 public class Class implements TypeInterface{
 

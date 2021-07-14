@@ -14,7 +14,10 @@ public class New extends StmtExpr{
     Vector<Expr> expressions;
 
     public New(Type type, Vector<Expr> expressions) {
+        // Typ des Objektes
         this.type = type;
+
+        // Parameter für den Konstruktor
         this.expressions = expressions;
     }
 
@@ -29,18 +32,11 @@ public class New extends StmtExpr{
             expr.codeGen(cl, meth, mv);
         }
 
-        // TODO Das scheint mir hier noch alles etwas suspekt
-
         System.out.println("[New] visitTypeInsn(NEW): " + type.name);
         mv.visitTypeInsn(Opcodes.NEW, type.name);
 
         System.out.println("[New] visitInsn(DUP)");
         mv.visitInsn(Opcodes.DUP);
-
-        // In MethodCall wird auch schon der Fall behandelt, dass die Methode <init> heißt
-        // Der Methodenaufruf hier ist also vermutlich doppelt oder der Spezialfall
-        // sollte aus der MethodCall-Klasse entfernt werden
-        // TODO Prüfen, ob Methodenaufruf hier redundant ist
 
         System.out.println("[New] visitMethodInsn(INVOKESPECIAL)");
         mv.visitMethodInsn(Opcodes.INVOKESPECIAL, type.name, "<init>", "()V", false);

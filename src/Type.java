@@ -55,4 +55,15 @@ public class Type {
     public boolean equals(Object obj) {
         return name.equals(((Type) obj).name);
     }
+
+    public boolean isPrimitive() {
+        switch (this.name) {
+            case "int":
+            case "char":
+            case "boolean":
+                return true;
+            default:
+                return false;
+        }
+    }
 }

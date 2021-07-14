@@ -59,7 +59,7 @@ public class Assign extends StmtExpr {
             System.out.println(f.type.name);
             System.out.println(expr.typeCheck(localVars, thisClass).name);
 
-            if (f != null && f.type.name.equals(expType)) {
+            if (f != null && f.type.name.equals(expType) || (expType.equals("null") && !f.type.isPrimitive())) {
                 return new Type("fieldVar");
             }
         } else if (varType.equals("localVar")) {
@@ -69,7 +69,7 @@ public class Assign extends StmtExpr {
             System.out.println("Klasse: " + expr.getClass().getName());
             System.out.println(expr.typeCheck(localVars, thisClass).name);
             // Ähnlich mit lokalen Variablen
-            if (f != null && f.type.name.equals(expType)) {
+            if (f != null && f.type.name.equals(expType) || expType.equals("null") && !f.type.isPrimitive()) {
                 return new Type("localVar");
             }
         }
@@ -91,9 +91,8 @@ public class Assign extends StmtExpr {
         // In unserem Fall wird das meistens "this" sein.
         // Mit diesem Hack sollte es allerdings nicht möglich sein, auf die Felder anderer Objekte
         // zuzugreifen und wenn man was als "this.irgendwas" schreibt kanns sein dass es net geht
-        // TODO Hack entfernen?
         if (varType.equals("fieldVar")) {
-            System.out.println("[Assign] visitVarInsn(ALOAD) (HACK!)");
+            System.out.println("[Assign] visitVarInsn(ALOAD_0)");
             mv.visitVarInsn(Opcodes.ALOAD, 0);
         }
 

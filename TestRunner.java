@@ -14,5 +14,14 @@ public class TestRunner {
         System.out.println("test32(100)" + tc.test32(2));
 
         System.out.println("addition(5 + 9): " + tc.addition(5, 9));
+
+        TestClass newTc = tc.superDuper();
+
+        System.out.println("superDuper()" + newTc);
+
+        System.out.println("Shit(): " + newTc.Shit());
+
+        System.out.println("gleichheit(hallo, welt): " + newTc.gleichheit("hallo", "welt"));
+        System.out.println("gleichheit(servus, servus): " + newTc.gleichheit("servus", "servus"));
     }
 }

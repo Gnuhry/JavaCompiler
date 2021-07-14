@@ -68,7 +68,6 @@ public class Method implements TypeInterface{
         endLabel = new Label();
         System.out.println("[Method] visitLabel(startLabel)");
         mv.visitLabel(startLabel);
-        // TODO Prüfen: Muss this auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
 
         for (Field f : params.params) {
             System.out.println("[Method] Visition method parameter: " + f.name);
@@ -78,7 +77,6 @@ public class Method implements TypeInterface{
             localVars.add(f);
             System.out.println("[Method] visitParameter(): " + f.name);
             mv.visitParameter(f.name, Opcodes.ACC_FINAL);
-            // TODO Prüfen: Müssen Parameter auch ähnlich wie lokale Variablen visited werden? Siehe LocalVarDecl
         }
 
         System.out.println("[Method] visitCode()");

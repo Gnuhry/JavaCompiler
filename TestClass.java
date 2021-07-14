@@ -25,29 +25,46 @@ class TestClass{
         c = 'X';
         o = new Object();
         String testString;
-        testString = "null";
+        testString = null;
 
         a = 1;
 
-        testString = silas();
+        silas();
+
+        test = 5;
 
         while (1 == a) {
             a = 1337;
             testString = "Fuck this shit";
         }
 
-
+        a = test;
 
         return a;
     }
 
     String silas() {
-        return "BIER";
+        String nullString;
+        nullString = "BIER";
+        nullString = null;
+        return nullString;
     }
 
     int addition(int a, int b) {
-        int erg;
-        erg =  a + b;
-        return erg;
+        return 2 * a + b;
+    }
+
+    TestClass superDuper() {
+        return new TestClass();
+    }
+
+    String Shit(){
+        return "TINF19AI1";
+    }
+
+    boolean gleichheit(String a, String b) {
+        boolean testVal;
+        testVal = a.equals(b);
+        return testVal;
     }
 }
