@@ -1,5 +1,6 @@
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import java.io.File;
@@ -50,6 +51,20 @@ public class Class implements TypeInterface{
             System.out.printf("[Class] Now compiling field: %s, Typ: %s\n", field.name, field.type.name);
             field.codeGen(this, cw);
         }
+
+        System.out.println("[Class] Compiling constructor");
+        MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);
+        constructor.visitCode();
+
+        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        constructor.visitInsn(Opcodes.RETURN);
+
+        constructor.visitMaxs(0,0);
+        constructor.visitEnd();
+
+
+
 
         System.out.println("[Class] Compiling methods");
         for(Method m : methods) {

@@ -7,6 +7,10 @@
 public class TestRunner {
     public static void main(String[] args) {
         TestClass tc = new TestClass();
-        System.out.println(tc.silas());
+        System.out.println("silas(): " + tc.silas());
+        System.out.println("test2(3, Hallo)");
+        tc.test2(3, "Hallo");
+        System.out.println("test32(100)" + tc.test32(100));
+        System.out.println("test32(100)" + tc.test32(2));
     }
 }

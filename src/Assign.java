@@ -82,8 +82,8 @@ public class Assign extends StmtExpr {
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
-        System.out.println("[Assign] Type of expression: " + expr.typeCheck(meth.localVars, cl).name);
         String varType = typeCheck(meth.localVars, cl).name;
+        System.out.println("[Assign] Type of expression: " + varType);
 
         // Wenn es sich um ein Feld handelt, muss man noch das Objekt auf den Stack pushen,
         // in welchem sich das jeweilige Feld befindet.

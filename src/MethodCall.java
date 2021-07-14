@@ -55,6 +55,9 @@ public class MethodCall extends StmtExpr {
         // Kontruktor benötigt Opcode INVOKESPECIAL, ansonsten INVOKEVIRTUAL
         //int opcode = methodName.equals("<init>") ? Opcodes.INVOKESPECIAL : Opcodes.INVOKEVIRTUAL;
 
+        System.out.println("[MethodCall] Codegen von Expr aufrufen!!!");
+        expr.codeGen(cl, meth, mv);
+
         int opcode = Opcodes.INVOKEVIRTUAL;
 
         // Diese Implementierung hat einen sehr großen Nachteil:
@@ -66,11 +69,15 @@ public class MethodCall extends StmtExpr {
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist
         System.out.println("[MethodCall] visitMethodInsn(INVOKEVIRTUAL): " + methodName);
         mv.visitMethodInsn(opcode, cl.type.name, methodName, descriptor, false);
+
+
+        // TODO Entfernen!!!
+        System.out.println("TEMPORÄR - visitInsn(POP)");
+//        mv.visitInsn(Opcodes.POP);
     }
 
     @Override
     public Type typeCheck(List<Field> localVars, Class thisClass) {
-        //TODO unsicher ob das so stimmt!
-        return expr.typeCheck(localVars, thisClass);
+        return thisClass.findMethodByName(this.methodName).returnType;
     }
 }

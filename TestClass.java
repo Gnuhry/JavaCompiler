@@ -22,10 +22,24 @@ class TestClass{
         t = "5head";
         c = 'X';
         o = new Object();
-        silas();
-        while (a == 5) {
+
+
+        String testString;
+
+
+        testString = "testString";
+
+        a = 1;
+
+        testString = silas();
+
+        while (1 == a) {
             a = 1337;
+            testString = "Fuck this shit";
         }
+
+
+
         return a;
     }
 

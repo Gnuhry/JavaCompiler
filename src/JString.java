@@ -20,7 +20,7 @@ public class JString extends Expr{
         // TODO Muss evt. durch java/lang/String ausgetauscht werden
         // Problem: Irgendwo kommt manchmal auch Objekte mit Typ "String" ohne Pfadangabe her
         // Idee: In der Type-Klasse
-        return new Type("String");
+        return new Type("java/lang/String");
     }
 
     @Override

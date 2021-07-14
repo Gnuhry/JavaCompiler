@@ -31,4 +31,4 @@ test:
 	java -cp "asm-7.1.jar:." main < TestClass.java
 
 clean:
-	rm -f *.class javalexer.java javaparser.java sources.txt
+	#rm -f *.class javalexer.java javaparser.java sources.txt

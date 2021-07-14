@@ -43,32 +43,34 @@ public class While extends Stmt {
             switch (binaryExpression.operator){
                 case "<":
                     System.out.println("[While] visitJumpInsn(IF_ICMPLT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLT, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPGE, end);
                     break;
                 case "<=":
                     System.out.println("[While] visitJumpInsn(IF_ICMPLE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLE, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPGT, end);
                     break;
                 case "==":
                     System.out.println("[While] visitJumpInsn(IF_ICMPEQ)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPNE, end);
                     break;
                 case "!=":
                     System.out.println("[While] visitJumpInsn(IF_ICMPNE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPNE, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
                     break;
                 case ">=":
                     System.out.println("[While] visitJumpInsn(IF_ICMPGE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGE, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPLT, end);
                     break;
                 case ">":
                     System.out.println("[While] visitJumpInsn(IF_ICMPGT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGT, end);
+                    mv.visitJumpInsn(Opcodes.IF_ICMPLE, end);
                     break;
             }
         } else if(exp instanceof Bool) {
+            exp.codeGen(cl, meth, mv);
+
             System.out.println("[While] visitJumpInsn(IFEQ)");
-            mv.visitJumpInsn(Opcodes.IFEQ, end);
+            mv.visitJumpInsn(Opcodes.IFNE, end);
         }
 
         // Kann sein, dass die Zeile hier falsch ist und über das Switch-Case muss

@@ -24,6 +24,7 @@ public class LocalOrFieldVar extends Expr {
         } else if (localVars.stream().anyMatch(f -> f.name.equals(this.name))) {
             return new Type("localVar");
         } else {
+            System.out.println("TYPECHECKING: " + this.name);
             throw new RuntimeException("Typecheck Error");
         }
     }
@@ -49,7 +50,6 @@ public class LocalOrFieldVar extends Expr {
         } else if (typeCheck(meth.localVars, cl).name.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.name);
             System.out.println("[LocalOrFieldVar] Field has type: " + f.type.name);
-            System.out.println("[LocalOrFieldVar] visitFieldInsn(GETFIELD)");
 
             // Wenn es sich um ein Feld handelt, muss man noch das Objekt auf den Stack pushen,
             // in welchem sich das jeweilige Feld befindet.
@@ -60,6 +60,7 @@ public class LocalOrFieldVar extends Expr {
             System.out.println("[LocalOrFieldVar] visitVarInsn(ALOAD) (HACK!)");
             mv.visitVarInsn(Opcodes.ALOAD, 0);
 
+            System.out.println("[LocalOrFieldVar] visitFieldInsn(GETFIELD)");
             mv.visitFieldInsn(Opcodes.GETFIELD, cl.type.name, this.name, f.type.getTypeDescriptor());
         }
     }

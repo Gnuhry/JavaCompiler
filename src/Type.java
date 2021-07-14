@@ -17,6 +17,11 @@ public class Type {
      */
     public Type(java.lang.String name) {
         this.name = name;
+
+        switch (this.name) {
+            case "String": this.name = "java/lang/String"; break;
+            case "Object": this.name = "java/lang/Object"; break;
+        }
     }
 
     /**

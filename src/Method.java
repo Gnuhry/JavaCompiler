@@ -86,6 +86,9 @@ public class Method implements TypeInterface{
         System.out.println("[Method] Class name: " + stmt.getClass().getName());
         stmt.codeGen(cl, this, mv);
 
+        if (returnType.name.equals("void"))
+            mv.visitInsn(Opcodes.RETURN);
+
         System.out.println("[Method] visitLabel(endLabel)");
         mv.visitLabel(endLabel);
 
