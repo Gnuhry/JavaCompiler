@@ -7,11 +7,11 @@ Kurz Doc über erledigte Aufgaben:
     - Silas Wessely =
     - Jannik Junker = 
     - Xuan Truong   =
-    
+
 • Semantische Analyse (2 Person): Oliver Döring & Leander Prange
-    - Oliver Döring  =
-    - Leander Prange = 
+    - Oliver Döring  = TypeCheck hinzugefügt, Mithilfe Bytecodegenerierung
+    - Leander Prange = Mithilfe TypeCheck 
 
 • Codeerzeugung (2 Person): Christian Schuhmann & Christian Attrot
-    - Christian Schuhmann =
-    - Christian Attrot    =
+    - Christian Schuhmann = Hinzufügen von Codegen-Methode, Implementierung, Code Documentation, Mithilfe bei TypeCheck 
+    - Christian Attrot    = Testcode erzeugt, Unterstüzung bei Implementierung 
