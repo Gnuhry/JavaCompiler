@@ -53,21 +53,15 @@ public class Assign extends StmtExpr {
         if (varType.equals("fieldVar")) {
             Field f = thisClass.findFieldByName(fieldOrVar.name);
 
-            System.out.println("1 - " + f);
             // Wenn wir es mit einem Feld zu tun haben, müssen wir prüfen, ob das Feld
             // den selben Typ hat wie das Ergebnis der Expression, welches wir zuweisen wollen
-            System.out.println(f.type.name);
-            System.out.println(expr.typeCheck(localVars, thisClass).name);
 
             if (f != null && f.type.name.equals(expType) || (expType.equals("null") && !f.type.isPrimitive())) {
                 return new Type("fieldVar");
             }
         } else if (varType.equals("localVar")) {
             Field f = Method.findLocalVarByName(fieldOrVar.name, localVars);
-            System.out.println("2 - " + f);
-            System.out.println(f.type.name);
-            System.out.println("Klasse: " + expr.getClass().getName());
-            System.out.println(expr.typeCheck(localVars, thisClass).name);
+
             // Ähnlich mit lokalen Variablen
             if (f != null && f.type.name.equals(expType) || expType.equals("null") && !f.type.isPrimitive()) {
                 return new Type("localVar");
@@ -100,24 +94,20 @@ public class Assign extends StmtExpr {
 
         if (varType.equals("localVar")) {
             Field f = meth.findLocalVarByName(this.fieldOrVar.name);
-            System.out.println("[Assign] Assigning to LocalVar: " + f.type.name);
-            System.out.println("[Assign] Type of field: " + f.type.name);
-            switch (f.type.name) {
-                case "boolean":
-                case "int":
-                case "char":
-                    System.out.println("[Assign] visitVarInsn(ISTORE)");
-                    mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f));
-                    break;
-                default:
-                    System.out.println("[Assign] visitVarInsn(ASTORE)");
-                    mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
+            System.out.println("[Assign] Assigning to LocalVar: " + f.name + ", " + f.type.name);
+
+            if (f.type.isPrimitive()) {
+                System.out.println("[Assign] visitVarInsn(ISTORE)");
+                mv.visitVarInsn(Opcodes.ISTORE, meth.localVars.indexOf(f));
+            } else {
+                System.out.println("[Assign] visitVarInsn(ASTORE)");
+                mv.visitVarInsn(Opcodes.ASTORE, meth.localVars.indexOf(f));
             }
+
             System.out.println("Index: " + meth.localVars.indexOf(f));
         } else if (varType.equals("fieldVar")) {
             Field f = cl.findFieldByName(this.fieldOrVar.name);
-            System.out.println("[Assign] Assigning to Field: " + f.type.name);
-            System.out.println("[Assign] visitFieldInsn(PUTFIELD)");
+            System.out.println("[Assign] visitFieldInsn(PUTFIELD): " + f.name + ", " + f.type.name);
             mv.visitFieldInsn(Opcodes.PUTFIELD, cl.type.name, f.name, f.type.getTypeDescriptor());
         }
     }

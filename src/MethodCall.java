@@ -6,13 +6,6 @@ import java.util.Vector;
 
 /**
  * MethodCall - Methodenaufruf
- * <p>
- * Status: Unsicher
- * <p>
- * Bei einem Methodenaufruf werden die Opcodes INVOKESPECIAL und INVOKEVIRTUAL
- * benötigt. Soweit ich es verstanden hab, wird in unserem Fall in der Regel
- * INVOKESPECIAL verwendet. INVOKEVIRTUAL wird bei uns nur beim Konstruktor
- * verwendet.
  */
 public class MethodCall extends StmtExpr {
 
@@ -52,13 +45,11 @@ public class MethodCall extends StmtExpr {
 
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
 
-        System.out.println("[MethodCall] Codegen von Expr aufrufen!!!");
         expr.codeGen(cl, meth, mv);
 
         // Diese Implementierung hat einen sehr großen Nachteil:
-        // Es lassen sich nur Methoden der eigenen Klasse aufrufen
+        // Es lassen sich vermutlich nur Methoden der eigenen Klasse aufrufen
         // TODO: Methoden anderer Klassen aufrufen?
-        System.out.println("[MethodCall] " + methodName);
         String descriptor = cl.findMethodByName(methodName).getTypeDescriptor();
 
         // Der Owner ist der Name der Klasse, in welcher die Methode definiert ist

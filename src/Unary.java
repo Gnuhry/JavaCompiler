@@ -24,6 +24,7 @@ public class Unary extends Expr{
     }
     
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
-
+        // TODO Das fehlt komplett
+        // Vermutlich nur IINC/INEG/...
     }
 }

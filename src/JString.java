@@ -6,8 +6,6 @@ import org.objectweb.asm.MethodVisitor;
  * JString - String-Objekt
  *
  * Status: Unsicher
- *
- * Siehe Hinweis bei der Klasse 'Bool'
  */
 public class JString extends Expr{
     String string;
@@ -24,7 +22,5 @@ public class JString extends Expr{
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         System.out.println("[JString] visitLdcInsn(string): \"" + string + "\"");
         mv.visitLdcInsn(string);
-
-        System.out.println("[JString] Pushing string to stack: " + string);
     }
 }

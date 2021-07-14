@@ -33,7 +33,5 @@ public class Bool extends Expr{
             System.out.println("[Bool] visitInsn(ICONST_0)");
             mv.visitInsn(Opcodes.ICONST_0);
         }
-
-        System.out.println("[Bool] Pushing boolean to stack: " + bool);
     }
 }

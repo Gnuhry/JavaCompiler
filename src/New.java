@@ -10,14 +10,15 @@ import java.util.Vector;
  * Status:
  */
 public class New extends StmtExpr{
+
+    // Typ des Objektes
     Type type;
+
+    // Parameter für den Konstruktor
     Vector<Expr> expressions;
 
     public New(Type type, Vector<Expr> expressions) {
-        // Typ des Objektes
         this.type = type;
-
-        // Parameter für den Konstruktor
         this.expressions = expressions;
     }
 

@@ -23,7 +23,5 @@ public class JInteger extends Expr{
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         System.out.println("[JInteger] visitLdcInsn(int): " + in);
         mv.visitLdcInsn(in);
-
-        System.out.println("[JInteger] Pushing int to stack: " + in);
     }
 }

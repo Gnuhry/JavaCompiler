@@ -1,5 +1,6 @@
 import java.util.List;
 
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -43,8 +44,6 @@ public class Binary extends Expr {
             }
         }
 
-
-
         if (leftExpType.equals(rightExpType)) {
             return new Type(leftExpType);
         }else{
@@ -72,6 +71,41 @@ public class Binary extends Expr {
             case "-": mv.visitInsn(Opcodes.INEG); break;
             case "*": mv.visitInsn(Opcodes.IMUL); break;
             case "/": mv.visitInsn(Opcodes.IDIV); break;
+        }
+    }
+
+    public void insertCmpJumpInstruction(MethodVisitor mv, Label jumpLabel) {
+        switch (this.operator){
+            case "<":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPLT)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPGE, jumpLabel);
+                System.out.println("<");
+                break;
+            case "<=":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPLE)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPGT, jumpLabel);
+                System.out.println("<=");
+                break;
+            case "==":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPEQ)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPNE, jumpLabel);
+                System.out.println("==");
+                break;
+            case "!=":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPNE)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPEQ, jumpLabel);
+                System.out.println("!=");
+                break;
+            case ">=":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPGE)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPLT, jumpLabel);
+                System.out.println(">=");
+                break;
+            case ">":
+                System.out.println("[Binary] visitJumpInsn(IF_ICMPGT)");
+                mv.visitJumpInsn(Opcodes.IF_ICMPLE, jumpLabel);
+                System.out.println(">");
+                break;
         }
     }
 }

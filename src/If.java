@@ -43,47 +43,12 @@ public class If extends Stmt {
 
         expr.codeGen(cl, meth, mv);
 
-        // Insert here?
-
-        // Fall: If-Expression = false
+        // Existiert ein Else-Statement?
         Label jump_label = elseStmt == null ? end : else_label;
 
         if (expr instanceof Binary){
-            System.out.println("[If] Expr is instanceof Binary");
             Binary binaryExpression = (Binary) expr;
-
-            switch (binaryExpression.operator){
-                case "<":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPLT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGE, jump_label);
-                    System.out.println("<");
-                    break;
-                case "<=":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPLE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGT, jump_label);
-                    System.out.println("<=");
-                    break;
-                case "==":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPEQ)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPNE, jump_label);
-                    System.out.println("==");
-                    break;
-                case "!=":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPNE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPEQ, jump_label);
-                    System.out.println("!=");
-                    break;
-                case ">=":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPGE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLT, jump_label);
-                    System.out.println(">=");
-                    break;
-                case ">":
-                    System.out.println("[If] visitJumpInsn(IF_ICMPGT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLE, jump_label);
-                    System.out.println(">");
-                    break;
-            }
+            binaryExpression.insertCmpJumpInstruction(mv, jump_label);
         } else if(expr instanceof Bool) {
             System.out.println("[If] visitJumpInsn(IFEQ)");
             mv.visitJumpInsn(Opcodes.IFNE, jump_label);

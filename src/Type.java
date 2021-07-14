@@ -57,7 +57,11 @@ public class Type {
     }
 
     public boolean isPrimitive() {
-        switch (this.name) {
+        return isPrimitive(this.name);
+    }
+
+    public static boolean isPrimitive(String type) {
+        switch (type) {
             case "int":
             case "char":
             case "boolean":

@@ -64,7 +64,7 @@ class TestClass{
 
     boolean gleichheit(String a, String b) {
         boolean testVal;
-        testVal = a.equals(b);
+        testVal = true;
         return testVal;
     }
 }

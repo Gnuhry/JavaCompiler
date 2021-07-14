@@ -49,16 +49,12 @@ public class Return extends Stmt {
             }
 
             System.out.println("Returntype überprüfen: " + returnType);
-            switch (returnType) {
-                case "boolean":
-                case "int":
-                case "char":
-                    System.out.println("[Return] visitInsn(IRETURN)");
-                    mv.visitInsn(Opcodes.IRETURN);
-                    break;
-                default:
-                    System.out.println("[Return] visitInsn(ARETURN)");
-                    mv.visitInsn(Opcodes.ARETURN);
+            if (Type.isPrimitive(returnType)) {
+                System.out.println("[Return] visitInsn(IRETURN)");
+                mv.visitInsn(Opcodes.IRETURN);
+            } else {
+                System.out.println("[Return] visitInsn(ARETURN)");
+                mv.visitInsn(Opcodes.ARETURN);
             }
         }
     }

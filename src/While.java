@@ -20,12 +20,7 @@ public class While extends Stmt {
     public Type typeCheck(List<Field> localVars, Class thisClass) {
         return stmt.typeCheck(localVars, thisClass);
     }
-    
-    /*
-     * Die Implementierung deckt sich sehr stark mit der aus 'If'
-     * Vermutlich kann man einiges auslagern
-     * Darüber hinaus ist auch noch nicht klar, ob das überhaupt stimmt
-     */
+
     public void codeGen(Class cl, Method meth, MethodVisitor mv) {
         System.out.println("[While] Compiling While-Loop");
         Label loop = new Label();
@@ -36,46 +31,13 @@ public class While extends Stmt {
 
         if (exp instanceof Binary){
             Binary binaryExpression = (Binary) exp;
-
-            binaryExpression.leftExpr.codeGen(cl, meth, mv);
-            binaryExpression.rightExpr.codeGen(cl, meth, mv);
-
-            switch (binaryExpression.operator){
-                case "<":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPLT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGE, end);
-                    break;
-                case "<=":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPLE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPGT, end);
-                    break;
-                case "==":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPEQ)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPNE, end);
-                    break;
-                case "!=":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPNE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPEQ, end);
-                    break;
-                case ">=":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPGE)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLT, end);
-                    break;
-                case ">":
-                    System.out.println("[While] visitJumpInsn(IF_ICMPGT)");
-                    mv.visitJumpInsn(Opcodes.IF_ICMPLE, end);
-                    break;
-            }
+            exp.codeGen(cl, meth, mv);
+            binaryExpression.insertCmpJumpInstruction(mv, end);
         } else if(exp instanceof Bool) {
             exp.codeGen(cl, meth, mv);
-
             System.out.println("[While] visitJumpInsn(IFEQ)");
             mv.visitJumpInsn(Opcodes.IFNE, end);
         }
-
-        // Kann sein, dass die Zeile hier falsch ist und über das Switch-Case muss
-        // Man loopt ja sozusagen wieder zum Anfang und muss ja erneut prüfen,
-        // ob unsere Bedingung weiterhin erfüllt ist
 
         stmt.codeGen(cl, meth, mv);
 

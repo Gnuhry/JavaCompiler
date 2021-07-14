@@ -6,6 +6,13 @@ import org.objectweb.asm.Opcodes;
 /**
  * Field - Ein Feld bzw. auch Klassenvariable genannt
  *
+ * Die Codegen-Methode wird eigentlich nur dann aufgerufen wird,
+ * wenn neue Felder definiert werden.
+ *
+ * Diese Klasse wird allerdings an vielen Stellen eingesetzt, da man
+ * hier auch sehr gut die Informationen zu lokalen Variablen
+ * speichern kann.
+ *
  * Status: Möglicherweise vollständig
  */
 public class Field implements TypeInterface {
@@ -24,14 +31,6 @@ public class Field implements TypeInterface {
     }
     
     public void codeGen(Class cl, ClassWriter cw) {
-
-        // So wie ich es verstehe, wird dieser Code an der Stelle eingefügt, wo
-        // sozusagen ein Feld definiert wird.
-        // cw.visitField(Opcodes.ACC_PUBLIC, name, ty.name, null, null);
-
-        // Neuer Code - Nimmt Typdescriptor statt Typname an
-        // Ich hatte es mal mit dem Namen des Typs ausprobiert, aber das hat nicht funktioniert
-        // Java-VM meckert, dass er dann den jeweiligen internen Typen nicht kennt
         System.out.println("[Field] visitField(): " + name);
         cw.visitField(Opcodes.ACC_PUBLIC, name, type.getTypeDescriptor(), null, null);
     }

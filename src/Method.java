@@ -34,7 +34,6 @@ public class Method implements TypeInterface{
     // Speichere den Anfang und das Ende der Methode in einem Label
     // Wird benötigt, um bei der Definition von lokalen Variablen den
     // Scope zu definieren.
-    // Hack: Aktuell wäre eine lokale Variable in der gesamten Methode gültig, egal wo sie definiert wird.
     Label startLabel;
     Label endLabel;
 
@@ -61,7 +60,7 @@ public class Method implements TypeInterface{
 
         localVars = new ArrayList<>();
         // Die erste Variable innerhalb einer Methode ist immer "this" und hat
-        // obviously den selben Typ die die umschließende Klasse
+        // offensichtlicht den selben Typ die die umschließende Klasse
         localVars.add(new Field(cl.type, "this"));
 
         startLabel = new Label();
@@ -70,8 +69,6 @@ public class Method implements TypeInterface{
         mv.visitLabel(startLabel);
 
         for (Field f : params.params) {
-            System.out.println("[Method] Visition method parameter: " + f.name);
-
             // Vor den lokalen Variablen kommen Parameter
             // Die benötigen für den Zugriff auch einen Index
             localVars.add(f);
@@ -81,11 +78,15 @@ public class Method implements TypeInterface{
 
         System.out.println("[Method] visitCode()");
         mv.visitCode();
-        System.out.println("[Method] Class name: " + stmt.getClass().getName());
         stmt.codeGen(cl, this, mv);
 
-        if (returnType.name.equals("void"))
+        // Eine Methode mit Return-Type void muss nicht zwingend mit einem return
+        // abgeschlossen werden. Vergisst man das Return im Code, würde unser Programm
+        // ohne die folgenden Zeilen allerdings abschmieren.
+        if (returnType.name.equals("void")) {
+            System.out.println("[Method] visitInsn(RETURN)");
             mv.visitInsn(Opcodes.RETURN);
+        }
 
         System.out.println("[Method] visitLabel(endLabel)");
         mv.visitLabel(endLabel);
