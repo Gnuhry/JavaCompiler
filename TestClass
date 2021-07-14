@@ -17,14 +17,44 @@ class Test{
 	  i = 3;
 	  i = new Test();
 	  u.t;
-	  silas();
+	  whileAddition();
+	  ifTest();
+	  stringAusgabe();
+	  stringCompare();
 	  super.method();
 	  while ("Test" == "Test") {}
 	  
 	  return "String"+ "Test";
       }
+	
+	  int stringCompare(){
+		  String str1 = "First String";
+          String str2 = "Second String";
+      	  
+		  int var1 = str1.compareTo( str2 );
+          return var1;
+	  }
 
-      String silas() {
-      	  return "BIER";
+	  int ifTest(){
+		  int t1 =1;
+		  int t2 =1;
+		  if(t1==t2){
+			  return true;
+		  }else{
+			  return false;
+		  }
+	  }
+
+	  int whileAddition(){
+		  int x1 =1;
+		  int x2 =5;
+		  while(x1<=x2){
+			  erg = x1+1;
+			  return erg;
+		  }
+	  }
+		
+      String stringAusgabe() {
+      	  return "Test String wurde ausgegeben";
       }
 }
