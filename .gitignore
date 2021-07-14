@@ -1,2 +1,7 @@
 ﻿.idea
 JavaCompiler.iml
+*.class
+sources.txt
+y.output
+javalexer.java
+javaparser.java

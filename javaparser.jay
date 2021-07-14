@@ -43,32 +43,32 @@ class javaparser {
 %%
 
 S:  CLASS Type OPENCURLYBRACKET Body CLOSECURLYBRACKET {
-    $$ = new Class($2, (Vector) $4.get(0),(Vector) $4.get(1));
+    $$ = new Class($2, (Vector<Field>) $4.get(0), (Vector<Method>) $4.get(1));
 }
 
 Body: Field {
-    Vector<Field> vf = new Vector();
+    Vector<Field> vf = new Vector<Field>();
     vf.add($1);
-    Vector<Vector> v = new Vector();
+    Vector<Vector> v = new Vector<Vector>();
     v.add(vf);
     v.add(new Vector());
     $$ = v;
 } | Method {
-    Vector<Method> vm = new Vector();
+    Vector<Method> vm = new Vector<Method>();
     vm.add($1);
-    Vector<Vector> v = new Vector();
+    Vector<Vector> v = new Vector<Vector>();
     v.add(new Vector());
     v.add(vm);
     $$ = v;
 } | Field Body{
-    Vector<Field> vf = new Vector();
+    Vector<Field> vf = new Vector<Field>();
     vf.add($1);
-    ((Vector) $2.get(0)).insertElementAt(vf,0);
+    ((Vector<Field>) $2.get(0)).insertElementAt(vf.get(0),0);
     $$ = $2;
 } | Method Body{
-    Vector<Method> vm = new Vector();
+    Vector<Method> vm = new Vector<Method>();
 	vm.add($1);
-    ((Vector) $2.get(1)).insertElementAt(vm,0);
+    ((Vector<Method>) $2.get(1)).insertElementAt(vm.get(0),0);
     $$ = $2;
 }
 

@@ -1,13 +1,26 @@
-import java.util.Map;
+import java.util.List;
 
+import org.objectweb.asm.MethodVisitor;
+
+/**
+ * JString - String-Objekt
+ *
+ * Status: Unsicher
+ */
 public class JString extends Expr{
-    String st;
+    String string;
 
-    public JString(String st) {
-        this.st = st;
+    public JString(String string) {
+        this.string = string;
     }
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        return new Type("string");
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
+        return new Type("java/lang/String");
+    }
+
+    @Override
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+        System.out.println("[JString] visitLdcInsn(string): \"" + string + "\"");
+        mv.visitLdcInsn(string);
     }
 }

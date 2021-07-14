@@ -27,9 +27,9 @@ super { return new SUPER(); }
 this { System.out.println("this"); return new THIS(); }
 while { return new WHILE(); }
 } { System.out.println("Close: " + yytext()); return new CLOSECURLYBRACKET(); }
-\) { return new CLOSEROUNDBRACKET(); }
+\) { System.out.println("Close: " + yytext()); return new CLOSEROUNDBRACKET(); }
 \{ { System.out.println("Open: " + yytext()); return new OPENCURLYBRACKET(); }
-\( { return new OPENROUNDBRACKET(); }
+\( { System.out.println("Open: " + yytext()); return new OPENROUNDBRACKET(); }
 ; { return new SEMICOLON(); }
 , { return new COMMA(); }
 \. { System.out.println("DOT"); return new DOT(); }

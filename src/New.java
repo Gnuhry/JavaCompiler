@@ -1,17 +1,45 @@
-import java.util.Map;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
+import java.util.List;
 import java.util.Vector;
 
+/**
+ * New - Erzeugung eines neuen Objektes
+ *
+ * Status:
+ */
 public class New extends StmtExpr{
-    Type ty;
-    Vector<Expr> exprs;
 
-    public New(Type ty, Vector<Expr> exprs) {
-        this.ty = ty;
-        this.exprs = exprs;
+    // Typ des Objektes
+    Type type;
+
+    // Parameter für den Konstruktor
+    Vector<Expr> expressions;
+
+    public New(Type type, Vector<Expr> expressions) {
+        this.type = type;
+        this.expressions = expressions;
     }
 
     @Override
-    public Type typeCheck(Map<String, String> localVars, Class thisClass) {
-        return ty;
+    public Type typeCheck(List<Field> localVars, Class thisClass) {
+        return type;
+    }
+    
+    public void codeGen(Class cl, Method meth, MethodVisitor mv) {
+
+        for (Expr expr : expressions) {
+            expr.codeGen(cl, meth, mv);
+        }
+
+        System.out.println("[New] visitTypeInsn(NEW): " + type.name);
+        mv.visitTypeInsn(Opcodes.NEW, type.name);
+
+        System.out.println("[New] visitInsn(DUP)");
+        mv.visitInsn(Opcodes.DUP);
+
+        System.out.println("[New] visitMethodInsn(INVOKESPECIAL)");
+        mv.visitMethodInsn(Opcodes.INVOKESPECIAL, type.name, "<init>", "()V", false);
     }
 }

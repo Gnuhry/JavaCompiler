@@ -1,7 +1,0 @@
-public class JString extends Expr{
-    String st;
-
-    public String(JString st) {
-        this.st = st;
-    }
-}
