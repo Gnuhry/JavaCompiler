@@ -28,16 +28,21 @@ class Test{
       }
 	
 	  int stringCompare(){
-		  String str1 = "First String";
-          String str2 = "Second String";
+		  String str1; 
+          String str2;  
+
+		  str1 = "First String";
+		  str2 = "Second String";
       	  
 		  int var1 = str1.compareTo( str2 );
           return var1;
 	  }
 
 	  int ifTest(){
-		  int t1 =1;
-		  int t2 =1;
+		  int t1; 
+		  int t2; 
+		  t1 = 1;
+		  t2 = 2;
 		  if(t1==t2){
 			  return true;
 		  }else{
@@ -46,8 +51,10 @@ class Test{
 	  }
 
 	  int whileAddition(){
-		  int x1 =1;
-		  int x2 =5;
+		  int x1; 
+		  int x2; 
+		  x1 = 1;
+		  x2 = 5;
 		  while(x1<=x2){
 			  erg = x1+1;
 			  return erg;
