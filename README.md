@@ -2,13 +2,8 @@
 
 ## Bedienungsanleitung Java Compiler: 
 
-Entweder:
 1. Projekt klonen 
 2. Im Terminal des JavaCompiler `make` aufrufen. (Testsuit wird kompiliert und ausgeführt)
-
-Oder:
-1. Release downloaden (enthählt fertigen Compiler und Testklasse)
-2. Im Ordner dann `java TestRunner` ausführen 
 
 ## Kurz Doc über erledigte Aufgaben: 
 

@@ -1,4 +1,4 @@
-all: clean javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class test
+all: clean javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class test TestRunner.class run
 all2: clean pull javalexer.java javaparser.java sources.txt spezifikation moveclasses yyTokenclass.class javascanner.class main.class test
 
 pull:
@@ -29,6 +29,12 @@ main.class: main.java yyTokenclass.class javascanner.class
 
 test:
 	java -cp "asm-7.1.jar:." main < TestClass.java
+
+TestRunner.class: TestRunner.java
+	javac TestRunner.java
+
+run:
+	java TestRunner
 
 clean:
 	rm -f *.class javalexer.java javaparser.java sources.txt
