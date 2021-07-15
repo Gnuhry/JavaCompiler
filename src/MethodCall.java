@@ -47,6 +47,10 @@ public class MethodCall extends StmtExpr {
 
         expr.codeGen(cl, meth, mv);
 
+	for(Expr param : params) {
+	    param.codeGen(cl, meth, mv);
+	}
+
         // Diese Implementierung hat einen sehr großen Nachteil:
         // Es lassen sich vermutlich nur Methoden der eigenen Klasse aufrufen
         // TODO: Methoden anderer Klassen aufrufen?

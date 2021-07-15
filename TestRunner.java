@@ -14,9 +14,9 @@ public class TestRunner {
         System.out.println("getT() -> Test: " + tc.getT());
         System.out.println("maximum(1, 3) -> 3: " + tc.maximum(1, 3));
         System.out.println("minimum(1, 3) -> 1: " + tc.minimum(1, 3));
-        System.out.println("methodCall(\"Test\") -> Second - Test: " + tc.methodCall("Test"));
-        System.out.println("methodDataTypes(1.0, false, 1, \"Test\"): ");
-        tc.methodDataTypes(1.0, false, 1, "Test");
+        System.out.println("methodCall(\"Ping\") -> Pong: " + tc.methodCall("Ping"));
+        System.out.println("methodDataTypes(false, 1, \"Test\"): ");
+        tc.methodDataTypes(false, 1, "Test");
         System.out.println("whileTo6() -> 6: " + tc.whileTo6());
     }
 }

@@ -31,10 +31,10 @@ class TestClass{
     }
     
     String secondMethod(String test) {
-        return "Second - " + test;
+        return "Pong";
     }
     
-    void methodDataTypes(double d, boolean b, int i, String s) {
+    void methodDataTypes(boolean b, int i, String s) {
         return;
     }
 
