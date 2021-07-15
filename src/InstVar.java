@@ -17,7 +17,7 @@ import org.objectweb.asm.MethodVisitor;
  * Frage ist: Was genau macht InstVar? Werden hier Werte einer InstVar
  * zugewiesen oder der Wert davon genommen? Oder keins von beidem?
  */
-public class InstVar extends StmtExpr{
+public class InstVar extends Expr{
 
     // Bezeichner des Objekts, welcher vor dem Punkt steht
     // Expr ist laut Jay-File aber immer ein LocalOrFieldVar

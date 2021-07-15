@@ -13,7 +13,7 @@ sources.txt:
 	find ./src/ -name "*.java" > sources.txt
 
 spezifikation: sources.txt
-	javac -cp asm-7.1.jar @sources.txt
+	javac -encoding iso-8859-1 -cp asm-7.1.jar @sources.txt
 
 moveclasses:
 	mv src/*.class .
@@ -31,4 +31,4 @@ test:
 	java -cp "asm-7.1.jar:." main < TestClass.java
 
 clean:
-	#rm -f *.class javalexer.java javaparser.java sources.txt
+	rm -f *.class javalexer.java javaparser.java sources.txt

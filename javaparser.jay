@@ -30,8 +30,8 @@ class javaparser {
 %token <String> TEXT
 
 %type <Stmt> LocalVarDecl Stmt ifthenstatement ifthenelsestatement whilestatement block emptystatement returnstatement StmtExprStmt
-%type <Expr> This Super Unary Binary Integer Bool Char String Jnull Expr LocalOrFieldVar StmtExprExpr
-%type <StmtExpr> Assign New MethodCall StmtExpr InstVar
+%type <Expr> This Super Unary Binary Integer Bool Char String Jnull Expr LocalOrFieldVar StmtExprExpr InstVar
+%type <StmtExpr> Assign New MethodCall StmtExpr
 %type <Class> S
 %type <Field> Parameter Field
 %type <Method> Method
@@ -166,8 +166,6 @@ StmtExpr: Assign {
     $$ = $1;
 } | MethodCall {
     $$ = $1;
-} | InstVar {
-    $$ = $1;
 }
 
 Assign: LocalOrFieldVar ASSIGN Expr {
@@ -190,9 +188,7 @@ MethodCall: Expr DOT TEXT OPENROUNDBRACKET expressions CLOSEROUNDBRACKET {
     $$ = new MethodCall($1, new Vector());
 }
 
-InstVar: TEXT DOT LocalOrFieldVar {
-    $$ = new InstVar($3, $1);
-}
+
        
 //------------------------------------Expr-----------------------------------
 Expr: This {
@@ -214,6 +210,8 @@ Expr: This {
 } | String {
     $$ = $1;
 } | Jnull {
+    $$ = $1;
+} | InstVar {
     $$ = $1;
 } | StmtExprExpr {
     $$ = $1;
@@ -237,6 +235,7 @@ Super: SUPER {
 }
 
 LocalOrFieldVar: TEXT {
+    System.out.println("Var: " + $1);
     $$ = new LocalOrFieldVar($1);
 }
 
@@ -266,6 +265,10 @@ String: STRING {
 
 Jnull: JNULL {
     $$ = new Jnull();
+}
+
+InstVar: TEXT DOT Expr {
+    $$ = new InstVar($3, $1);
 }
 
 StmtExprExpr: StmtExpr { 
