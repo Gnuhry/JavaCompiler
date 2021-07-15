@@ -50,6 +50,12 @@ class TestClass{
         return x1;
     }
 
+    TestClass objectCreation() {
+	TestClass tc;
+	tc = new TestClass();
+	return tc;
+    }
+
     String getT() {
         return t;
     }

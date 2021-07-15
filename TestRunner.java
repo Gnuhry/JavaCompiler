@@ -18,5 +18,6 @@ public class TestRunner {
         System.out.println("methodDataTypes(false, 1, \"Test\"): ");
         tc.methodDataTypes(false, 1, "Test");
         System.out.println("whileTo6() -> 6: " + tc.whileTo6());
+	System.out.println("objectCreation() -> TestClass@.....: " + tc.objectCreation());
     }
 }
