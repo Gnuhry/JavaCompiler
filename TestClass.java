@@ -1,70 +1,56 @@
 class TestClass{
-    int test;
-    char c;
-
-    void test2(int a, String b) {
-        if (a < 5) {
-            return;
-        }
-        int i;
-        i = 17;
-    }
-
-
 
     String t;
 
-    int test32(int a) {
-        if (a > 69) {
-            return 1;
+    boolean intEquality(int a, int b) {
+        return a == b;
+    }
+
+    void setT(String test) {
+        t = test;
+    }
+
+    int minimum(int a, int b){
+        if(a<b){
+            return a;
+        }else{
+            return b;
         }
-        t = t;
-        Object o;
-        t = "null";
-        t = "5head";
-        c = 'X';
-        o = new Object();
-        String testString;
-        testString = null;
+    }
 
-        a = 1;
+    int maximum(int a, int b){
+        if(a>b){
+            return a;
+        }else{
+            return b;
+        }
+    }
+    
+    String methodCall(String test) {
+        return secondMethod(test);
+    }
+    
+    String secondMethod(String test) {
+        return "Second - " + test;
+    }
+    
+    void methodDataTypes(double d, boolean b, int i, String s) {
+        return;
+    }
 
-        silas();
-
-        test = 5;
-
-        while (1 == a) {
-            a = 1337;
-            testString = "Fuck this shit";
+    int whileTo6(){
+        int x1;
+        int x2;
+        x1 = 1;
+        x2 = 5;
+        while(x1<=x2){
+            x1 = x1+1;
         }
 
-        a = test;
-
-        return a;
+        return x1;
     }
 
-    String silas() {
-        String nullString;
-        nullString = "BIER";
-        nullString = null;
-        return nullString;
-    }
-
-    int addition(int a, int b) {
-        return 2 * a + b;
-    }
-
-    TestClass superDuper() {
-        return new TestClass();
-    }
-
-    String Shit(){
-        return "TINF19AI1";
-    }
-
-    boolean gleichheit(String a, String b) {
-        boolean testVal;
-        testVal = true;
-        return testVal;
+    String getT() {
+        return t;
     }
 }
